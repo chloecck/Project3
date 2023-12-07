@@ -222,29 +222,27 @@ def read_user_metadata(user_id):
 # Extension2 User Profile: edit a user
 @app.route('/user/<int:user_id>/edit/<string:user_key>', methods=['PUT'])
 def edit_user_metadata(user_id, user_key):
-    try:
-        data = request.get_json()
-        if not isinstance(data, dict) or 'username' not in data or not isinstance(data['username'], str) or 'real_name' not in data or not isinstance(data['real_name'], str):
-            return {'err': "should be json object with both username and real_name string field"}, 400
-        with lock:
-            # Critical section where the global state (users) is accessed
-            # Look up the user by id
-            user_profile = users.get(user_id, None)
-            if not user_profile:
-                return {'err': 'No user found'}, 404
-            if user_key != user_profile['key']:
-                return {'err': 'provided user key does not match post\'s key'}, 403
-            # Update user metadata
-            user_profile['username'] = data.get(
-                'username', user_profile['username'])
-            user_profile['real_name'] = data.get(
-                'real_name', user_profile['real_name'])
-            # if there's no real update, treat as success update
-        # Return the response with updated user details
-        return_obj = get_user_id_unique_nonunique(user_id)
-        return return_obj, 200
-    except Exception as e:
-        return {'err': str(e)}, 3
+
+    data = request.get_json()
+    if not isinstance(data, dict) or 'username' not in data or not isinstance(data['username'], str) or 'real_name' not in data or not isinstance(data['real_name'], str):
+        return {'err': "should be json object with both username and real_name string field"}, 400
+    with lock:
+        # Critical section where the global state (users) is accessed
+        # Look up the user by id
+        user_profile = users.get(user_id, None)
+        if not user_profile:
+            return {'err': 'No user found'}, 404
+        if user_key != user_profile['user_key']:
+            return {'err': 'provided user key does not match post\'s key'}, 403
+        # Update user metadata
+        user_profile['username'] = data.get(
+            'username', user_profile['username'])
+        user_profile['real_name'] = data.get(
+            'real_name', user_profile['real_name'])
+        # if there's no real update, treat as success update
+    # Return the response with updated user details
+    return_obj = get_user_id_unique_nonunique(user_id)
+    return return_obj, 200
 
 
 if __name__ == '__main__':

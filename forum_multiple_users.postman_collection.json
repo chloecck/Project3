@@ -294,6 +294,74 @@
 				"description": "get user2 profile success"
 			},
 			"response": []
+		},
+		{
+			"name": "edit user 1 valid",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"    var jsonData = pm.response.json();",
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"user 2 contents correct\", function () {",
+							"    pm.expect(jsonData.user_unique_metadata).eql(\"chloecck\");",
+							"    pm.expect(jsonData.user_non_unique_metadata).eql(\"ChloeKe\");",
+							"    pm.expect(jsonData.key === undefined);",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"real_name\": \"ChloeKe\", \"username\": \"chloecck\"}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://127.0.0.1:5000/user/{{user1_id}}/edit/{{user1_key}}",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "5000",
+					"path": [
+						"user",
+						"{{user1_id}}",
+						"edit",
+						"{{user1_key}}"
+					],
+					"query": [
+						{
+							"key": "real_name",
+							"value": "ChloeKe",
+							"disabled": true
+						},
+						{
+							"key": "username",
+							"value": "chloecck",
+							"disabled": true
+						}
+					]
+				},
+				"description": "edit user1 success"
+			},
+			"response": []
 		}
 	]
 }
