@@ -134,8 +134,8 @@ def create_post():
                 return_object.update(
                     get_user_id_unique_nonunique(int(user_id)))
         return return_object, 200
-    except:
-        return {'err': 'json'}, 3
+    except Exception as e:
+        return {'err': str(e)}, 404
 
 
 # Endpoint2: read a post with GET /post/{{id}} -> test in forum_multiple_posts.postman_collection.json
@@ -170,88 +170,100 @@ def read_post(post_id):
 # Endpoint 3: delete a post with DELETE /post/{{id}}/delete/{{key}} -> TODO: test (add to the end of the forum_multiple_users.postman_collection.json file)
 @app.route('/post/<int:post_id>/delete/<string:key>', methods=['DELETE'])
 def delete_post(post_id, key):
-    with lock:
-        post = posts.get(post_id, None)
-        if not post:
-            return {'err': 'No post found'}, 404
-        if (key != post['key']):
-            if ('user_key' in post and key != post['user_key']):
-                return {'err': 'provided key does not match post\'s key nor user\'s key'}, 403
+    try:
+        with lock:
+            post = posts.get(post_id, None)
+            if not post:
+                return {'err': 'No post found'}, 404
+            if (key != post['key']):
+                if ('user_key' in post and key != post['user_key']):
+                    return {'err': 'provided key does not match post\'s key nor user\'s key'}, 403
 
-        if post['reply_to']:
-            mother_post = posts.get(post['reply_to'])
-            mother_post['has_reply'].remove(post_id)
-        # Delete the post
-        del posts[post_id]
-        # Return the response with post details (exclude key), and 200
-        return_object = {
-            'id': post['id'],
-            'timestamp': post['timestamp'],
-            'msg': post['msg'],
-            # Extension 3: Threaded replies: --TODO: test (add to the end of the forum_multiple_posts.postman_collection.json file)
-            # When returning information about a post that is a reply, include the id of the post to which it is replying.
-            # When returning information about a post which has replies, include the ids of every reply to that post
-            'reply_to': post['reply_to'],
-            'has_reply': post['has_reply']
-        }
-        # Extension 1 Users and user keys:  -> tested in in forum_multiple_users.postman_collection.json
-        # Whenever you give information about a post that has an associated user,
-        # you should return the associated user id along with other data (e.g., when reading and deleting posts).
-        # Extension 2 User Profile:  -> tested in in forum_multiple_users.postman_collection.json
-        # When returning information about a post associated with a user, you must include the user’s unique metadata.
-        user_id = post.get('user_id', None)
-        if user_id:
-            return_object.update(get_user_id_unique_nonunique(user_id))
-    return return_object, 200
+            if post['reply_to']:
+                mother_post = posts.get(post['reply_to'])
+                mother_post['has_reply'].remove(post_id)
+            # Delete the post
+            del posts[post_id]
+            # Return the response with post details (exclude key), and 200
+            return_object = {
+                'id': post['id'],
+                'timestamp': post['timestamp'],
+                'msg': post['msg'],
+                # Extension 3: Threaded replies: --TODO: test (add to the end of the forum_multiple_posts.postman_collection.json file)
+                # When returning information about a post that is a reply, include the id of the post to which it is replying.
+                # When returning information about a post which has replies, include the ids of every reply to that post
+                'reply_to': post['reply_to'],
+                'has_reply': post['has_reply']
+            }
+            # Extension 1 Users and user keys:  -> tested in in forum_multiple_users.postman_collection.json
+            # Whenever you give information about a post that has an associated user,
+            # you should return the associated user id along with other data (e.g., when reading and deleting posts).
+            # Extension 2 User Profile:  -> tested in in forum_multiple_users.postman_collection.json
+            # When returning information about a post associated with a user, you must include the user’s unique metadata.
+            user_id = post.get('user_id', None)
+            if user_id:
+                return_object.update(get_user_id_unique_nonunique(user_id))
+        return return_object, 200
+    except Exception as e:
+        return {'err': str(e)}, 404
 
 
 # Extension 1 and 2 User: create a user: -> test in forum_multiple_users.postman_collection.json
 @app.route('/user', methods=['POST'])
 def create_user():
-    data = request.get_json()
-    if not isinstance(data, dict) or ('username' not in data) or (not isinstance(data['username'], str)) or ('real_name' not in data) or (not isinstance(data['real_name'], str)):
-        return {'err': "should be json object w username and real_name string field"}, 200
-    user_profile = create_user_helper(data)
-    # Return the response with user details with 200
-    return user_profile, 200
+    try:
+        data = request.get_json()
+        if not isinstance(data, dict) or ('username' not in data) or (not isinstance(data['username'], str)) or ('real_name' not in data) or (not isinstance(data['real_name'], str)):
+            return {'err': "should be json object w username and real_name string field"}, 200
+        user_profile = create_user_helper(data)
+        # Return the response with user details with 200
+        return user_profile, 200
+    except Exception as e:
+        return {'err': str(e)}, 404
 
 
 # Extension2 User Profile: read a user: -> test in forum_multiple_users.postman_collection.json
 @app.route('/user/<int:user_id>', methods=['GET'])
 def read_user_metadata(user_id):
-    with lock:
-        user_profile = users.get(user_id, None)
-        if not user_profile:
-            return {'err': 'no user found'}, 404
-    # Return the response with user details with 200
-    return_obj = get_user_id_unique_nonunique(user_id)
-    return return_obj, 200
-
+    try:
+        with lock:
+            user_profile = users.get(user_id, None)
+            if not user_profile:
+                return {'err': 'no user found'}, 404
+        # Return the response with user details with 200
+        return_obj = get_user_id_unique_nonunique(user_id)
+        return return_obj, 200
+    except Exception as e:
+        return {'err': str(e)}, 404
 
 # Extension2 User Profile: edit a user -> test in forum_multiple_users.postman_collection.json
+
+
 @app.route('/user/<int:user_id>/edit/<string:user_key>', methods=['PUT'])
 def edit_user_metadata(user_id, user_key):
-
-    data = request.get_json()
-    if not isinstance(data, dict) or 'username' not in data or not isinstance(data['username'], str) or 'real_name' not in data or not isinstance(data['real_name'], str):
-        return {'err': "should be json object with both username and real_name string field"}, 400
-    with lock:
-        # Critical section where the global state (users) is accessed
-        # Look up the user by id
-        user_profile = users.get(user_id, None)
-        if not user_profile:
-            return {'err': 'No user found'}, 404
-        if user_key != user_profile['user_key']:
-            return {'err': 'provided user key does not match post\'s key'}, 403
-        # Update user metadata
-        user_profile['username'] = data.get(
-            'username', user_profile['username'])
-        user_profile['real_name'] = data.get(
-            'real_name', user_profile['real_name'])
-        # if there's no real update, treat as success update
-    # Return the response with updated user details
-    return_obj = get_user_id_unique_nonunique(user_id)
-    return return_obj, 200
+    try:
+        data = request.get_json()
+        if not isinstance(data, dict) or 'username' not in data or not isinstance(data['username'], str) or 'real_name' not in data or not isinstance(data['real_name'], str):
+            return {'err': "should be json object with both username and real_name string field"}, 400
+        with lock:
+            # Critical section where the global state (users) is accessed
+            # Look up the user by id
+            user_profile = users.get(user_id, None)
+            if not user_profile:
+                return {'err': 'No user found'}, 404
+            if user_key != user_profile['user_key']:
+                return {'err': 'provided user key does not match post\'s key'}, 403
+            # Update user metadata
+            user_profile['username'] = data.get(
+                'username', user_profile['username'])
+            user_profile['real_name'] = data.get(
+                'real_name', user_profile['real_name'])
+            # if there's no real update, treat as success update
+        # Return the response with updated user details
+        return_obj = get_user_id_unique_nonunique(user_id)
+        return return_obj, 200
+    except Exception as e:
+        return {'err': str(e)}, 404
 
 
 # TODO: the remaining two extension and write tests in a separete .json
