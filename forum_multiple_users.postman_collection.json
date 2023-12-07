@@ -1,0 +1,299 @@
+{
+	"info": {
+		"_postman_id": "dab434b9-7c2f-449f-9fd7-c66d46069e14",
+		"name": "forum: multiple users",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "read user 1 not found",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"User 1 not found\", function () {",
+							"    pm.response.to.have.status(404);",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://127.0.0.1:5000/user/{{id}}",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "5000",
+					"path": [
+						"user",
+						"{{id}}"
+					]
+				},
+				"description": "get user1 profile not found"
+			},
+			"response": []
+		},
+		{
+			"name": "read user 2 not found",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"User 2 not found\", function () {",
+							"    pm.response.to.have.status(404);",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://127.0.0.1:5000/user/{{id2}}",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "5000",
+					"path": [
+						"user",
+						"{{id2}}"
+					]
+				},
+				"description": "get user2 profile not found"
+			},
+			"response": []
+		},
+		{
+			"name": "create user 1 success",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var jsonData = pm.response.json();",
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"    pm.expect(jsonData[\"user_unique_metadata\"]).eql(\"cck\");",
+							"    pm.expect(jsonData[\"user_non_unique_metadata\"]).eql(\"ChloeKe\");;",
+							"});",
+							"pm.environment.set(\"user1_id\", jsonData.user_id);",
+							"pm.environment.set(\"user1_key\", jsonData.user_key);",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"real_name\": \"ChloeKe\", \"username\": \"cck\"}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://127.0.0.1:5000/user",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "5000",
+					"path": [
+						"user"
+					],
+					"query": [
+						{
+							"key": "real_name",
+							"value": "ChloeKe",
+							"disabled": true
+						},
+						{
+							"key": "username",
+							"value": "cck",
+							"disabled": true
+						}
+					]
+				},
+				"description": "create user1 success"
+			},
+			"response": []
+		},
+		{
+			"name": "read user 1 valid",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"user 1 contents correct\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData['user_unique_metadata']).to.eql(\"cck\");",
+							"    pm.expect(jsonData.key === undefined);",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://127.0.0.1:5000/user/{{user1_id}}",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "5000",
+					"path": [
+						"user",
+						"{{user1_id}}"
+					]
+				},
+				"description": "read user 1 valid"
+			},
+			"response": []
+		},
+		{
+			"name": "create user 2",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"    var jsonData = pm.response.json();",
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"    pm.expect(jsonData[\"user_unique_metadata\"]).eql(\"mk\");",
+							"    pm.expect(jsonData[\"user_non_unique_metadata\"]).eql(\"Greenberg\");",
+							"});",
+							"pm.environment.set(\"user2_id\", jsonData.user_id);",
+							"pm.environment.set(\"user2_key\", jsonData.user_key);",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"real_name\": \"Greenberg\", \"username\": \"mk\"}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://127.0.0.1:5000/user",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "5000",
+					"path": [
+						"user"
+					],
+					"query": [
+						{
+							"key": "real_name",
+							"value": "Greenberg",
+							"disabled": true
+						},
+						{
+							"key": "username",
+							"value": "mk",
+							"disabled": true
+						}
+					]
+				},
+				"description": "create user2 success"
+			},
+			"response": []
+		},
+		{
+			"name": "read user 2 valid",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"user 2 contents correct\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.user_unique_metadata).eql(\"mk\");",
+							"    pm.expect(jsonData.key === undefined);",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://127.0.0.1:5000/user/{{user2_id}}",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "5000",
+					"path": [
+						"user",
+						"{{user2_id}}"
+					]
+				},
+				"description": "get user2 profile success"
+			},
+			"response": []
+		}
+	]
+}
