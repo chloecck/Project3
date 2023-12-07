@@ -55,7 +55,7 @@ def get_user_id_unique_nonunique(existed_user_id):
     }
 
 
-# Endpoint 1: create a post with POST /post
+# Endpoint 1: create a post with POST /post -> test in forum_multiple_posts.postman_collection.json and in forum_multiple_users.postman_collection.json
 @app.route('/post', methods=['POST'])
 def create_post():
     try:
@@ -76,7 +76,7 @@ def create_post():
                 'key': post_key,
                 'timestamp': timestamp,
                 'msg': data['msg'],
-                # Extension 3: Threaded replies
+                # Extension 3: Threaded replies --> TODO: test (add to the end of the forum_multiple_posts.postman_collection.json file)
                 # When creating a post, it should be possible to specify a post id to which the new post is replying.
                 # When returning information about a post that is a reply, include the id of the post to which it is replying.
                 # When returning information about a post which has replies, include the ids of every reply to that post
@@ -86,50 +86,59 @@ def create_post():
             if new_post['reply_to']:
                 mother_post = posts.get(new_post['reply_to'])
                 mother_post['has_reply'].append(post_id)
-            # Extension 1 Users and user keys:
+
+            # Extension 1 Users and user keys: -> tested in in forum_multiple_users.postman_collection.json
             # Each post can be associated with a user by providing the user id and corresponding user key when creating the post.
             # Since user_id and user_key are non-editable, it can and will be passed into the posts database.
             user_id = data.get('user_id', None)
+            # app.logger.error(
+            #     'This is an error message of user_id.', {int(user_id)})
             user_key = data.get('user_key', None)
-            if (user_id and not user_key) or (not user_id and user_key):
+            # app.logger.error(
+            #     'This is an error message of user_key.', {user_key})
+            if (user_id and not user_key) or (user_key and not user_id):
                 return {'err': 'if provide a user, it must contain both user_id and user_key'}, 400
             if user_id and user_key:
-                user_profile = users.get(user_id, None)
+                user_profile = users.get(int(user_id), None)
                 if not user_profile:
+                    app.logger.error(
+                        'This is an error message where user_profile cannot be found.', {user_profile})
                     return {'err': 'no user found with the user_id in the post POST method'}, 404
-                if user_key != user_profile['key']:
+                if user_key != user_profile['user_key']:
                     return {'err': 'provided key does not match user\'s key'}, 404
-            new_post['user_id'] = user_id
-            new_post['user_key'] = user_key
-            # Append the post to the global data
+            if user_id:
+                new_post['user_id'] = int(user_id)
+                new_post['user_key'] = str(user_key)
+            # Add the post to the global data
             posts[post_id] = new_post
+
             # Return the response with post details and 200
             return_object = {
                 'id': post_id,
                 'timestamp': timestamp,
                 'msg': data['msg'],
                 'key': new_post['key'],
-                # Extension 3: Threaded replies
+                # Extension 3: Threaded replies: --TODO: test: test (add to the end of the forum_multiple_posts.postman_collection.json file)
                 # When returning information about a post that is a reply, include the id of the post to which it is replying.
                 # When returning information about a post which has replies, include the ids of every reply to that post
                 'reply_to': new_post['reply_to'],
                 'has_reply': new_post['has_reply']
             }
-            # Extension 1 Users and user keys:
+            # Extension 1 Users and user keys:  -> tested in in forum_multiple_users.postman_collection.json
             # Whenever you give information about a post that has an associated user,
             # you should return the associated user id along with other data (e.g., when reading and deleting posts).
-            # Extension 2 User Profile:
+            # Extension 2 User Profile:  -> tested in in forum_multiple_users.postman_collection.json
             # When returning information about a post associated with a user, you must include the user’s unique metadata.
             # I also include user other data for the POST method return, and it should include the most updated user info (through retrieve the user database)
-            if user_id:
-                return_object.update(get_user_id_unique_nonunique(user_id))
+            if 'user_id' in new_post:
+                return_object.update(
+                    get_user_id_unique_nonunique(int(user_id)))
         return return_object, 200
+    except:
+        return {'err': 'json'}, 3
 
-    except Exception as e:
-        return {'err': str(e)}, 400
 
-
-# Endpoint2: read a post with GET /post/{{id}}
+# Endpoint2: read a post with GET /post/{{id}} -> test in forum_multiple_posts.postman_collection.json
 @app.route('/post/<int:post_id>', methods=['GET'])
 def read_post(post_id):
     try:
@@ -145,10 +154,10 @@ def read_post(post_id):
                 'reply_to': post['reply_to'],
                 'has_reply': post['has_reply']
             }
-            # Extension 1 Users and user keys:
+            # Extension 1 Users and user keys:  -> tested in in forum_multiple_users.postman_collection.json
             # Whenever you give information about a post that has an associated user,
             # you should return the associated user id along with other data (e.g., when reading and deleting posts).
-            # Extension 2 User Profile:
+            # Extension 2 User Profile:  -> tested in in forum_multiple_users.postman_collection.json
             # When returning information about a post associated with a user, you must include the user’s unique metadata.
             user_id = post.get('user_id', None)
             if user_id:
@@ -158,7 +167,7 @@ def read_post(post_id):
         return {'err': str(e)}, 404
 
 
-# Endpoint 3: delete a post with DELETE /post/{{id}}/delete/{{key}}
+# Endpoint 3: delete a post with DELETE /post/{{id}}/delete/{{key}} -> TODO: test (add to the end of the forum_multiple_users.postman_collection.json file)
 @app.route('/post/<int:post_id>/delete/<string:key>', methods=['DELETE'])
 def delete_post(post_id, key):
     with lock:
@@ -179,16 +188,16 @@ def delete_post(post_id, key):
             'id': post['id'],
             'timestamp': post['timestamp'],
             'msg': post['msg'],
-            # Extension 3: Threaded replies
+            # Extension 3: Threaded replies: --TODO: test (add to the end of the forum_multiple_posts.postman_collection.json file)
             # When returning information about a post that is a reply, include the id of the post to which it is replying.
             # When returning information about a post which has replies, include the ids of every reply to that post
             'reply_to': post['reply_to'],
             'has_reply': post['has_reply']
         }
-        # Extension 1 Users and user keys:
+        # Extension 1 Users and user keys:  -> tested in in forum_multiple_users.postman_collection.json
         # Whenever you give information about a post that has an associated user,
         # you should return the associated user id along with other data (e.g., when reading and deleting posts).
-        # Extension 2 User Profile:
+        # Extension 2 User Profile:  -> tested in in forum_multiple_users.postman_collection.json
         # When returning information about a post associated with a user, you must include the user’s unique metadata.
         user_id = post.get('user_id', None)
         if user_id:
@@ -196,7 +205,7 @@ def delete_post(post_id, key):
     return return_object, 200
 
 
-# Extension 1 and 2 User: create a user
+# Extension 1 and 2 User: create a user: -> test in forum_multiple_users.postman_collection.json
 @app.route('/user', methods=['POST'])
 def create_user():
     data = request.get_json()
@@ -207,7 +216,7 @@ def create_user():
     return user_profile, 200
 
 
-# Extension2 User Profile: read a user
+# Extension2 User Profile: read a user: -> test in forum_multiple_users.postman_collection.json
 @app.route('/user/<int:user_id>', methods=['GET'])
 def read_user_metadata(user_id):
     with lock:
@@ -219,7 +228,7 @@ def read_user_metadata(user_id):
     return return_obj, 200
 
 
-# Extension2 User Profile: edit a user
+# Extension2 User Profile: edit a user -> test in forum_multiple_users.postman_collection.json
 @app.route('/user/<int:user_id>/edit/<string:user_key>', methods=['PUT'])
 def edit_user_metadata(user_id, user_key):
 
@@ -244,6 +253,8 @@ def edit_user_metadata(user_id, user_key):
     return_obj = get_user_id_unique_nonunique(user_id)
     return return_obj, 200
 
+
+# TODO: the remaining two extension and write tests in a separete .json
 
 if __name__ == '__main__':
     app.run(debug=True)

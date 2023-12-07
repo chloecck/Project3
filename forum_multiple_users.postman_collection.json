@@ -92,7 +92,7 @@
 							"pm.test(\"Status code is 200\", function () {",
 							"    pm.response.to.have.status(200);",
 							"    pm.expect(jsonData[\"user_unique_metadata\"]).eql(\"cck\");",
-							"    pm.expect(jsonData[\"user_non_unique_metadata\"]).eql(\"ChloeKe\");;",
+							"    pm.expect(jsonData[\"user_non_unique_metadata\"]).eql(\"ChloeKe\");",
 							"});",
 							"pm.environment.set(\"user1_id\", jsonData.user_id);",
 							"pm.environment.set(\"user1_key\", jsonData.user_key);",
@@ -296,6 +296,127 @@
 			"response": []
 		},
 		{
+			"name": "create post 1 under user1 success",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var jsonData = pm.response.json();",
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"    pm.expect(jsonData.user_unique_metadata).eql(\"cck\");",
+							"    pm.expect(jsonData.user_non_unique_metadata).eql(\"ChloeKe\");",
+							"});",
+							"",
+							"",
+							"pm.environment.set(\"post3_user_id\", jsonData.user_id);",
+							"pm.environment.set(\"post3_id\", jsonData.id);",
+							"pm.environment.set(\"post3_key\", jsonData.key);",
+							"pm.environment.set(\"timestamp3\", jsonData.timestamp);",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"msg\": \"goodbye\",\"user_id\": \"{{user1_id}}\",\"user_key\": \"{{user1_key}}\"}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://127.0.0.1:5000/post",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "5000",
+					"path": [
+						"post"
+					],
+					"query": [
+						{
+							"key": "msg",
+							"value": "hello",
+							"disabled": true
+						},
+						{
+							"key": "user_id",
+							"value": "{{user1_id}}",
+							"disabled": true
+						},
+						{
+							"key": "user_key",
+							"value": "{{user1_key}}",
+							"disabled": true
+						}
+					]
+				},
+				"description": "create post  under user1 success"
+			},
+			"response": []
+		},
+		{
+			"name": "read post  under user1 valid",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"post under user 1contents correct\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.msg).to.eql(\"goodbye\");",
+							"    pm.expect(jsonData.key === undefined);",
+							"});",
+							"",
+							"var jsonData = pm.response.json();",
+							"pm.environment.set(\"id\", jsonData.id);",
+							"pm.environment.set(\"timestamp\", jsonData.timestamp);",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://127.0.0.1:5000/post/{{post3_id}}",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "5000",
+					"path": [
+						"post",
+						"{{post3_id}}"
+					]
+				},
+				"description": "read post  under user1 success"
+			},
+			"response": []
+		},
+		{
 			"name": "edit user 1 valid",
 			"event": [
 				{
@@ -360,6 +481,56 @@
 					]
 				},
 				"description": "edit user1 success"
+			},
+			"response": []
+		},
+		{
+			"name": "read post under user1 after edit user 1 profile valid",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"post under user 1contents correct\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.msg).to.eql(\"goodbye\");",
+							"    pm.expect(jsonData.key === undefined);",
+							"    pm.expect(jsonData.user_unique_metadata).eql(\"chloecck\");",
+							"    pm.expect(jsonData.user_non_unique_metadata).eql(\"ChloeKe\");",
+							"});",
+							"",
+							"var jsonData = pm.response.json();",
+							"pm.environment.set(\"id\", jsonData.id);",
+							"pm.environment.set(\"timestamp\", jsonData.timestamp);",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://127.0.0.1:5000/post/{{post3_id}}",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "5000",
+					"path": [
+						"post",
+						"{{post3_id}}"
+					]
+				},
+				"description": "read post  under user1 after edit user 1 profile success"
 			},
 			"response": []
 		}
