@@ -18,8 +18,6 @@ app = Flask(__name__)
 # global data and helper function
 posts = {}
 users = {}
-post_id_to_keys = {}  # for testing, should not really exist
-user_id_to_keys = {}
 
 
 def secret_key():
@@ -176,9 +174,11 @@ def delete_post(post_id, key):
             if not post:
                 return {'err': 'No post found'}, 404
             if (key != post['key']):
-                if ('user_key' in post and key != post['user_key']):
+                ok = False
+                if ('user_key' in post and key == post['user_key']):
+                    ok = True
+                if not ok:
                     return {'err': 'provided key does not match post\'s key nor user\'s key'}, 403
-
             if post['reply_to']:
                 mother_post = posts.get(post['reply_to'])
                 mother_post['has_reply'].remove(post_id)
