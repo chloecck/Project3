@@ -1,0 +1,968 @@
+{
+	"info": {
+		"_postman_id": "38eb615b-14b9-471e-86f7-4e61ea34ec2d",
+		"name": "s04.forum: posts & users",
+		"description": "``` python\n{\n  id:int = id_generator(), # int starting from 1\n  key:str = token_hex(16),\n  timestamp:str = datetime.utcnow().isoformat(),\n  user_id:int = id_generator, # Ext1\n  user_key:str = token_hex(16), # Ext1\n  **user_unique_metadata, # Ext2\n  reply_to, # Ext3\n  replies:list = , # Ext3\n}\n\n ```\n\n``` python\n# Ext1\n{\n  id:int = id_generator()\n  key:str = token_hex(16),\n  timestamp:str = datetime.utcnow().isoformat(),\n  username:str, # Ext2\n  display_name:str # Ext2\n}\n\n ```",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "31693814"
+	},
+	"item": [
+		{
+			"name": "---templates---",
+			"item": [
+				{
+					"name": "create post",
+					"item": [
+						{
+							"name": "/post: create post  --msg&reply_to&user_id&user_key",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"return id, key, timestamp, user_id, username, reply_to\", () => {\r",
+											"  pm.response.to.have.status(200);\r",
+											"  pm.response.to.have.jsonBody(\"id\");\r",
+											"  pm.response.to.have.jsonBody(\"key\");\r",
+											"  pm.response.to.have.jsonBody(\"timestamp\");\r",
+											"  pm.response.to.have.jsonBody(\"user_id\");\r",
+											"  pm.response.to.have.jsonBody(\"username\");\r",
+											"  pm.response.to.have.jsonBody(\"reply_to\");\r",
+											"});\r",
+											"\r",
+											"const res = pm.response.json();\r",
+											"const { id = null, key = null, timestamp = null, user_id = null, username = null, reply_to = null, replies = null } = res;\r",
+											"\r",
+											"pm.test(\"'id' is a postive int\", () => {\r",
+											"  pm.expect(Number.isInteger(id)).to.be.true;\r",
+											"  pm.expect(id > 0).to.be.true;\r",
+											"});\r",
+											"pm.test(\"'key' is a non-trival, truthy string\", () => {\r",
+											"  pm.expect(typeof key === 'string').to.be.true;\r",
+											"  pm.expect(!key.trim()).to.be.false;\r",
+											"});\r",
+											"pm.test(\"'timestamp' is ISO format\", () => {\r",
+											"  const isoRegex = /^(?:\\d{4}-[01]\\d-[0-3]\\d[T ][0-2]\\d:[0-5]\\d:[0-5]\\d(\\.\\d{3}|\\.\\d{6})?)(?:[Zz]|([+\\-][0-2]\\d:[0-5]\\d))?$/;\r",
+											"\r",
+											"  pm.expect(isoRegex.test(timestamp)).to.be.true;\r",
+											"});\r",
+											"pm.test(\"'timestamp' has correct date and time\", () => {\r",
+											"  const timeDiff = Math.abs(new Date(timestamp) - new Date());\r",
+											"  pm.expect(timeDiff).to.be.lessThan(3e3);\r",
+											"});\r",
+											"pm.test(\"'user_id' is a positive int\", () => {\r",
+											"  pm.expect(Number.isInteger(user_id)).to.be.true;\r",
+											"  pm.expect(user_id > 0).to.be.true;\r",
+											"});\r",
+											"pm.test(\"'username' is a non-trival, truthy string\", () => {\r",
+											"  pm.expect(typeof username === 'string').to.be.true;\r",
+											"  pm.expect(!username.trim()).to.be.false;\r",
+											"})\r",
+											"pm.test(\"'reply_to' is a positive int\", () => {\r",
+											"  pm.expect(Number.isInteger(reply_to)).to.be.true;\r",
+											"  pm.expect(reply_to > 0).to.be.true;\r",
+											"})\r",
+											"pm.test(\"no 'replies'\",()=>{\r",
+											"  pm.response.to.have.\r",
+											"})\r",
+											"\r",
+											"const post = { id, key, timestamp, user_id, username, reply_to, replies }\r",
+											"const jsonEncoded = JSON.stringify(post, (k, v) => {\r",
+											"  if (typeof v === \"string\") {\r",
+											"    return encodeURIComponent(v);\r",
+											"  }\r",
+											"  return v;\r",
+											"});\r",
+											"pm.environment.set(\"post0\", jsonEncoded)\r",
+											"\r",
+											"// pm.test('', () => {\r",
+											"//   pm.response.to.have.status(400);\r",
+											"//   pm.response.to.have.jsonBody(\"err\");\r",
+											"// });\r",
+											""
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"msg\": \"{{$randomPhrase}}\",\r\n  \"user_id\": \"{{idUserInit}}\",\r\n  \"user_key\": \"{{keyUserInit}}\",\r\n  \"reply_to\": {{$randomHexColor}}\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://127.0.0.1:5000/post",
+									"protocol": "http",
+									"host": [
+										"127",
+										"0",
+										"0",
+										"1"
+									],
+									"port": "5000",
+									"path": [
+										"post"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "/post: create post  --msg&user_id&user_key",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"return id, key, timestamp, user_id, username\", () => {\r",
+											"  pm.response.to.have.status(200);\r",
+											"  pm.response.to.have.jsonBody(\"id\");\r",
+											"  pm.response.to.have.jsonBody(\"key\");\r",
+											"  pm.response.to.have.jsonBody(\"timestamp\");\r",
+											"  pm.response.to.have.jsonBody(\"user_id\");\r",
+											"  pm.response.to.have.jsonBody(\"username\");\r",
+											"});\r",
+											"\r",
+											"const res = pm.response.json();\r",
+											"const { id = null, key = null, timestamp = null, user_id = null, username = null, reply_to = null, replies = null } = res;\r",
+											"\r",
+											"pm.test(\"'id' is a postive int\", () => {\r",
+											"  pm.expect(Number.isInteger(id)).to.be.true;\r",
+											"  pm.expect(id > 0).to.be.true;\r",
+											"});\r",
+											"pm.test(\"'key' is a non-trival, truthy string\", () => {\r",
+											"  pm.expect(typeof key === 'string').to.be.true;\r",
+											"  pm.expect(!key.trim()).to.be.false;\r",
+											"});\r",
+											"pm.test(\"'timestamp' is ISO format\", () => {\r",
+											"  const isoRegex = /^(?:\\d{4}-[01]\\d-[0-3]\\d[T ][0-2]\\d:[0-5]\\d:[0-5]\\d(\\.\\d{3}|\\.\\d{6})?)(?:[Zz]|([+\\-][0-2]\\d:[0-5]\\d))?$/;\r",
+											"\r",
+											"  pm.expect(isoRegex.test(timestamp)).to.be.true;\r",
+											"});\r",
+											"pm.test(\"'timestamp' has correct date and time\", () => {\r",
+											"  const timeDiff = Math.abs(new Date(timestamp) - new Date());\r",
+											"  pm.expect(timeDiff).to.be.lessThan(3e3);\r",
+											"});\r",
+											"pm.test(\"'user_id' is a positive int\", () => {\r",
+											"  pm.expect(Number.isInteger(id)).to.be.true;\r",
+											"  pm.expect(id > 0).to.be.true;\r",
+											"});\r",
+											"pm.test(\"'username' is a non-trival, truthy string\", () => {\r",
+											"  pm.expect(typeof key === 'string').to.be.true;\r",
+											"  pm.expect(!key.trim()).to.be.false;\r",
+											"})\r",
+											"\r",
+											"const post = { id, key, timestamp, user_id, username, reply_to, replies }\r",
+											"const jsonEncoded = JSON.stringify(post, (k, v) => {\r",
+											"  if (typeof v === \"string\") {\r",
+											"    return encodeURIComponent(v);\r",
+											"  }\r",
+											"  return v;\r",
+											"});\r",
+											"pm.set.environment(\"post0\", jsonEncoded)\r",
+											"\r",
+											"// pm.test('', () => {\r",
+											"//   pm.response.to.have.status(400);\r",
+											"//   pm.response.to.have.jsonBody(\"err\");\r",
+											"// });\r",
+											""
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"msg\": \"{{$randomPhrase}}\",\r\n  \"user_id\": \"{{idUserInit}}\",\r\n  \"user_key\": \"{{keyUserInit}}\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://127.0.0.1:5000/post",
+									"protocol": "http",
+									"host": [
+										"127",
+										"0",
+										"0",
+										"1"
+									],
+									"port": "5000",
+									"path": [
+										"post"
+									]
+								},
+								"description": "``` javascript\nisoRegex = \n/^(?:\\d{4}-[01]\\d-[0-3]\\d[T ][0-2]\\d:[0-5]\\d:[0-5]\\d(\\.\\d{3}|\\.\\d{6})?)(?:[Zz]|([+\\-][0-2]\\d:[0-5]\\d))?$/;\n\n ```"
+							},
+							"response": []
+						},
+						{
+							"name": "/post: create post  --msg&reply_to",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"return id, key, timestamp, reply_to\", () => {\r",
+											"  pm.response.to.have.status(200);\r",
+											"  pm.response.to.have.jsonBody(\"id\");\r",
+											"  pm.response.to.have.jsonBody(\"key\");\r",
+											"  pm.response.to.have.jsonBody(\"timestamp\");\r",
+											"  pm.response.to.have.jsonBody(\"reply_to\");\r",
+											"});\r",
+											"\r",
+											"const res = pm.response.json();\r",
+											"const { id = null, key = null, timestamp = null, user_id = null, username = null, reply_to = null, replies = null } = res;\r",
+											"\r",
+											"pm.test(\"'id' is a postive int\", () => {\r",
+											"  pm.expect(Number.isInteger(id)).to.be.true;\r",
+											"  pm.expect(id > 0).to.be.true;\r",
+											"});\r",
+											"pm.test(\"'key' is a non-trival, truthy string\", () => {\r",
+											"  pm.expect(typeof key === 'string').to.be.true;\r",
+											"  pm.expect(!key.trim()).to.be.false;\r",
+											"});\r",
+											"pm.test(\"'timestamp' is ISO format\", () => {\r",
+											"  const isoRegex = /^(?:\\d{4}-[01]\\d-[0-3]\\d[T ][0-2]\\d:[0-5]\\d:[0-5]\\d(\\.\\d{3}|\\.\\d{6})?)(?:[Zz]|([+\\-][0-2]\\d:[0-5]\\d))?$/;\r",
+											"\r",
+											"  pm.expect(isoRegex.test(timestamp)).to.be.true;\r",
+											"});\r",
+											"pm.test(\"'timestamp' has correct date and time\", () => {\r",
+											"  const timeDiff = Math.abs(new Date(timestamp) - new Date());\r",
+											"  pm.expect(timeDiff).to.be.lessThan(3e3);\r",
+											"});\r",
+											"pm.test(\"'reply_to' is a positive int\", () => {\r",
+											"  pm.expect(Number.isInteger(id)).to.be.true;\r",
+											"  pm.expect(id > 0).to.be.true;\r",
+											"})\r",
+											"\r",
+											"const post = { id, key, timestamp, user_id, username, reply_to, replies }\r",
+											"const jsonEncoded = JSON.stringify(post, (k, v) => {\r",
+											"  if (typeof v === \"string\") {\r",
+											"    return encodeURIComponent(v);\r",
+											"  }\r",
+											"  return v;\r",
+											"});\r",
+											"pm.set.environment(\"post0\", jsonEncoded)\r",
+											"\r",
+											"// pm.test('', () => {\r",
+											"//   pm.response.to.have.status(400);\r",
+											"//   pm.response.to.have.jsonBody(\"err\");\r",
+											"// });\r",
+											""
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"msg\": \"{{$randomPhrase}}\",\r\n  \"reply_to\":\"{{$randomHexColor}}\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://127.0.0.1:5000/post",
+									"protocol": "http",
+									"host": [
+										"127",
+										"0",
+										"0",
+										"1"
+									],
+									"port": "5000",
+									"path": [
+										"post"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "/post: create post  --msg",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"return id, key, timestamp\", () => {\r",
+											"  pm.response.to.have.status(200);\r",
+											"  pm.response.to.have.jsonBody(\"id\");\r",
+											"  pm.response.to.have.jsonBody(\"key\");\r",
+											"  pm.response.to.have.jsonBody(\"timestamp\");\r",
+											"});\r",
+											"\r",
+											"const res = pm.response.json();\r",
+											"const { id = null, key = null, timestamp = null, user_id = null, username = null, reply_to = null, replies = null } = res;\r",
+											"\r",
+											"pm.test(\"'id' is a postive int\", () => {\r",
+											"  pm.expect(Number.isInteger(id)).to.be.true;\r",
+											"  pm.expect(id > 0).to.be.true;\r",
+											"});\r",
+											"pm.test(\"'key' is a non-trival, truthy string\", () => {\r",
+											"  pm.expect(typeof key === 'string').to.be.true;\r",
+											"  pm.expect(!key.trim()).to.be.false;\r",
+											"});\r",
+											"pm.test(\"'timestamp' is ISO format\", () => {\r",
+											"  const isoRegex = /^(?:\\d{4}-[01]\\d-[0-3]\\d[T ][0-2]\\d:[0-5]\\d:[0-5]\\d(\\.\\d{3}|\\.\\d{6})?)(?:[Zz]|([+\\-][0-2]\\d:[0-5]\\d))?$/;\r",
+											"\r",
+											"  pm.expect(isoRegex.test(timestamp)).to.be.true;\r",
+											"});\r",
+											"pm.test(\"'timestamp' has correct date and time\", () => {\r",
+											"  const timeDiff = Math.abs(new Date(timestamp) - new Date());\r",
+											"  pm.expect(timeDiff).to.be.lessThan(3e3);\r",
+											"});\r",
+											"\r",
+											"const post = { id, key, timestamp, user_id, username, reply_to, replies }\r",
+											"const jsonEncoded = JSON.stringify(post, (k, v) => {\r",
+											"  if (typeof v === \"string\") {\r",
+											"    return encodeURIComponent(v);\r",
+											"  }\r",
+											"  return v;\r",
+											"});\r",
+											"pm.set.environment(\"post0\", jsonEncoded)\r",
+											"\r",
+											"// pm.test('', () => {\r",
+											"//   pm.response.to.have.status(400);\r",
+											"//   pm.response.to.have.jsonBody(\"err\");\r",
+											"// });\r",
+											""
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"msg\": \"{{$randomPhrase}}\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://127.0.0.1:5000/post",
+									"protocol": "http",
+									"host": [
+										"127",
+										"0",
+										"0",
+										"1"
+									],
+									"port": "5000",
+									"path": [
+										"post"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "------",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": ""
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "/post: create post --no-msg",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test('No \"msg\"', () => {\r",
+											"  pm.response.to.have.status(400);\r",
+											"  pm.response.to.have.jsonBody(\"err\");\r",
+											"});\r",
+											""
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://127.0.0.1:5000/post",
+									"protocol": "http",
+									"host": [
+										"127",
+										"0",
+										"0",
+										"1"
+									],
+									"port": "5000",
+									"path": [
+										"post"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "/post: create post --empty-msg",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test('Empty \"msg\"', () => {\r",
+											"  pm.response.to.have.status(400);\r",
+											"  pm.response.to.have.jsonBody(\"err\");\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"msg\": \"\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://127.0.0.1:5000/post",
+									"protocol": "http",
+									"host": [
+										"127",
+										"0",
+										"0",
+										"1"
+									],
+									"port": "5000",
+									"path": [
+										"post"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "/post: create post  --msg&user_id",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test('missing \"user_key\"', () => {\r",
+											"  pm.response.to.have.status(400);\r",
+											"  pm.response.to.have.jsonBody(\"err\");\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"msg\": \"{{$randomPhrase}}\",\r\n  \"user_id\": \"{{idUserInit}}\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://127.0.0.1:5000/post",
+									"protocol": "http",
+									"host": [
+										"127",
+										"0",
+										"0",
+										"1"
+									],
+									"port": "5000",
+									"path": [
+										"post"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "/post: create post  --msg&user_key",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test('missing \"user_id\"', () => {\r",
+											"  pm.response.to.have.status(400);\r",
+											"  pm.response.to.have.jsonBody(\"err\");\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"msg\": \"{{$randomPhrase}}\",\r\n  \"user_key\": \"{{keyUserInit}}\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://127.0.0.1:5000/post",
+									"protocol": "http",
+									"host": [
+										"127",
+										"0",
+										"0",
+										"1"
+									],
+									"port": "5000",
+									"path": [
+										"post"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "read post",
+					"item": [
+						{
+							"name": "/post/<id>: read post Copy",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"return post_id, timestamp, msg, username\",()=>{\r",
+											"  pm.response.to.have.status(200);\r",
+											"  pm.response.to.have.jsonBody(\"id\");\r",
+											"  pm.response.to.have.jsonBody(\"timestamp\");\r",
+											"  pm.response.to.have.jsonBody(\"msg\");\r",
+											"  pm.response.to.have.jsonBody(\"username\");\r",
+											"})\r",
+											"\r",
+											"// pm.test(`post not found`, () => {\r",
+											"//   pm.response.to.have.status(404);\r",
+											"//   pm.response.to.have.jsonBody(\"err\");\r",
+											"// });\r",
+											"\r",
+											""
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://127.0.0.1:5000/post/{{idPostInit}}",
+									"protocol": "http",
+									"host": [
+										"127",
+										"0",
+										"0",
+										"1"
+									],
+									"port": "5000",
+									"path": [
+										"post",
+										"{{idPostInit}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "/post: time range query #Ext4 Copy",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Empty Res\", () => {\r",
+											"  pm.response.to.have.status(200);\r",
+											"  pm.response.to.have.jsonBody();\r",
+											"  \r",
+											"  const res = pm.response.json();\r",
+											"  pm.expect(res).to.be.an(\"array\");\r",
+											"  pm.expect(res.length).to.equal(0);\r",
+											"});\r",
+											""
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://127.0.0.1:5000/post?start=-1&end=-1",
+									"protocol": "http",
+									"host": [
+										"127",
+										"0",
+										"0",
+										"1"
+									],
+									"port": "5000",
+									"path": [
+										"post"
+									],
+									"query": [
+										{
+											"key": "start",
+											"value": "-1"
+										},
+										{
+											"key": "end",
+											"value": "-1"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "/post: user range query #Ext5 Copy",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Empty Res\", () => {\r",
+											"  pm.response.to.have.status(200);\r",
+											"  pm.response.to.have.jsonBody();\r",
+											"\r",
+											"  const res = pm.response.json();\r",
+											"  pm.expect(res).to.be.an(\"array\");\r",
+											"  pm.expect(res.length).to.equal(0);\r",
+											"});\r",
+											""
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://127.0.0.1:5000/post?user_id={{idUserInit}}&username={{usernameUserInit}}",
+									"protocol": "http",
+									"host": [
+										"127",
+										"0",
+										"0",
+										"1"
+									],
+									"port": "5000",
+									"path": [
+										"post"
+									],
+									"query": [
+										{
+											"key": "user_id",
+											"value": "{{idUserInit}}"
+										},
+										{
+											"key": "username",
+											"value": "{{usernameUserInit}}"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "delete post",
+					"item": [
+						{
+							"name": "/post/<id>/delete/<key>: delete post Copy",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"const idPost = pm.environment.get(\"idPostInit\");\r",
+											"const keyPost = pm.environment.get(\"keyPostInit\");\r",
+											"\r",
+											"pm.test(`${idPost}: post not found`, () => {\r",
+											"  pm.response.to.have.status(404);\r",
+											"  pm.response.to.have.jsonBody(\"err\");\r",
+											"});\r",
+											""
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "http://127.0.0.1:5000/post/{{idPostInit}}/delete/{{keyPostInit}}",
+									"protocol": "http",
+									"host": [
+										"127",
+										"0",
+										"0",
+										"1"
+									],
+									"port": "5000",
+									"path": [
+										"post",
+										"{{idPostInit}}",
+										"delete",
+										"{{keyPostInit}}"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			],
+			"description": "``` javascript\nisoRegex = \n/^(?:\\d{4}-[01]\\d-[0-3]\\d[T ][0-2]\\d:[0-5]\\d:[0-5]\\d(\\.\\d{3}|\\.\\d{6})?)(?:[Zz]|([+\\-][0-2]\\d:[0-5]\\d))?$/;\n\n ```\n\n- \"2023-12-13T07:16:24.123Z\"\n- \"2023-12-13T07:16:24Z\"\n- \"2023-12-13T07:16:24.123456Z\"\n- \"2023-12-13T07:16:24+02:00\"\n- \"2023-12-13T07:16:24-05:00\"\n- \"2023-12-13T07:16:24.123+02:00\"\n- \"2023-12-13T07:16:24.123-05:00\"\n- \"2023-12-13T07:16:24.123456+02:00\"\n- \"2023-12-13T07:16:24.123456-05:00\"",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"// pm.execution.skipRequest();",
+							"",
+							"pm.environment.set(\"idPostInit\", encodeURIComponent(pm.variables.replaceIn(\"{{$randomInt}}\")));",
+							"pm.environment.set(\"keyPostInit\", encodeURIComponent(\"5a788dbc6b8dc4185cab72878b4f2c87\"));",
+							"pm.environment.set(\"tsPostInit\", encodeURIComponent(new Date().toISOString()));",
+							"",
+							"pm.environment.set(\"idUserInit\", encodeURIComponent(+pm.variables.replaceIn(\"{{$randomInt}}\")));",
+							"pm.environment.set(\"keyUserInit\", encodeURIComponent(\"4e1d2268c13d79dbcb9827b74df6a96d\"));",
+							"pm.environment.set(\"usernameUserInit\", encodeURIComponent(pm.variables.replaceIn(\"{{$randomHexColor}}\")));",
+							"pm.environment.set(\"dNameUserInit\", encodeURIComponent(pm.variables.replaceIn(\"{{$randomFullName}}\")));"
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "create users",
+			"item": []
+		},
+		{
+			"name": "failure",
+			"item": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	]
+}
