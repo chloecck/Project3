@@ -1,8 +1,9 @@
-from flask import Flask, request
 from threading import Lock
 
-from data import posts, users
+from flask import Flask, request
+
 from config import config_app
+from data import posts, users
 from helper import extract_from_json
 
 lock = Lock()

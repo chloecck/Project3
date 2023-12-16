@@ -6,7 +6,7 @@
 	},
 	"item": [
 		{
-			"name": "read post 1",
+			"name": "read post 1 failed",
 			"event": [
 				{
 					"listen": "test",
@@ -39,7 +39,7 @@
 						"{{id}}"
 					]
 				},
-				"description": "post hello"
+				"description": "post 1 failed"
 			},
 			"response": []
 		},
@@ -77,12 +77,12 @@
 						"{{id2}}"
 					]
 				},
-				"description": "post hello"
+				"description": "post 1 failed"
 			},
 			"response": []
 		},
 		{
-			"name": "post 1",
+			"name": "create post 1 success",
 			"event": [
 				{
 					"listen": "test",
@@ -135,7 +135,7 @@
 						}
 					]
 				},
-				"description": "post hello"
+				"description": "create post 1 success"
 			},
 			"response": []
 		},
@@ -183,7 +183,7 @@
 						"{{id}}"
 					]
 				},
-				"description": "post hello"
+				"description": "read post 1 success"
 			},
 			"response": []
 		},
@@ -221,12 +221,12 @@
 						"{{id2}}"
 					]
 				},
-				"description": "post hello"
+				"description": "read post 2 failed"
 			},
 			"response": []
 		},
 		{
-			"name": "post 2",
+			"name": "create post 2 success",
 			"event": [
 				{
 					"listen": "test",
@@ -280,7 +280,7 @@
 						}
 					]
 				},
-				"description": "post hello"
+				"description": "create post success"
 			},
 			"response": []
 		},
