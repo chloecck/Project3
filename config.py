@@ -2,11 +2,16 @@ from flask import Flask, Request
 from werkzeug.exceptions import HTTPException
 
 
-def register_errorhandlers(app: Flask, request: Request) -> Flask:
+def _register_before_request(app: Flask, request: Request) -> None:
     @app.before_request
     def log_request_body():
-        app.logger.info(request.get_data(as_text=True))
+        app.logger.info(f"Content-Type: {request.headers.get('Content-Type')}")
+        app.logger.info(f"Body: {request.get_data(as_text=True)}")
 
+
+def _register_errorhandlers(
+    app: Flask,
+) -> None:
     @app.errorhandler(AssertionError)
     def handle_AssertionError(error):
         app.logger.error(error)
@@ -27,17 +32,27 @@ def register_errorhandlers(app: Flask, request: Request) -> Flask:
         app.logger.error(error)
         return {"err": str(error)}, 404
 
-    @app.errorhandler(417)
+    @app.errorhandler(405)
+    def handle_MethodNotAllowed(error):
+        app.logger.error(error)
+        return {"err": str(error)}, 405
+
+    @app.errorhandler(415)
     def handle_UnsupportedMediaType(error):
         app.logger.error(error)
-        return {"err": str(error)}, 417
+        return {"err": str(error)}, 415
 
     @app.errorhandler(HTTPException)
-    def handle_HTTPException(error):
+    def handle_HTTPException(error: HTTPException):
         app.logger.error(error)
-        return {"err": str(error)}, 400
+        return {"err": str(error)}, error.code
 
     @app.errorhandler(Exception)
     def handle_Exception(error):
         app.logger.exception(error)
         return {"err": str(error)}, 500
+
+
+def config_app(app: Flask, request: Request) -> None:
+    _register_before_request(app, request)
+    _register_errorhandlers(app)
