@@ -108,6 +108,8 @@
 											"v.replies(post.replies, true)\r",
 											"\r",
 											"ctx.save();\r",
+											"\r",
+											"console.log(post)\r",
 											""
 										],
 										"type": "text/javascript"
@@ -184,6 +186,9 @@
 											"v.replies(post.replies, true)\r",
 											"\r",
 											"ctx.save();\r",
+											"\r",
+											"console.log(post)\r",
+											"\r",
 											""
 										],
 										"type": "text/javascript"
@@ -262,6 +267,9 @@
 											"v.replies(post.replies, true)\r",
 											"\r",
 											"ctx.save();\r",
+											"\r",
+											"console.log(post)\r",
+											"\r",
 											"\r",
 											""
 										],
@@ -342,6 +350,9 @@
 											"v.replies(post.replies, true)\r",
 											"\r",
 											"ctx.save();\r",
+											"\r",
+											"console.log(post)\r",
+											"\r",
 											""
 										],
 										"type": "text/javascript"
@@ -922,7 +933,7 @@
 							"response": []
 						},
 						{
-							"name": "/post: time range query #Ext4 --today",
+							"name": "/post: time range query #Ext4 --within 24hrs",
 							"event": [
 								{
 									"listen": "test",
@@ -947,8 +958,10 @@
 										"exec": [
 											"ctx.pm(pm)\r",
 											"\r",
-											"req.rangePost({ start: u.tsDiff({ day: 1 }), end: u.tsDiff() })\r",
-											""
+											"const start = u.tsDiff({ day: 1 })\r",
+											"const end = u.tsDiff()\r",
+											"req.rangePost({ start, end })\r",
+											"console.log(start, end)"
 										],
 										"type": "text/javascript"
 									}
