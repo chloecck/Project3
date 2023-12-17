@@ -949,7 +949,7 @@
 				"exec": [
 					"ctx = {",
 					"  restore() {",
-					"    console.clear();",
+					"    // console.clear();",
 					"    console.info(\"ctx restore start...\");",
 					"    for (const [k, v] of Object.entries(this)) {",
 					"      if (typeof v !== \"function\") {",
