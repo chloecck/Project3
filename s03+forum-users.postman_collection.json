@@ -34,7 +34,6 @@
 											"const reqJSON = req.json();\r",
 											"v.users(user, reqJSON, ...Object.keys(reqJSON))\r",
 											"\r",
-											"console.log(ctx.user())\r",
 											"ctx.save();\r",
 											""
 										],

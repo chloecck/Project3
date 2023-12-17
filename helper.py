@@ -70,8 +70,8 @@ def check_username(
     if err:
         return username, err
 
-    if not 3 <= len(username) <= 20:
-        return username, ({"err": f"{what} length should be in range [3,20]"}, 400)
+    if not 3 <= len(username) <= 30:
+        return username, ({"err": f"{what} length should be in range [3,30]"}, 400)
     if not re.fullmatch(r"(?i)[a-z0-9_.$]+", username):
         return username, (
             {
@@ -93,6 +93,9 @@ def check_ts_iso(ts: str, what: str = "timestamp") -> Tuple[datetime, Tuple[Dict
         ts,
     ):
         return ts, ({"err": f"{ts}: {what} is not valid iso format"}, 400)
+
+    if ts.endswith("Z"):
+        ts = ts[:-1]
 
     try:
         ts = datetime.fromisoformat(ts)

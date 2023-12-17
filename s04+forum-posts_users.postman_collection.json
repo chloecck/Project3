@@ -1,8 +1,8 @@
 {
 	"info": {
-		"_postman_id": "38eb615b-14b9-471e-86f7-4e61ea34ec2d",
+		"_postman_id": "7f5633ac-ff9c-479b-9342-cf443e3e5ee4",
 		"name": "s04+forum-posts_users",
-		"description": "``` python\n{\n  post_id:int = id_generator(),\n  post_key:str = token_hex(16),\n  timestamp:str = datetime.utcnow().isoformat(),\n  msg:str,\n  user_id:int = uuid4().int, # Ext1\n  user_key:str = token_hex(16), # Ext1\n  username:str, # Ext2\n  user_bio:str, # Ext2\n  reply_to:post_id, # Ext3\n  replies:List[post_id] #Ext3\n}\n\n ```\n\n``` python\n# Ext1\n{\n  id:int = id_generator()\n  key:str = token_hex(16),\n  timestamp:str = datetime.now().isoformat(),\n  username:str, # Ext2\n  user_bio:str # Ext2\n}\n\n ```",
+		"description": "``` python\n{\n  id:int = id_generator(),\n  key:str = token_hex(16),\n  timestamp:str = datetime.utcnow().isoformat(),\n  msg:str,\n  user_id:int = uuid4().int, # Ext1\n  user_key:str = token_hex(16), # Ext1\n  username:str, # Ext2\n  user_bio:str, # Ext2\n  reply_to:id, # Ext3\n  replies:List[id] #Ext3\n}\n\n ```\n\n``` python\n# Ext1\n{\n  id:int = id_generator()\n  key:str = token_hex(16),\n  timestamp:str = datetime.now().isoformat(),\n  username:str, # Ext2\n  user_bio:str # Ext2\n}\n\n ```",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "31693814"
 	},
@@ -14,20 +14,20 @@
 					"name": "create post",
 					"item": [
 						{
-							"name": "---/user: create user #Ext1 Copy---",
+							"name": "/user: create user #Ext1 Copy",
 							"event": [
 								{
 									"listen": "test",
 									"script": {
 										"exec": [
 											"ctx.pm(pm);\r",
-											"const keys = ['user_id', 'user_key', 'username', 'user_bio']\r",
+											"const keys = ['id', 'key', 'username', 'user_bio']\r",
 											"\r",
 											"v.return(...keys);\r",
 											"\r",
 											"const user = ctx.user();\r",
-											"v.user_id(user.user_id);\r",
-											"v.user_key(user.user_key);\r",
+											"v.id(user.id);\r",
+											"v.key(user.key);\r",
 											"v.username(user.username);\r",
 											"v.user_bio(user.user_bio);\r",
 											"\r",
@@ -44,7 +44,9 @@
 									"listen": "prerequest",
 									"script": {
 										"exec": [
-											""
+											"ctx.pm(pm);\r",
+											"\r",
+											"u.envClr();"
 										],
 										"type": "text/javascript"
 									}
@@ -87,13 +89,13 @@
 									"script": {
 										"exec": [
 											"ctx.pm(pm)\r",
-											"const keys = [\"post_id\", \"post_key\", \"timestamp\", \"msg\"];\r",
+											"const keys = [\"id\", \"key\", \"timestamp\", \"msg\"];\r",
 											"\r",
 											"v.return(...keys)\r",
 											"\r",
 											"const post = ctx.post();\r",
-											"v.post_id(post.post_id)\r",
-											"v.post_key(post.post_key)\r",
+											"v.id(post.id)\r",
+											"v.key(post.key)\r",
 											"v.ts(post.timestamp);\r",
 											"v.msg(post.msg);\r",
 											"v.user_id(post.user_id, true)\r",
@@ -163,13 +165,13 @@
 									"script": {
 										"exec": [
 											"ctx.pm(pm)\r",
-											"const keys = [\"post_id\", \"post_key\", \"msg\", \"timestamp\", \"reply_to\"];\r",
+											"const keys = [\"id\", \"key\", \"msg\", \"timestamp\", \"reply_to\"];\r",
 											"\r",
 											"v.return(...keys)\r",
 											"\r",
 											"const post = ctx.post();\r",
-											"v.post_id(post.post_id)\r",
-											"v.post_key(post.post_key)\r",
+											"v.id(post.id)\r",
+											"v.key(post.key)\r",
 											"v.ts(post.timestamp);\r",
 											"v.msg(post.msg);\r",
 											"v.user_id(post.user_id,true)\r",
@@ -195,7 +197,7 @@
 											"\r",
 											"req.json({\r",
 											"  msg: u.def(\"$randomLoremSentences\"),\r",
-											"  reply_to: ctx.postPrev()?.post_id\r",
+											"  reply_to: ctx.postPrev()?.id\r",
 											"})\r",
 											"\r",
 											""
@@ -241,13 +243,13 @@
 									"script": {
 										"exec": [
 											"ctx.pm(pm)\r",
-											"const keys = [\"post_id\", \"post_key\", \"msg\", \"timestamp\", \"user_id\", \"username\"];\r",
+											"const keys = [\"id\", \"key\", \"msg\", \"timestamp\", \"user_id\", \"username\"];\r",
 											"\r",
 											"v.return(...keys)\r",
 											"\r",
 											"const post = ctx.post();\r",
-											"v.post_id(post.post_id)\r",
-											"v.post_key(post.post_key)\r",
+											"v.id(post.id)\r",
+											"v.key(post.key)\r",
 											"v.ts(post.timestamp);\r",
 											"v.msg(post.msg);\r",
 											"v.user_id(post.user_id)\r",
@@ -274,8 +276,8 @@
 											"\r",
 											"req.json({\r",
 											"  msg: u.def(\"$randomLoremSentences\"),\r",
-											"  user_id: ctx.loadUserFromEnv()?.user_id,\r",
-											"  user_key: ctx.loadUserFromEnv()?.user_key,\r",
+											"  user_id: ctx.userPrev()?.id,\r",
+											"  user_key: ctx.userPrev()?.key,\r",
 											"})\r",
 											""
 										],
@@ -321,13 +323,13 @@
 									"script": {
 										"exec": [
 											"ctx.pm(pm)\r",
-											"const keys = [\"post_id\", \"post_key\", \"msg\", \"timestamp\", \"user_id\", \"username\", \"reply_to\"];\r",
+											"const keys = [\"id\", \"key\", \"msg\", \"timestamp\", \"user_id\", \"username\", \"reply_to\"];\r",
 											"\r",
 											"v.return(...keys)\r",
 											"\r",
 											"const post = ctx.post();\r",
-											"v.post_id(post.post_id)\r",
-											"v.post_key(post.post_key)\r",
+											"v.id(post.id)\r",
+											"v.key(post.key)\r",
 											"v.ts(post.timestamp);\r",
 											"v.msg(post.msg);\r",
 											"v.user_id(post.user_id)\r",
@@ -353,9 +355,9 @@
 											"\r",
 											"req.json({\r",
 											"  msg: u.def(\"$randomLoremSentences\"),\r",
-											"  user_id: ctx.loadUserFromEnv()?.user_id,\r",
-											"  user_key: ctx.loadUserFromEnv()?.user_key,\r",
-											"  reply_to: ctx.postPrev()?.post_id\r",
+											"  user_id: ctx.userPrev()?.id,\r",
+											"  user_key: ctx.userPrev()?.key,\r",
+											"  reply_to: ctx.postPrev()?.id\r",
 											"})\r",
 											"\r",
 											""
@@ -455,7 +457,8 @@
 										"exec": [
 											"ctx.pm(pm);\r",
 											"\r",
-											"v.basicErr(\"no 'msg'\",400)"
+											"v.basicErr(\"no 'msg'\",400)\r",
+											""
 										],
 										"type": "text/javascript"
 									}
@@ -580,7 +583,7 @@
 											"\r",
 											"req.json({\r",
 											"  msg: u.def(\"$randomLoremSentences\"),\r",
-											"  user_id: ctx.loadUserFromEnv()?.user_id,\r",
+											"  user_id: ctx.userPrev()?.id,\r",
 											"})"
 										],
 										"type": "text/javascript"
@@ -638,7 +641,7 @@
 											"\r",
 											"req.json({\r",
 											"  msg: u.def(\"$randomLoremSentences\"),\r",
-											"  user_key: ctx.loadUserFromEnv()?.user_key,\r",
+											"  user_key: ctx.userPrev()?.key,\r",
 											"})\r",
 											""
 										],
@@ -681,21 +684,21 @@
 					"name": "read post",
 					"item": [
 						{
-							"name": "/post/<post_id>: read post",
+							"name": "/post/<id>: read post",
 							"event": [
 								{
 									"listen": "test",
 									"script": {
 										"exec": [
 											"ctx.pm(pm);\r",
-											"const keys = [\"post_id\", \"timestamp\", \"msg\"];\r",
+											"const keys = [\"id\", \"timestamp\", \"msg\"];\r",
 											"\r",
 											"v.return(...keys);\r",
 											"\r",
 											"const post = ctx.post();\r",
-											"v.post_id(post.post_id);\r",
-											"v.post_key(post.post_key, true);\r",
-											"v.ts(post.timestamp);\r",
+											"v.id(post.id);\r",
+											"v.key(post.key, true);\r",
+											"v.ts(post.timestamp,false,{threshold:20e3});\r",
 											"v.msg(post.msg);\r",
 											"if (post.user_id !== null) {\r",
 											"  v.user_id(post.user_id);\r",
@@ -723,7 +726,8 @@
 										"exec": [
 											"ctx.pm(pm)\r",
 											"\r",
-											"req.readPost()"
+											"req.readPost()\r",
+											""
 										],
 										"type": "text/javascript"
 									}
@@ -733,7 +737,7 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "http://127.0.0.1:5000/post/<post_id>",
+									"raw": "http://127.0.0.1:5000/post/<id>",
 									"protocol": "http",
 									"host": [
 										"127",
@@ -744,20 +748,22 @@
 									"port": "5000",
 									"path": [
 										"post",
-										"<post_id>"
+										"<id>"
 									]
 								}
 							},
 							"response": []
 						},
 						{
-							"name": "/post: time range query #Ext4---",
+							"name": "/post/<id>: read post --fake-post_id",
 							"event": [
 								{
 									"listen": "test",
 									"script": {
 										"exec": [
-											"ctx.pm(pm)"
+											"ctx.pm(pm);\r",
+											"\r",
+											"v.basicErr(\"fake post_id\",404)"
 										],
 										"type": "text/javascript"
 									}
@@ -768,9 +774,60 @@
 										"exec": [
 											"ctx.pm(pm)\r",
 											"\r",
-											"req.rangePost({ start: u.tsDiff({ day:1 }), end: new Date().toISOString() })\r",
+											"req.readPost(u.def(\"$randomInt\"))\r",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://127.0.0.1:5000/post/<id>",
+									"protocol": "http",
+									"host": [
+										"127",
+										"0",
+										"0",
+										"1"
+									],
+									"port": "5000",
+									"path": [
+										"post",
+										"<id>"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "/post: time range query #Ext4 --future",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"ctx.pm(pm)\r",
 											"\r",
-											"u.skip()"
+											"pm.test(\"future time range\", () => {\r",
+											"  v.true(Array.isArray(res.json()))\r",
+											"  v.true(res.json().length === 0)\r",
+											"})\r",
+											""
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											"ctx.pm(pm)\r",
+											"\r",
+											"req.rangePost({ start: u.tsDiff({ day: -1 }), end: u.tsDiff({ day: -2 }) })\r",
+											""
 										],
 										"type": "text/javascript"
 									}
@@ -807,13 +864,16 @@
 							"response": []
 						},
 						{
-							"name": "/post: user range query #Ext5---",
+							"name": "/post: time range query #Ext4 --start after end",
 							"event": [
 								{
 									"listen": "test",
 									"script": {
 										"exec": [
-											"ctx.pm(pm)"
+											"ctx.pm(pm)\r",
+											"\r",
+											"v.basicErr(\"start after end\", 400)\r",
+											""
 										],
 										"type": "text/javascript"
 									}
@@ -824,7 +884,251 @@
 										"exec": [
 											"ctx.pm(pm)\r",
 											"\r",
-											"req.rangePost({ user_id: ctx.userPrev()?.user_id, username: ctx.userPrev()?.username })\r",
+											"req.rangePost({ start: u.tsDiff({ day: 1 }), end: u.tsDiff({ day: 2 }) })\r",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://127.0.0.1:5000/post?start=<>&end=<>",
+									"protocol": "http",
+									"host": [
+										"127",
+										"0",
+										"0",
+										"1"
+									],
+									"port": "5000",
+									"path": [
+										"post"
+									],
+									"query": [
+										{
+											"key": "start",
+											"value": "<>"
+										},
+										{
+											"key": "end",
+											"value": "<>"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "/post: time range query #Ext4 --today",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"ctx.pm(pm)\r",
+											"\r",
+											"pm.test(\"today\", () => {\r",
+											"  v.true(Array.isArray(res.json()))\r",
+											"  v.true(res.json().length === 4)\r",
+											"})\r",
+											""
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											"ctx.pm(pm)\r",
+											"\r",
+											"req.rangePost({ start: u.tsDiff({ day: 1 }), end: u.tsDiff() })\r",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://127.0.0.1:5000/post?start=<>&end=<>",
+									"protocol": "http",
+									"host": [
+										"127",
+										"0",
+										"0",
+										"1"
+									],
+									"port": "5000",
+									"path": [
+										"post"
+									],
+									"query": [
+										{
+											"key": "start",
+											"value": "<>"
+										},
+										{
+											"key": "end",
+											"value": "<>"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "/post: user range query #Ext5",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"ctx.pm(pm)\r",
+											"\r",
+											"pm.test(\"post by user1\", () => {\r",
+											"  v.true(Array.isArray(res.json()));\r",
+											"  v.true(res.json().length === 2)\r",
+											"})"
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											"ctx.pm(pm)\r",
+											"\r",
+											"req.rangePost({ user_id: ctx.userPrev()?.id, username: ctx.userPrev()?.username })\r",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://127.0.0.1:5000/post?user_id=<>&username=<>",
+									"protocol": "http",
+									"host": [
+										"127",
+										"0",
+										"0",
+										"1"
+									],
+									"port": "5000",
+									"path": [
+										"post"
+									],
+									"query": [
+										{
+											"key": "user_id",
+											"value": "<>"
+										},
+										{
+											"key": "username",
+											"value": "<>"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "/post: user range query #Ext5 --fake-username",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"ctx.pm(pm)\r",
+											"\r",
+											"pm.test(\"fake user_name\", () => {\r",
+											"  v.true(Array.isArray(res.json()));\r",
+											"  v.true(res.json().length === 0)\r",
+											"})"
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											"ctx.pm(pm)\r",
+											"\r",
+											"\r",
+											"req.rangePost({ user_id: ctx.userPrev()?.id, username: u.def(\"$randomUserName\") })\r",
+											"\r",
+											"u.skip()"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://127.0.0.1:5000/post?user_id=<>&username=<>",
+									"protocol": "http",
+									"host": [
+										"127",
+										"0",
+										"0",
+										"1"
+									],
+									"port": "5000",
+									"path": [
+										"post"
+									],
+									"query": [
+										{
+											"key": "user_id",
+											"value": "<>"
+										},
+										{
+											"key": "username",
+											"value": "<>"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "/post: user range query #Ext5 --fake-user_id",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"ctx.pm(pm)\r",
+											"\r",
+											"pm.test(\"fake user_id\", () => {\r",
+											"  v.true(Array.isArray(res.json()))\r",
+											"  v.true(res.json().length === 0)\r",
+											"})"
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											"ctx.pm(pm)\r",
+											"\r",
+											"\r",
+											"req.rangePost({ user_id: u.def(\"$randomInt\"), username: ctx.userPrev()?.username })\r",
 											"\r",
 											"u.skip()"
 										],
@@ -868,12 +1172,96 @@
 					"name": "delete post",
 					"item": [
 						{
-							"name": "/post/<post_id>/delete/<key>: delete post---",
+							"name": "/post/<id>/delete/<key>: delete post --fake-post_id",
 							"event": [
 								{
 									"listen": "test",
 									"script": {
 										"exec": [
+											"ctx.pm(pm);\r",
+											"\r",
+											"v.basicErr(\"fake post key\", 403)"
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											"ctx.pm(pm);\r",
+											"\r",
+											"req.deletePost(ctx.postPrev().id,u.def(\"$randomInt\"));\r",
+											"\r",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://127.0.0.1:5000/post/<id>/delete/<key>",
+									"protocol": "http",
+									"host": [
+										"127",
+										"0",
+										"0",
+										"1"
+									],
+									"port": "5000",
+									"path": [
+										"post",
+										"<id>",
+										"delete",
+										"<key>"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "/post/<id>/delete/<key>: delete post --read that post",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"ctx.pm(pm);\r",
+											"const keys = [\"id\", \"timestamp\", \"msg\"];\r",
+											"\r",
+											"v.return(...keys);\r",
+											"\r",
+											"const post = ctx.post();\r",
+											"v.id(post.id);\r",
+											"v.key(post.key, true);\r",
+											"v.msg(post.msg);\r",
+											"if (post.user_id !== null) {\r",
+											"  v.user_id(post.user_id);\r",
+											"}\r",
+											"v.user_key(post.user_key, true);\r",
+											"if (post.username !== null) {\r",
+											"  v.username(post.username);\r",
+											"}\r",
+											"if (post.user_bio !== null) {\r",
+											"  v.user_bio(post.user_bio);\r",
+											"}\r",
+											"if (post.reply_to !== null) {\r",
+											"  v.reply_to(post.reply_to);\r",
+											"}\r",
+											"\r",
+											"v.posts(post, ctx.postPrev(), ...keys);\r",
 											""
 										],
 										"type": "text/javascript"
@@ -885,18 +1273,17 @@
 										"exec": [
 											"ctx.pm(pm);\r",
 											"\r",
-											"req.json(null)\r",
-											"req.deletePost()"
+											"req.readPost();"
 										],
 										"type": "text/javascript"
 									}
 								}
 							],
 							"request": {
-								"method": "DELETE",
+								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "http://127.0.0.1:5000/post/<post_id>/delete/<key>",
+									"raw": "http://127.0.0.1:5000/post/<id>",
 									"protocol": "http",
 									"host": [
 										"127",
@@ -907,9 +1294,534 @@
 									"port": "5000",
 									"path": [
 										"post",
-										"<post_id>",
+										"<id>"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "/post/<id>/delete/<key>: delete post --default-post_key",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"ctx.pm(pm);\r",
+											"const keys = [\"id\", \"msg\", \"timestamp\"]\r",
+											"\r",
+											"const post = ctx.post();\r",
+											"\r",
+											"v.id(post.id)\r",
+											"v.msg(post.msg)\r",
+											"v.key(post.key, true)\r",
+											"v.key(post.user_key, true)\r",
+											"if (post.reply_to !== null) { v.reply_to(post.reply_to) }\r",
+											"if (post.replies !== null) { \r",
+											"  v.replies(post.replies) \r",
+											"  }\r",
+											"if (post.user_id !== null) { v.id(post.user_id) }\r",
+											"if (post.username !== null) { v.username(post.username) }\r",
+											"\r",
+											"v.posts(post, ctx.postPrev(), ...keys)\r",
+											""
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											"ctx.pm(pm);\r",
+											"\r",
+											"req.deletePost();\r",
+											"\r",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://127.0.0.1:5000/post/<id>/delete/<key>",
+									"protocol": "http",
+									"host": [
+										"127",
+										"0",
+										"0",
+										"1"
+									],
+									"port": "5000",
+									"path": [
+										"post",
+										"<id>",
 										"delete",
 										"<key>"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "/post/<id>/delete/<key>: delete post --delete again",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"ctx.pm(pm);\r",
+											"\r",
+											"v.basicErr(\"delete again\", 404)"
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											"ctx.pm(pm);\r",
+											"\r",
+											"req.deletePost();"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "http://127.0.0.1:5000/post/<id>/delete/<key>",
+									"protocol": "http",
+									"host": [
+										"127",
+										"0",
+										"0",
+										"1"
+									],
+									"port": "5000",
+									"path": [
+										"post",
+										"<id>",
+										"delete",
+										"<key>"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "/post/<id>/delete/<key>: delete post --read deleted",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"ctx.pm(pm);\r",
+											"\r",
+											"v.basicErr(\"read again\", 404)"
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											"ctx.pm(pm);\r",
+											"\r",
+											"req.readPost();"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://127.0.0.1:5000/post/<id>",
+									"protocol": "http",
+									"host": [
+										"127",
+										"0",
+										"0",
+										"1"
+									],
+									"port": "5000",
+									"path": [
+										"post",
+										"<id>"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "/post: create post  --msg&user_id&user_key Copy",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"ctx.pm(pm)\r",
+											"const keys = [\"id\", \"key\", \"msg\", \"timestamp\", \"user_id\", \"username\"];\r",
+											"\r",
+											"v.return(...keys)\r",
+											"\r",
+											"const post = ctx.post();\r",
+											"v.id(post.id)\r",
+											"v.key(post.key)\r",
+											"v.ts(post.timestamp);\r",
+											"v.msg(post.msg);\r",
+											"v.user_id(post.user_id)\r",
+											"v.user_key(post.user_key);\r",
+											"v.username(post.username);\r",
+											"if (post.user_bio !== null) {\r",
+											"  v.user_bio(post.user_bio)\r",
+											"}\r",
+											"v.reply_to(post.reply_to, true)\r",
+											"v.replies(post.replies, true)\r",
+											"\r",
+											"ctx.save();\r",
+											"\r",
+											""
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											"ctx.pm(pm);\r",
+											"\r",
+											"req.json({\r",
+											"  msg: u.def(\"$randomLoremSentences\"),\r",
+											"  user_id: ctx.userPrev()?.id,\r",
+											"  user_key: ctx.userPrev()?.key,\r",
+											"})\r",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://127.0.0.1:5000/post",
+									"protocol": "http",
+									"host": [
+										"127",
+										"0",
+										"0",
+										"1"
+									],
+									"port": "5000",
+									"path": [
+										"post"
+									]
+								},
+								"description": "``` javascript\nisoRegex = \n/^(?:\\d{4}-[01]\\d-[0-3]\\d[T ][0-2]\\d:[0-5]\\d:[0-5]\\d(\\.\\d{3}|\\.\\d{6})?)(?:[Zz]|([+\\-][0-2]\\d:[0-5]\\d))?$/;\n\n ```"
+							},
+							"response": []
+						},
+						{
+							"name": "/post/<id>/delete/<key>: delete post --fake-user_key",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"ctx.pm(pm);\r",
+											"\r",
+											"v.basicErr(\"fake user key\", 403)"
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											"ctx.pm(pm);\r",
+											"\r",
+											"req.json({\r",
+											"  is_user_key: true\r",
+											"})\r",
+											"req.deletePost();\r",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://127.0.0.1:5000/post/<id>",
+									"protocol": "http",
+									"host": [
+										"127",
+										"0",
+										"0",
+										"1"
+									],
+									"port": "5000",
+									"path": [
+										"post",
+										"<id>"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "/post/<id>/delete/<key>: delete post --read that post",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"ctx.pm(pm);\r",
+											"const keys = [\"id\", \"timestamp\", \"msg\"];\r",
+											"\r",
+											"v.return(...keys);\r",
+											"\r",
+											"const post = ctx.post();\r",
+											"v.id(post.id);\r",
+											"v.key(post.key, true);\r",
+											"v.msg(post.msg);\r",
+											"if (post.user_id !== null) {\r",
+											"  v.user_id(post.user_id);\r",
+											"}\r",
+											"v.user_key(post.user_key, true);\r",
+											"if (post.username !== null) {\r",
+											"  v.username(post.username);\r",
+											"}\r",
+											"if (post.user_bio !== null) {\r",
+											"  v.user_bio(post.user_bio);\r",
+											"}\r",
+											"if (post.reply_to !== null) {\r",
+											"  v.reply_to(post.reply_to);\r",
+											"}\r",
+											"\r",
+											"v.posts(post, ctx.postPrev(), ...keys);\r",
+											""
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											"ctx.pm(pm);\r",
+											"\r",
+											"req.readPost();"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://127.0.0.1:5000/post/<id>",
+									"protocol": "http",
+									"host": [
+										"127",
+										"0",
+										"0",
+										"1"
+									],
+									"port": "5000",
+									"path": [
+										"post",
+										"<id>"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "/post/<id>/delete/<key>: delete post --user-key",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"ctx.pm(pm);\r",
+											"const keys = [\"id\", \"msg\", \"timestamp\"]\r",
+											"\r",
+											"const post = ctx.post();\r",
+											"\r",
+											"v.id(post.id)\r",
+											"v.msg(post.msg)\r",
+											"v.key(post.key, true)\r",
+											"v.key(post.user_key, true)\r",
+											"if (post.reply_to !== null) { v.reply_to(post.reply_to) }\r",
+											"if (post.replies !== null) { \r",
+											"  v.replies(post.replies) \r",
+											"  }\r",
+											"if (post.user_id !== null) { v.id(post.user_id) }\r",
+											"if (post.username !== null) { v.username(post.username) }\r",
+											"\r",
+											"v.posts(post, ctx.postPrev(), ...keys)\r",
+											""
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											"ctx.pm(pm);\r",
+											"\r",
+											"req.json({\r",
+											"  is_user_key: true\r",
+											"})\r",
+											"req.deletePost(ctx.postPrev().id,ctx.userPrev().key);\r",
+											"\r",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://127.0.0.1:5000/post/<id>",
+									"protocol": "http",
+									"host": [
+										"127",
+										"0",
+										"0",
+										"1"
+									],
+									"port": "5000",
+									"path": [
+										"post",
+										"<id>"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "/post/<id>/delete/<key>: delete post --read deleted Copy",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"ctx.pm(pm);\r",
+											"\r",
+											"v.basicErr(\"read again\", 404)"
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											"ctx.pm(pm);\r",
+											"\r",
+											"req.readPost();"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://127.0.0.1:5000/post/<id>",
+									"protocol": "http",
+									"host": [
+										"127",
+										"0",
+										"0",
+										"1"
+									],
+									"port": "5000",
+									"path": [
+										"post",
+										"<id>"
 									]
 								}
 							},
@@ -950,43 +1862,47 @@
 					"ctx = {",
 					"  restore() {",
 					"    // console.clear();",
-					"    console.info(\"ctx restore start...\");",
+					"    // console.info(\"ctx restore start...\");",
 					"    for (const [k, v] of Object.entries(this)) {",
 					"      if (typeof v !== \"function\") {",
 					"        const toRestore = u.colVar(k);",
 					"        if (toRestore !== undefined) {",
 					"          try {",
 					"            this[k] = JSON.parse(toRestore);",
-					"            console.info(`${k}: ${toRestore} restored JSON`);",
+					"            // console.info(`${k}: ${toRestore} restored JSON`);",
 					"          } catch (e) {",
 					"            this[k] = toRestore;",
-					"            console.info(`${k}: ${toRestore} restored`);",
+					"            // console.info(`${k}: ${toRestore} restored`);",
 					"          }",
 					"        }",
 					"      }",
 					"    }",
-					"    console.info(\"ctx restore end---\");",
+					"    // console.info(\"ctx restore end---\");",
 					"  },",
 					"  save() {",
-					"    this.userPrev(this.user());",
-					"    this.user(null);",
-					"    this.postPrev(this.post());",
-					"    this.post(null);",
-					"    console.info(\"ctx save start...\");",
+					"    if (this.user() !== null) {",
+					"      this.userPrev(this.user());",
+					"      this.user(null);",
+					"    }",
+					"    if (this.post() !== null) {",
+					"      this.postPrev(this.post());",
+					"      this.post(null);",
+					"    }",
+					"    // console.info(\"ctx save start...\");",
 					"    for (const [k, v] of Object.entries(this)) {",
 					"      if (typeof v !== \"function\") {",
 					"        if (k.includes(\"pm\")) {",
-					"          console.info(\"_pm skipped\");",
+					"          // console.info(\"_pm skipped\");",
 					"        } else if (typeof v === \"object\") {",
 					"          u.colVar(k, JSON.stringify(v));",
-					"          console.info(`${k}: ${JSON.stringify(v, null, 2)} saved`);",
+					"          // console.info(`${k}: ${JSON.stringify(v, null, 2)} saved`);",
 					"        } else {",
 					"          u.colVar(k, v);",
-					"          console.info(`${k}:${v} saved`);",
+					"          // console.info(`${k}:${v} saved`);",
 					"        }",
 					"      }",
 					"    }",
-					"    console.info(\"ctx save end---\");",
+					"    // console.info(\"ctx save end---\");",
 					"  },",
 					"  updateUser(...keys) {",
 					"    this.user(u.update(this.userPrev(), this.user(), ...keys));",
@@ -1139,14 +2055,14 @@
 					"",
 					"sch = schema = {",
 					"  _userSchema: {",
-					"    user_id: ctx.pm().variables.replaceIn(\"{{$randomInt}}\"),",
-					"    user_key: ctx.pm().variables.replaceIn(\"{{$randomPassword}}\"),",
+					"    id: ctx.pm().variables.replaceIn(\"{{$randomInt}}\"),",
+					"    key: ctx.pm().variables.replaceIn(\"{{$randomPassword}}\"),",
 					"    username: ctx.pm().variables.replaceIn(\"{{$randomUserName}}\"),",
 					"    user_bio: ctx.pm().variables.replaceIn(\"{{$randomPhrase}}\"),",
 					"  },",
 					"  _postSchema: {",
-					"    post_id: ctx.pm().variables.replaceIn(\"{{$randomInt}}\"),",
-					"    post_key: ctx.pm().variables.replaceIn(\"{{$randomPassword}}\"),",
+					"    id: ctx.pm().variables.replaceIn(\"{{$randomInt}}\"),",
+					"    key: ctx.pm().variables.replaceIn(\"{{$randomPassword}}\"),",
 					"    timestamp: ctx.pm().variables.replaceIn(\"{{$isoTimestamp}}\"),",
 					"    msg: ctx.pm().variables.replaceIn(\"{{$randomLoremSentences}}\"),",
 					"    user_id: ctx.pm().variables.replaceIn(\"{{$randomInt}}\"),",
@@ -1176,8 +2092,8 @@
 					"  },",
 					"  randomPost() {",
 					"    return {",
-					"      post_id: ctx.pm().variables.replaceIn(\"{{$randomInt}}\"),",
-					"      post_key: ctx.pm().variables.replaceIn(\"{{$randomPassword}}\"),",
+					"      id: ctx.pm().variables.replaceIn(\"{{$randomInt}}\"),",
+					"      key: ctx.pm().variables.replaceIn(\"{{$randomPassword}}\"),",
 					"      timestamp: ctx.pm().variables.replaceIn(\"{{$isoTimestamp}}\"),",
 					"      msg: ctx.pm().variables.replaceIn(\"{{$randomLoremSentences}}\"),",
 					"      user_id: ctx.pm().variables.replaceIn(\"{{$randomInt}}\"),",
@@ -1252,7 +2168,12 @@
 					"      }",
 					"      config[p] = res;",
 					"    }",
+					"    console.log(pm.request.url)",
+					"    console.log(\"pm.request.url\")",
 					"    pm.request.url.update(config);",
+					"  },",
+					"  query(){",
+					"    return this.url().query",
 					"  },",
 					"  json(body) {",
 					"    const pm = ctx.pm();",
@@ -1307,27 +2228,25 @@
 					"      path: [\"user\", user_id, \"edit\", user_key],",
 					"    });",
 					"  },",
-					"  readPost(post_id) {",
+					"  readPost(id) {",
 					"    const post = ctx.postPrev();",
-					"    console.log(post);",
-					"    console.log(\"post\");",
-					"    if (post_id === undefined) post_id = post?.post_id;",
+					"    if (id === undefined) id = post?.id;",
 					"    this.url({",
 					"      protocol: this.protocol(),",
 					"      host: this.host(),",
 					"      port: this.port(),",
-					"      path: [\"post\", post_id],",
+					"      path: [\"post\", id],",
 					"    });",
 					"  },",
-					"  deletePost(post_id, key) {",
+					"  deletePost(id, key) {",
 					"    const post = ctx.postPrev();",
-					"    if (post_id === undefined) post_id = post?.post_id;",
-					"    if (key === undefined) key = post?.post_key;",
+					"    if (id === undefined) id = post?.id;",
+					"    if (key === undefined) key = post?.key;",
 					"    this.url({",
 					"      protocol: this.protocol(),",
 					"      host: this.host(),",
 					"      port: this.port(),",
-					"      path: [\"post\", post_id, \"delete\", key],",
+					"      path: [\"post\", id, \"delete\", key],",
 					"    });",
 					"  },",
 					"  rangePost({ start, end, user_id, username } = {}) {",
@@ -1382,6 +2301,12 @@
 					"      pm.globals.set(k, v);",
 					"    }",
 					"    return pm.globals.get(k);",
+					"  },",
+					"  envClr() {",
+					"    ctx.pm().environment.clear();",
+					"  },",
+					"  colClr() {",
+					"    ctx.pm().collectionVariables.clear();",
 					"  },",
 					"  spreadToEnv(o, rootName = \"root\", { encode = false, decode = false } = {}) {",
 					"    for (const [k, v] of Object.entries(o)) {",
@@ -1617,7 +2542,7 @@
 					"      pm.expect(!user_bio.trim()).to.be.false;",
 					"    });",
 					"  },",
-					"  ts(timestamp, negate = false) {",
+					"  ts(timestamp, negate = false, { threshold = 3e3 } = {}) {",
 					"    const pm = ctx.pm();",
 					"    if (negate === true) {",
 					"      return this.negate(timestamp, \"timestamp\");",
@@ -1630,7 +2555,7 @@
 					"    });",
 					"    pm.test(\"'timestamp' has correct date and time\", () => {",
 					"      const timeDiff = Math.abs(new Date(timestamp) - new Date());",
-					"      pm.expect(timeDiff).to.be.lessThan(3e3);",
+					"      pm.expect(timeDiff).to.be.lessThan(threshold);",
 					"    });",
 					"  },",
 					"  users(cur, prev, ...keys) {",
@@ -1645,24 +2570,24 @@
 					"      }",
 					"    });",
 					"  },",
-					"  post_id(post_id, negate = false) {",
+					"  id(id, negate = false) {",
 					"    const pm = ctx.pm();",
 					"    if (negate === true) {",
-					"      return this.negate(post_id, \"post_id\");",
+					"      return this.negate(id, \"id\");",
 					"    }",
-					"    pm.test(\"'post_id' should be a postive int\", () => {",
-					"      pm.expect(Number.isInteger(post_id)).to.be.true;",
-					"      pm.expect(post_id > 0).to.be.true;",
+					"    pm.test(\"'id' should be a postive int\", () => {",
+					"      pm.expect(Number.isInteger(id)).to.be.true;",
+					"      pm.expect(id > 0).to.be.true;",
 					"    });",
 					"  },",
-					"  post_key(post_key, negate = false) {",
+					"  key(key, negate = false) {",
 					"    const pm = ctx.pm();",
 					"    if (negate === true) {",
-					"      return this.negate(post_key, \"post_key\");",
+					"      return this.negate(key, \"key\");",
 					"    }",
-					"    pm.test(\"'post_key' should be a non-empty string\", () => {",
-					"      pm.expect(typeof post_key === \"string\").to.be.true;",
-					"      pm.expect(!post_key.trim()).to.be.false;",
+					"    pm.test(\"'key' should be a non-empty string\", () => {",
+					"      pm.expect(typeof key === \"string\").to.be.true;",
+					"      pm.expect(!key.trim()).to.be.false;",
 					"    });",
 					"  },",
 					"  msg(msg, negate = false) {",
@@ -1755,15 +2680,7 @@
 			"value": ""
 		},
 		{
-			"key": "_userVarName",
-			"value": ""
-		},
-		{
 			"key": "_user",
-			"value": ""
-		},
-		{
-			"key": "_userNo",
 			"value": ""
 		},
 		{
@@ -1771,7 +2688,15 @@
 			"value": ""
 		},
 		{
-			"key": "_postVarName",
+			"key": "_userNo",
+			"value": ""
+		},
+		{
+			"key": "_userVarName",
+			"value": ""
+		},
+		{
+			"key": "_userRepo",
 			"value": ""
 		},
 		{
@@ -1779,15 +2704,15 @@
 			"value": ""
 		},
 		{
-			"key": "_postNo",
-			"value": ""
-		},
-		{
 			"key": "_postPrev",
 			"value": ""
 		},
 		{
-			"key": "_userRepo",
+			"key": "_postNo",
+			"value": ""
+		},
+		{
+			"key": "_postVarName",
 			"value": ""
 		},
 		{

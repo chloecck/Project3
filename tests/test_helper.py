@@ -153,7 +153,7 @@ class TestCheckUsername(unittest.TestCase):
 
     def test_long_username(self):
         """Test with a long username."""
-        long_username = "a" * 21  # 21 characters
+        long_username = "a" * 31  # 21 characters
         _, err = check_username(long_username)
         self.assertIsNotNone(err, "Expected an error for a long username")
 

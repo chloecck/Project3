@@ -2,17 +2,9 @@ from datetime import datetime
 from typing import Dict, List, Tuple
 
 from data import users
-from helper import (
-    check_id,
-    check_str,
-    check_ts_iso,
-    check_username,
-    generate_secret_key,
-    id_generator,
-    purge_key_info,
-    ts_iso,
-    dicts_intersection,
-)
+from helper import (check_id, check_str, check_ts_iso, check_username,
+                    dicts_intersection, generate_secret_key, id_generator,
+                    purge_key_info, ts_iso)
 
 """
 {
@@ -158,7 +150,7 @@ def get_posts_by_time_range(
             return [], ({"err": f"start {start} after end {end}"}, 400)
 
     res = []
-    for post in _posts:
+    for post in _posts.values():
         ts = datetime.fromisoformat(post.get("timestamp"))
         if ((start is None or ts >= start)) and (end is None or ts <= end):
             if safe is True:
@@ -187,12 +179,12 @@ def get_posts_by_user(
             return [], err
 
     if username is not None:
-        username, err = check_username(username, "end timestamp")
+        username, err = check_username(username, "username")
         if err:
             return [], err
 
     res = []
-    for post in _posts:
+    for post in _posts.values():
         if ((user_id is None or user_id == post.get("user_id"))) and (
             username is None or username == post.get("username")
         ):
@@ -231,8 +223,11 @@ def get_posts_by_queries(
         if err:
             return [], err
 
-    post, err = dicts_intersection(posts_by_time, posts_by_user)
-    if err:
-        return [], err
+    if (start or end) and (user_id or username):
+        post, err = dicts_intersection(posts_by_time, posts_by_user)
+        if err:
+            return [], err
+    else:
+        post = posts_by_time + posts_by_user
 
     return post, None

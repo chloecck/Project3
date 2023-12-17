@@ -3,7 +3,6 @@ from threading import Lock
 from flask import Flask, request
 from werkzeug.exceptions import UnsupportedMediaType
 
-
 from config import config_app
 from data import posts, users
 from helper import extract_from_json
@@ -137,7 +136,7 @@ def read_posts_queries():
     username = request.args.get("username", type=str)
 
     assert (
-        start is not None or end is not None or user_id is not None or username is None
+        start is not None or end is not None or user_id is not None or username is not None
     ), "'start', 'end', 'user_id' or 'username' is required for query"
 
     with lock:
@@ -148,10 +147,9 @@ def read_posts_queries():
             return err
 
         res = posts_queried.copy()
-        for post in posts_queried:
-            post.update({"id": post.get("post_id"), "key": post.get("post_key")})
+        for post in res:
+            post.update({"id": post.get("post_id")})
             post.pop("post_id")
-            post.pop("post_key")
         return res
 
 

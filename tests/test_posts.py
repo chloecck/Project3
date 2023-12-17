@@ -15,7 +15,7 @@ from data.posts import (
 )
 
 MODULE_PATH = "data.posts"
-_posts = []
+_posts = {}
 
 
 class TestCreatePost(unittest.TestCase):
@@ -230,25 +230,28 @@ class TestGetPostsByTimeRange(unittest.TestCase):
 
         # Populate _posts with controlled data
         global _posts
-        _posts = [
-            cls.create_mock_post(time_delta=timedelta(days=-2)),  # 2 days ago
-            cls.create_mock_post(time_delta=timedelta(days=-1)),  # 1 day ago
-            cls.create_mock_post(time_delta=timedelta(hours=-1)),  # 1 hour ago
-            cls.create_mock_post(
+        _posts = {
+            **cls.create_mock_post(time_delta=timedelta(days=-2)),  # 2 days ago
+            **cls.create_mock_post(time_delta=timedelta(days=-1)),  # 1 day ago
+            **cls.create_mock_post(time_delta=timedelta(hours=-1)),  # 1 hour ago
+            **cls.create_mock_post(
                 time_delta=timedelta(minutes=30)
             ),  # 30 minutes from now
-        ]
+        }
 
     @classmethod
     def create_mock_post(cls, time_delta):
         """Creates a mock post with a timestamp offset by time_delta."""
         post_time = cls.base_time + time_delta
+        post_id = cls.fake.random_number(digits=5)
         return {
-            "post_id": cls.fake.random_number(digits=5),
-            "timestamp": post_time.isoformat(),
-            "user_id": cls.fake.random_number(digits=5),
-            "username": cls.fake.user_name(),
-            # ... other fields ...
+            post_id: {
+                "post_id": post_id,
+                "timestamp": post_time.isoformat(),
+                "user_id": cls.fake.random_number(digits=5),
+                "username": cls.fake.user_name(),
+                # ... other fields ...
+            }
         }
 
     def test_posts_within_past_day(self):
@@ -317,24 +320,27 @@ class TestGetPostsByUser(unittest.TestCase):
         cls.base_time = datetime.utcnow()
 
         global _posts
-        _posts = [
-            cls.create_mock_post(user_id=1, username="user1"),
-            cls.create_mock_post(user_id=2, username="user2"),
-            cls.create_mock_post(user_id=1, username="user1"),
-            cls.create_mock_post(user_id=3, username="user3"),
-        ]
+        _posts = {
+            **cls.create_mock_post(user_id=1, username="user1"),
+            **cls.create_mock_post(user_id=2, username="user2"),
+            **cls.create_mock_post(user_id=1, username="user1"),
+            **cls.create_mock_post(user_id=3, username="user3"),
+        }
 
     @classmethod
     def create_mock_post(cls, user_id, username):
         post_time = cls.base_time + timedelta(
             minutes=cls.fake.random_int(min=1, max=60)
         )
+        post_id = cls.fake.random_number(digits=5)
         return {
-            "post_id": cls.fake.random_number(digits=5),
-            "timestamp": post_time.isoformat(),
-            "user_id": user_id,
-            "username": username,
-            # ... other fields ...
+            post_id: {
+                "post_id": post_id,
+                "timestamp": post_time.isoformat(),
+                "user_id": user_id,
+                "username": username,
+                # ... other fields ...
+            }
         }
 
     def test_posts_by_specific_user_id(self):
@@ -406,30 +412,33 @@ class TestGetPostsByQueries(unittest.TestCase):
         cls.base_time = datetime.utcnow()
 
         global _posts
-        _posts = [
-            cls.create_mock_post(
+        _posts = {
+            **cls.create_mock_post(
                 time_delta=timedelta(days=-2), user_id=1, username="user1"
             ),
-            cls.create_mock_post(
+            **cls.create_mock_post(
                 time_delta=timedelta(days=-1), user_id=2, username="user2"
             ),
-            cls.create_mock_post(
+            **cls.create_mock_post(
                 time_delta=timedelta(hours=-1), user_id=1, username="user1"
             ),
-            cls.create_mock_post(
+            **cls.create_mock_post(
                 time_delta=timedelta(minutes=30), user_id=3, username="user3"
             ),
-        ]
+        }
 
     @classmethod
     def create_mock_post(cls, time_delta, user_id, username):
         post_time = cls.base_time + time_delta
+        post_id = cls.fake.random_number(digits=5)
         return {
-            "post_id": cls.fake.random_number(digits=5),
-            "timestamp": post_time.isoformat(),
-            "user_id": user_id,
-            "username": username,
-            # ... other fields ...
+            post_id: {
+                "post_id": post_id,
+                "timestamp": post_time.isoformat(),
+                "user_id": user_id,
+                "username": username,
+                # ... other fields ...
+            }
         }
 
     def test_queries_by_time_and_user(self):
