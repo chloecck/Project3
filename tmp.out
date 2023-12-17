@@ -1,0 +1,2488 @@
+ * Debug mode: off
+newman
+
+s01+forum-multiple_posts
+
+→ read post 1
+  GET http://127.0.0.1:5000/post/1 [404 NOT FOUND, 200B, 26ms]
+  ✓  Post 1 not found
+
+→ read post 2
+  GET http://127.0.0.1:5000/post/2 [404 NOT FOUND, 200B, 4ms]
+  ✓  Post 2 not found
+
+→ post 1
+  POST http://127.0.0.1:5000/post [200 OK, 284B, 4ms]
+  ✓  Status code is 200
+
+→ read post 1 valid
+  GET http://127.0.0.1:5000/post/1 [200 OK, 242B, 3ms]
+  ✓  Status code is 200
+  ✓  post 1 contents correct
+
+→ read post 2 invalid
+  GET http://127.0.0.1:5000/post/2 [404 NOT FOUND, 200B, 4ms]
+  ✓  Post 2 not found
+
+→ post 2
+  POST http://127.0.0.1:5000/post [200 OK, 286B, 3ms]
+  ✓  Status code is 200
+
+→ read post 2 valid
+  GET http://127.0.0.1:5000/post/2 [200 OK, 244B, 3ms]
+  ✓  Status code is 200
+  ✓  post 2 contents correct
+
+→ read post 1 still valid
+  GET http://127.0.0.1:5000/post/1 [200 OK, 242B, 3ms]
+  ✓  Status code is 200
+  ✓  post 1 contents correct
+  ✓  timestamps in correct order
+
+[90m┌─────────────────────────[39m[90m┬─────────────────[39m[90m┬─────────────────┐[39m
+[90m│[39m                         [90m│[39m        executed [90m│[39m          failed [90m│[39m
+[90m├─────────────────────────[39m[90m┼─────────────────[39m[90m┼─────────────────┤[39m
+[90m│[39m              iterations [90m│[39m               1 [90m│[39m               0 [90m│[39m
+[90m├─────────────────────────[39m[90m┼─────────────────[39m[90m┼─────────────────┤[39m
+[90m│[39m                requests [90m│[39m               8 [90m│[39m               0 [90m│[39m
+[90m├─────────────────────────[39m[90m┼─────────────────[39m[90m┼─────────────────┤[39m
+[90m│[39m            test-scripts [90m│[39m               8 [90m│[39m               0 [90m│[39m
+[90m├─────────────────────────[39m[90m┼─────────────────[39m[90m┼─────────────────┤[39m
+[90m│[39m      prerequest-scripts [90m│[39m               0 [90m│[39m               0 [90m│[39m
+[90m├─────────────────────────[39m[90m┼─────────────────[39m[90m┼─────────────────┤[39m
+[90m│[39m              assertions [90m│[39m              12 [90m│[39m               0 [90m│[39m
+[90m├─────────────────────────┴─────────────────┴─────────────────┤[39m
+[90m│[39m total run duration: 153ms                                   [90m│[39m
+[90m├─────────────────────────────────────────────────────────────┤[39m
+[90m│[39m total data received: 555B (approx)                          [90m│[39m
+[90m├─────────────────────────────────────────────────────────────┤[39m
+[90m│[39m average response time: 6ms [min: 3ms, max: 26ms, s.d.: 7ms] [90m│[39m
+[90m└─────────────────────────────────────────────────────────────┘[39m
+newman
+
+s02+forum-post_read_delete
+
+→ post hello
+  POST http://127.0.0.1:5000/post [200 OK, 284B, 25ms]
+  ✓  Status code is 200
+
+→ read post
+  GET http://127.0.0.1:5000/post/3 [200 OK, 242B, 3ms]
+  ✓  Status code is 200
+
+→ delete post invalid
+  DELETE http://127.0.0.1:5000/post/3/delete/not-a-valid-key [403 FORBIDDEN, 229B, 3ms]
+  ✓  Status code is 403
+
+→ delete post
+  DELETE http://127.0.0.1:5000/post/3/delete/9e86ae2eb50a3bcb145efe890e310d6f [200 OK, 242B, 3ms]
+  ✓  Status code is 200
+
+→ read post again
+  GET http://127.0.0.1:5000/post/3 [404 NOT FOUND, 200B, 3ms]
+  ✓  Status code is 404
+
+[90m┌─────────────────────────[39m[90m┬─────────────────[39m[90m┬─────────────────┐[39m
+[90m│[39m                         [90m│[39m        executed [90m│[39m          failed [90m│[39m
+[90m├─────────────────────────[39m[90m┼─────────────────[39m[90m┼─────────────────┤[39m
+[90m│[39m              iterations [90m│[39m               1 [90m│[39m               0 [90m│[39m
+[90m├─────────────────────────[39m[90m┼─────────────────[39m[90m┼─────────────────┤[39m
+[90m│[39m                requests [90m│[39m               5 [90m│[39m               0 [90m│[39m
+[90m├─────────────────────────[39m[90m┼─────────────────[39m[90m┼─────────────────┤[39m
+[90m│[39m            test-scripts [90m│[39m               5 [90m│[39m               0 [90m│[39m
+[90m├─────────────────────────[39m[90m┼─────────────────[39m[90m┼─────────────────┤[39m
+[90m│[39m      prerequest-scripts [90m│[39m               0 [90m│[39m               0 [90m│[39m
+[90m├─────────────────────────[39m[90m┼─────────────────[39m[90m┼─────────────────┤[39m
+[90m│[39m              assertions [90m│[39m               5 [90m│[39m               0 [90m│[39m
+[90m├─────────────────────────┴─────────────────┴─────────────────┤[39m
+[90m│[39m total run duration: 103ms                                   [90m│[39m
+[90m├─────────────────────────────────────────────────────────────┤[39m
+[90m│[39m total data received: 357B (approx)                          [90m│[39m
+[90m├─────────────────────────────────────────────────────────────┤[39m
+[90m│[39m average response time: 7ms [min: 3ms, max: 25ms, s.d.: 8ms] [90m│[39m
+[90m└─────────────────────────────────────────────────────────────┘[39m
+newman
+
+s03+forum-users
+
+❏ ---templates--- / create user
+↳ /user: create user #Ext1
+  ┌
+  │ 
+  │ 'ctx restore start...'
+  │ '_encodeJSON:  restored'
+  │ '_decodeJSON:  restored'
+  │ '_user:  restored'
+  │ '_userPrev:  restored'
+  │ '_userNo:  restored'
+  │ '_userVarName:  restored'
+  │ '_userRepo:  restored'
+  │ '_post:  restored'
+  │ '_postPrev:  restored'
+  │ '_postNo:  restored'
+  │ '_postVarName:  restored'
+  │ '_postRepo:  restored'
+  │ 'ctx restore end---'
+  └
+  POST http://127.0.0.1:5000/user [200 OK, 384B, 26ms]
+  ┌
+  │ {
+  │   id: 1,
+  │   key: '4c608ef7493006641e0541ed76a19be0',
+  │   timestamp: '2023-12-17T02:54:21.095194',
+  │   user_bio: "synthesizing the bus won't do anything, w
+  │ e need to index the online AI transmitter!",
+  │   username: 'Camren_Cummerata'
+  │ }
+  │ 'r'
+  └
+  ✓  return 'id', 'key', 'username', 'user_bio'
+  ✓  'id' should be a postive int
+  ✓  'key' should be a non-empty string
+  ✓  'username' should be a non-empty string
+  ✓  'user_bio' should be a non-empty string
+  ✓  return correct 'username', 'user_bio'
+  ┌
+  │ {
+  │   id: 1,
+  │   key: '4c608ef7493006641e0541ed76a19be0',
+  │   username: 'Camren_Cummerata',
+  │   user_bio: "synthesizing the bus won't do anything, w
+  │ e need to index the online AI transmitter!"
+  │ }
+  │ 'ctx save start...'
+  │ '_pm skipped'
+  │ '_encodeJSON: saved'
+  │ '_decodeJSON: saved'
+  │ '_user: null saved'
+  │ '_userPrev: {\n' +
+  │   '  "id": 1,\n' +
+  │   '  "key": "4c608ef7493006641e0541ed76a19be0",\n' +
+  │   '  "username": "Camren_Cummerata",\n' +
+  │   `  "user_bio": "synthesizing the bus won't do anythi
+  │ ng, we need to index the online AI transmitter!"\n` +
+  │   '} saved'
+  │ '_userNo: saved'
+  │ '_userVarName: saved'
+  │ '_userRepo: saved'
+  │ '_post: null saved'
+  │ '_postPrev: saved'
+  │ '_postNo: saved'
+  │ '_postVarName: saved'
+  │ '_postRepo: saved'
+  │ 'ctx save end---'
+  └
+
+↳ /user: create user #Ext1 --no-user_bio
+  ┌
+  │ 
+  │ 'ctx restore start...'
+  │ '_encodeJSON:  restored'
+  │ '_decodeJSON:  restored'
+  │ '_user: null restored JSON'
+  │ `_userPrev: {"id":1,"key":"4c608ef7493006641e0541ed76a
+  │ 19be0","username":"Camren_Cummerata","user_bio":"synth
+  │ esizing the bus won't do anything, we need to index th
+  │ e online AI transmitter!"} restored JSON`
+  │ '_userNo:  restored'
+  │ '_userVarName:  restored'
+  │ '_userRepo:  restored'
+  │ '_post: null restored JSON'
+  │ '_postPrev:  restored'
+  │ '_postNo:  restored'
+  │ '_postVarName:  restored'
+  │ '_postRepo:  restored'
+  │ 'ctx restore end---'
+  └
+  POST http://127.0.0.1:5000/user [200 OK, 295B, 4ms]
+  ┌
+  │ {
+  │   id: 2,
+  │   key: '4cef4774389a560ab53b7a130c2f654c',
+  │   timestamp: '2023-12-17T02:54:21.139906',
+  │   user_bio: null,
+  │   username: '$Alyce10'
+  │ }
+  │ 'r'
+  └
+  ✓  return 'id', 'key', 'username'
+  ✓  'id' should be a postive int
+  ✓  'key' should be a non-empty string
+  ✓  'username' should be a non-empty string
+  ✓  'user_bio' is expected to be absent or present with trivial value
+  ✓  return correct 'username'
+  ┌
+  │ 'ctx save start...'
+  │ '_pm skipped'
+  │ '_encodeJSON: saved'
+  │ '_decodeJSON: saved'
+  │ '_user: null saved'
+  │ '_userPrev: {\n' +
+  │   '  "id": 2,\n' +
+  │   '  "key": "4cef4774389a560ab53b7a130c2f654c",\n' +
+  │   '  "username": "$Alyce10",\n' +
+  │   '  "user_bio": null\n' +
+  │   '} saved'
+  │ '_userNo: saved'
+  │ '_userVarName: saved'
+  │ '_userRepo: saved'
+  │ '_post: null saved'
+  │ '_postPrev: null saved'
+  │ '_postNo: saved'
+  │ '_postVarName: saved'
+  │ '_postRepo: saved'
+  │ 'ctx save end---'
+  └
+
+↳ ------
+  ┌
+  │ 
+  │ 'ctx restore start...'
+  │ '_encodeJSON:  restored'
+  │ '_decodeJSON:  restored'
+  │ '_user: null restored JSON'
+  │ '_userPrev: {"id":2,"key":"4cef4774389a560ab53b7a130c2
+  │ f654c","username":"$Alyce10","user_bio":null} restored
+  │  JSON'
+  │ '_userNo:  restored'
+  │ '_userVarName:  restored'
+  │ '_userRepo:  restored'
+  │ '_post: null restored JSON'
+  │ '_postPrev: null restored JSON'
+  │ '_postNo:  restored'
+  │ '_postVarName:  restored'
+  │ '_postRepo:  restored'
+  │ 'ctx restore end---'
+  └
+  1⠄ TypeError in prerequest-script
+  POST google.com [405 Method Not Allowed, 1.8kB, 53ms]
+  ┌
+  │ "could not parse res body json: JSONError: Unexpected 
+  │ token '<' at 1:1\n" +
+  │   '<!DOCTYPE html>\n' +
+  │   '^'
+  │ undefined
+  │ 'r'
+  └
+
+↳ /user: create user #Ext1 --bad-username ===
+  ┌
+  │ 
+  │ 'ctx restore start...'
+  │ '_encodeJSON:  restored'
+  │ '_decodeJSON:  restored'
+  │ '_user: null restored JSON'
+  │ '_userPrev: {"id":2,"key":"4cef4774389a560ab53b7a130c2
+  │ f654c","username":"$Alyce10","user_bio":null} restored
+  │  JSON'
+  │ '_userNo:  restored'
+  │ '_userVarName:  restored'
+  │ '_userRepo:  restored'
+  │ '_post: null restored JSON'
+  │ '_postPrev: null restored JSON'
+  │ '_postNo:  restored'
+  │ '_postVarName:  restored'
+  │ '_postRepo:  restored'
+  │ 'ctx restore end---'
+  └
+  POST http://127.0.0.1:5000/user [400 BAD REQUEST, 257B, 3ms]
+  ┌
+  │ {
+  │   err: 'username should only consist of letters, numbe
+  │ rs, underscores, dots or $'
+  │ }
+  │ 'r'
+  └
+  ✓  bad 'username
+
+↳ /user: create user #Ext1 --empty-username
+  ┌
+  │ 
+  │ 'ctx restore start...'
+  │ '_encodeJSON:  restored'
+  │ '_decodeJSON:  restored'
+  │ '_user: null restored JSON'
+  │ '_userPrev: {"id":2,"key":"4cef4774389a560ab53b7a130c2
+  │ f654c","username":"$Alyce10","user_bio":null} restored
+  │  JSON'
+  │ '_userNo:  restored'
+  │ '_userVarName:  restored'
+  │ '_userRepo:  restored'
+  │ '_post: null restored JSON'
+  │ '_postPrev: null restored JSON'
+  │ '_postNo:  restored'
+  │ '_postVarName:  restored'
+  │ '_postRepo:  restored'
+  │ 'ctx restore end---'
+  └
+  POST http://127.0.0.1:5000/user [400 BAD REQUEST, 213B, 3ms]
+  ┌
+  │ {
+  │   err: 'username should not be empty'
+  │ }
+  │ 'r'
+  └
+  ✓  empty 'username
+
+↳ /user: create user #Ext1 --no-username
+  ┌
+  │ 
+  │ 'ctx restore start...'
+  │ '_encodeJSON:  restored'
+  │ '_decodeJSON:  restored'
+  │ '_user: null restored JSON'
+  │ '_userPrev: {"id":2,"key":"4cef4774389a560ab53b7a130c2
+  │ f654c","username":"$Alyce10","user_bio":null} restored
+  │  JSON'
+  │ '_userNo:  restored'
+  │ '_userVarName:  restored'
+  │ '_userRepo:  restored'
+  │ '_post: null restored JSON'
+  │ '_postPrev: null restored JSON'
+  │ '_postNo:  restored'
+  │ '_postVarName:  restored'
+  │ '_postRepo:  restored'
+  │ 'ctx restore end---'
+  └
+  POST http://127.0.0.1:5000/user [400 BAD REQUEST, 212B, 4ms]
+  ┌
+  │ {
+  │   err: 'username: not found in body'
+  │ }
+  │ 'r'
+  └
+  ✓  missing 'username
+
+↳ /user: create user #Ext1 --no-username/user_bio
+  ┌
+  │ 
+  │ 'ctx restore start...'
+  │ '_encodeJSON:  restored'
+  │ '_decodeJSON:  restored'
+  │ '_user: null restored JSON'
+  │ '_userPrev: {"id":2,"key":"4cef4774389a560ab53b7a130c2
+  │ f654c","username":"$Alyce10","user_bio":null} restored
+  │  JSON'
+  │ '_userNo:  restored'
+  │ '_userVarName:  restored'
+  │ '_userRepo:  restored'
+  │ '_post: null restored JSON'
+  │ '_postPrev: null restored JSON'
+  │ '_postNo:  restored'
+  │ '_postVarName:  restored'
+  │ '_postRepo:  restored'
+  │ 'ctx restore end---'
+  └
+  POST http://127.0.0.1:5000/user [400 BAD REQUEST, 199B, 3ms]
+  ┌
+  │ { err: 'Body was empty' }
+  │ 'r'
+  └
+  ✓  missing 'username
+
+❏ ---templates--- / read user metadata
+↳ /user: read user metadata #Ext2
+  ┌
+  │ 
+  │ 'ctx restore start...'
+  │ '_encodeJSON:  restored'
+  │ '_decodeJSON:  restored'
+  │ '_user: null restored JSON'
+  │ '_userPrev: {"id":2,"key":"4cef4774389a560ab53b7a130c2
+  │ f654c","username":"$Alyce10","user_bio":null} restored
+  │  JSON'
+  │ '_userNo:  restored'
+  │ '_userVarName:  restored'
+  │ '_userRepo:  restored'
+  │ '_post: null restored JSON'
+  │ '_postPrev: null restored JSON'
+  │ '_postNo:  restored'
+  │ '_postVarName:  restored'
+  │ '_postRepo:  restored'
+  │ 'ctx restore end---'
+  └
+  GET http://127.0.0.1:5000/user?id=2&username=$Alyce10 [200 OK, 212B, 3ms]
+  ┌
+  │ {
+  │   id: 2,
+  │   user_bio: null,
+  │   username: '$Alyce10'
+  │ }
+  │ 'r'
+  └
+  ✓  return 'id', 'username', 'user_bio'
+  ✓  'id' should be a postive int
+  ✓  'username' should be a non-empty string
+  ✓  return correct 'id', 'username', 'user_bio'
+
+↳ /user: read user metadata #Ext2 --no-id
+  ┌
+  │ 
+  │ 'ctx restore start...'
+  │ '_encodeJSON:  restored'
+  │ '_decodeJSON:  restored'
+  │ '_user: null restored JSON'
+  │ '_userPrev: {"id":2,"key":"4cef4774389a560ab53b7a130c2
+  │ f654c","username":"$Alyce10","user_bio":null} restored
+  │  JSON'
+  │ '_userNo:  restored'
+  │ '_userVarName:  restored'
+  │ '_userRepo:  restored'
+  │ '_post: null restored JSON'
+  │ '_postPrev: null restored JSON'
+  │ '_postNo:  restored'
+  │ '_postVarName:  restored'
+  │ '_postRepo:  restored'
+  │ 'ctx restore end---'
+  └
+  GET http://127.0.0.1:5000/user?id=2&username=$Alyce10 [200 OK, 212B, 4ms]
+  ┌
+  │ {
+  │   id: 2,
+  │   user_bio: null,
+  │   username: '$Alyce10'
+  │ }
+  │ 'r'
+  └
+  ✓  return 'id', 'username', 'user_bio'
+  ✓  'id' should be a postive int
+  ✓  'username' should be a non-empty string
+  ✓  return correct 'id', 'username', 'user_bio'
+
+↳ /user: read user metadata #Ext2 --no-username
+  ┌
+  │ 
+  │ 'ctx restore start...'
+  │ '_encodeJSON:  restored'
+  │ '_decodeJSON:  restored'
+  │ '_user: null restored JSON'
+  │ '_userPrev: {"id":2,"key":"4cef4774389a560ab53b7a130c2
+  │ f654c","username":"$Alyce10","user_bio":null} restored
+  │  JSON'
+  │ '_userNo:  restored'
+  │ '_userVarName:  restored'
+  │ '_userRepo:  restored'
+  │ '_post: null restored JSON'
+  │ '_postPrev: null restored JSON'
+  │ '_postNo:  restored'
+  │ '_postVarName:  restored'
+  │ '_postRepo:  restored'
+  │ 'ctx restore end---'
+  └
+  GET http://127.0.0.1:5000/user?id=2&username=$Alyce10 [200 OK, 212B, 3ms]
+  ┌
+  │ {
+  │   id: 2,
+  │   user_bio: null,
+  │   username: '$Alyce10'
+  │ }
+  │ 'r'
+  └
+  ✓  return 'id', 'username', 'user_bio'
+  ✓  'id' should be a postive int
+  ✓  'username' should be a non-empty string
+  ✓  return correct 'id', 'username', 'user_bio'
+
+↳ /user: read user metadata #Ext2 --id&fake-username
+  ┌
+  │ 
+  │ 'ctx restore start...'
+  │ '_encodeJSON:  restored'
+  │ '_decodeJSON:  restored'
+  │ '_user: null restored JSON'
+  │ '_userPrev: {"id":2,"key":"4cef4774389a560ab53b7a130c2
+  │ f654c","username":"$Alyce10","user_bio":null} restored
+  │  JSON'
+  │ '_userNo:  restored'
+  │ '_userVarName:  restored'
+  │ '_userRepo:  restored'
+  │ '_post: null restored JSON'
+  │ '_postPrev: null restored JSON'
+  │ '_postNo:  restored'
+  │ '_postVarName:  restored'
+  │ '_postRepo:  restored'
+  │ 'ctx restore end---'
+  └
+  GET http://127.0.0.1:5000/user?id=2&username=$Alyce10 [200 OK, 212B, 2ms]
+  ┌
+  │ {
+  │   id: 2,
+  │   user_bio: null,
+  │   username: '$Alyce10'
+  │ }
+  │ 'r'
+  └
+  ✓  return 'id', 'username', 'user_bio'
+  ✓  'id' should be a postive int
+  ✓  'username' should be a non-empty string
+  ✓  return correct 'id', 'username', 'user_bio'
+
+↳ ------
+  ┌
+  │ 
+  │ 'ctx restore start...'
+  │ '_encodeJSON:  restored'
+  │ '_decodeJSON:  restored'
+  │ '_user: null restored JSON'
+  │ '_userPrev: {"id":2,"key":"4cef4774389a560ab53b7a130c2
+  │ f654c","username":"$Alyce10","user_bio":null} restored
+  │  JSON'
+  │ '_userNo:  restored'
+  │ '_userVarName:  restored'
+  │ '_userRepo:  restored'
+  │ '_post: null restored JSON'
+  │ '_postPrev: null restored JSON'
+  │ '_postNo:  restored'
+  │ '_postVarName:  restored'
+  │ '_postRepo:  restored'
+  │ 'ctx restore end---'
+  └
+  2⠄ TypeError in prerequest-script
+  GET google.com [200 OK, 9.25kB, 84ms]
+  ┌
+  │ "could not parse res body json: JSONError: Unexpected 
+  │ token '<' at 1:1\n" +
+  │   '<!doctype html><html itemscope="" itemtype="http://
+  │ schema.org/WebPage" lang="en\n' +
+  │   '^'
+  │ undefined
+  │ 'r'
+  └
+
+↳ /user: read user metadata #Ext2 --fake-id&username
+  ┌
+  │ 
+  │ 'ctx restore start...'
+  │ '_encodeJSON:  restored'
+  │ '_decodeJSON:  restored'
+  │ '_user: null restored JSON'
+  │ '_userPrev: {"id":2,"key":"4cef4774389a560ab53b7a130c2
+  │ f654c","username":"$Alyce10","user_bio":null} restored
+  │  JSON'
+  │ '_userNo:  restored'
+  │ '_userVarName:  restored'
+  │ '_userRepo:  restored'
+  │ '_post: null restored JSON'
+  │ '_postPrev: null restored JSON'
+  │ '_postNo:  restored'
+  │ '_postVarName:  restored'
+  │ '_postRepo:  restored'
+  │ 'ctx restore end---'
+  └
+  GET http://127.0.0.1:5000/user?id=500&username=$Alyce10 [404 NOT FOUND, 202B, 3ms]
+  ┌
+  │ { err: '500: user not found' }
+  │ 'r'
+  └
+  ✓  user not found
+
+↳ /user: read user metadata #Ext2 --fake-id&fake-username
+  ┌
+  │ 
+  │ 'ctx restore start...'
+  │ '_encodeJSON:  restored'
+  │ '_decodeJSON:  restored'
+  │ '_user: null restored JSON'
+  │ '_userPrev: {"id":2,"key":"4cef4774389a560ab53b7a130c2
+  │ f654c","username":"$Alyce10","user_bio":null} restored
+  │  JSON'
+  │ '_userNo:  restored'
+  │ '_userVarName:  restored'
+  │ '_userRepo:  restored'
+  │ '_post: null restored JSON'
+  │ '_postPrev: null restored JSON'
+  │ '_postNo:  restored'
+  │ '_postVarName:  restored'
+  │ '_postRepo:  restored'
+  │ 'ctx restore end---'
+  └
+  GET http://127.0.0.1:5000/user?id=1000&username=Helmer.Quitzon [404 NOT FOUND, 203B, 2ms]
+  ┌
+  │ { err: '1000: user not found' }
+  │ 'r'
+  └
+  ✓  user not found
+
+↳ /user: read user metadata #Ext2 --fake-id&no-username
+  ┌
+  │ 
+  │ 'ctx restore start...'
+  │ '_encodeJSON:  restored'
+  │ '_decodeJSON:  restored'
+  │ '_user: null restored JSON'
+  │ '_userPrev: {"id":2,"key":"4cef4774389a560ab53b7a130c2
+  │ f654c","username":"$Alyce10","user_bio":null} restored
+  │  JSON'
+  │ '_userNo:  restored'
+  │ '_userVarName:  restored'
+  │ '_userRepo:  restored'
+  │ '_post: null restored JSON'
+  │ '_postPrev: null restored JSON'
+  │ '_postNo:  restored'
+  │ '_postVarName:  restored'
+  │ '_postRepo:  restored'
+  │ 'ctx restore end---'
+  └
+  GET http://127.0.0.1:5000/user?id=548 [404 NOT FOUND, 202B, 2ms]
+  ┌
+  │ { err: '548: user not found' }
+  │ 'r'
+  └
+  ✓  user not found
+
+↳ /user: read user metadata #Ext2 --no-id&fake-username
+  ┌
+  │ 
+  │ 'ctx restore start...'
+  │ '_encodeJSON:  restored'
+  │ '_decodeJSON:  restored'
+  │ '_user: null restored JSON'
+  │ '_userPrev: {"id":2,"key":"4cef4774389a560ab53b7a130c2
+  │ f654c","username":"$Alyce10","user_bio":null} restored
+  │  JSON'
+  │ '_userNo:  restored'
+  │ '_userVarName:  restored'
+  │ '_userRepo:  restored'
+  │ '_post: null restored JSON'
+  │ '_postPrev: null restored JSON'
+  │ '_postNo:  restored'
+  │ '_postVarName:  restored'
+  │ '_postRepo:  restored'
+  │ 'ctx restore end---'
+  └
+  GET http://127.0.0.1:5000/user?username=Carlotta.Walsh [404 NOT FOUND, 213B, 3ms]
+  ┌
+  │ {
+  │   err: 'Carlotta.Walsh: user not found'
+  │ }
+  │ 'r'
+  └
+  ✓  user not found
+
+↳ /user: read user metadata #Ext2 --no-id/username
+  ┌
+  │ 
+  │ 'ctx restore start...'
+  │ '_encodeJSON:  restored'
+  │ '_decodeJSON:  restored'
+  │ '_user: null restored JSON'
+  │ '_userPrev: {"id":2,"key":"4cef4774389a560ab53b7a130c2
+  │ f654c","username":"$Alyce10","user_bio":null} restored
+  │  JSON'
+  │ '_userNo:  restored'
+  │ '_userVarName:  restored'
+  │ '_userRepo:  restored'
+  │ '_post: null restored JSON'
+  │ '_postPrev: null restored JSON'
+  │ '_postNo:  restored'
+  │ '_postVarName:  restored'
+  │ '_postRepo:  restored'
+  │ 'ctx restore end---'
+  └
+  GET http://127.0.0.1:5000/user [400 BAD REQUEST, 227B, 3ms]
+  ┌
+  │ {
+  │   err: "'user_id' or 'id' is required for metadata"
+  │ }
+  │ 'r'
+  └
+  ✓  'id' or 'id' is required
+
+❏ ---templates--- / edit user metadata
+↳ /user/<id>/edit/<key>: edit user metadata #Ext2
+  ┌
+  │ 
+  │ 'ctx restore start...'
+  │ '_encodeJSON:  restored'
+  │ '_decodeJSON:  restored'
+  │ '_user: null restored JSON'
+  │ '_userPrev: {"id":2,"key":"4cef4774389a560ab53b7a130c2
+  │ f654c","username":"$Alyce10","user_bio":null} restored
+  │  JSON'
+  │ '_userNo:  restored'
+  │ '_userVarName:  restored'
+  │ '_userRepo:  restored'
+  │ '_post: null restored JSON'
+  │ '_postPrev: null restored JSON'
+  │ '_postNo:  restored'
+  │ '_postVarName:  restored'
+  │ '_postRepo:  restored'
+  │ 'ctx restore end---'
+  └
+  PUT http://127.0.0.1:5000/user/2/edit/4cef4774389a560ab53b7a130c2f654c [200 OK, 312B, 2ms]
+  ┌
+  │ {
+  │   id: 2,
+  │   user_bio: 'The SQL microchip is down, program the cr
+  │ oss-platform panel so we can bypass the AI monitor!',
+  │   username: 'Wilson.Weissnat94'
+  │ }
+  │ 'r'
+  └
+  ✓  return 'id', 'username', 'user_bio'
+  ✓  'id' should be a postive int
+  ✓  'key' is expected to be absent or present with trivial value
+  ✓  'username' should be a non-empty string
+  ✓  'user_bio' should be a non-empty string
+  ✓  return correct 'username', 'user_bio'
+  ┌
+  │ 'ctx save start...'
+  │ '_pm skipped'
+  │ '_encodeJSON: saved'
+  │ '_decodeJSON: saved'
+  │ '_user: null saved'
+  │ '_userPrev: {\n' +
+  │   '  "id": 2,\n' +
+  │   '  "key": "4cef4774389a560ab53b7a130c2f654c",\n' +
+  │   '  "username": "Wilson.Weissnat94",\n' +
+  │   '  "user_bio": "The SQL microchip is down, program t
+  │ he cross-platform panel so we can bypass the AI monito
+  │ r!"\n' +
+  │   '} saved'
+  │ '_userNo: saved'
+  │ '_userVarName: saved'
+  │ '_userRepo: saved'
+  │ '_post: null saved'
+  │ '_postPrev: null saved'
+  │ '_postNo: saved'
+  │ '_postVarName: saved'
+  │ '_postRepo: saved'
+  │ 'ctx save end---'
+  └
+
+↳ ------
+  ┌
+  │ 
+  │ 'ctx restore start...'
+  │ '_encodeJSON:  restored'
+  │ '_decodeJSON:  restored'
+  │ '_user: null restored JSON'
+  │ '_userPrev: {"id":2,"key":"4cef4774389a560ab53b7a130c2
+  │ f654c","username":"Wilson.Weissnat94","user_bio":"The 
+  │ SQL microchip is down, program the cross-platform pane
+  │ l so we can bypass the AI monitor!"} restored JSON'
+  │ '_userNo:  restored'
+  │ '_userVarName:  restored'
+  │ '_userRepo:  restored'
+  │ '_post: null restored JSON'
+  │ '_postPrev: null restored JSON'
+  │ '_postNo:  restored'
+  │ '_postVarName:  restored'
+  │ '_postRepo:  restored'
+  │ 'ctx restore end---'
+  └
+  3⠄ TypeError in prerequest-script
+  PUT google.com [405 Method Not Allowed, 1.8kB, 19ms]
+  ┌
+  │ "could not parse res body json: JSONError: Unexpected 
+  │ token '<' at 1:1\n" +
+  │   '<!DOCTYPE html>\n' +
+  │   '^'
+  │ undefined
+  │ 'r'
+  └
+
+↳ /user/<id>/edit/<key>: edit user metadata #Ext2 --no-username/user_bio
+  ┌
+  │ 
+  │ 'ctx restore start...'
+  │ '_encodeJSON:  restored'
+  │ '_decodeJSON:  restored'
+  │ '_user: null restored JSON'
+  │ '_userPrev: {"id":2,"key":"4cef4774389a560ab53b7a130c2
+  │ f654c","username":"Wilson.Weissnat94","user_bio":"The 
+  │ SQL microchip is down, program the cross-platform pane
+  │ l so we can bypass the AI monitor!"} restored JSON'
+  │ '_userNo:  restored'
+  │ '_userVarName:  restored'
+  │ '_userRepo:  restored'
+  │ '_post: null restored JSON'
+  │ '_postPrev: null restored JSON'
+  │ '_postNo:  restored'
+  │ '_postVarName:  restored'
+  │ '_postRepo:  restored'
+  │ 'ctx restore end---'
+  └
+  PUT http://127.0.0.1:5000/user/2/edit/4cef4774389a560ab53b7a130c2f654c [400 BAD REQUEST, 199B, 2ms]
+  ┌
+  │ { err: 'Body was empty' }
+  │ 'r'
+  └
+  ✓  no 'username' nor 'user_bio'
+
+↳ /user/<id>/edit/<key>: edit user metadata #Ext2 --no-username
+  ┌
+  │ 
+  │ 'ctx restore start...'
+  │ '_encodeJSON:  restored'
+  │ '_decodeJSON:  restored'
+  │ '_user: null restored JSON'
+  │ '_userPrev: {"id":2,"key":"4cef4774389a560ab53b7a130c2
+  │ f654c","username":"Wilson.Weissnat94","user_bio":"The 
+  │ SQL microchip is down, program the cross-platform pane
+  │ l so we can bypass the AI monitor!"} restored JSON'
+  │ '_userNo:  restored'
+  │ '_userVarName:  restored'
+  │ '_userRepo:  restored'
+  │ '_post: null restored JSON'
+  │ '_postPrev: null restored JSON'
+  │ '_postNo:  restored'
+  │ '_postVarName:  restored'
+  │ '_postRepo:  restored'
+  │ 'ctx restore end---'
+  └
+  PUT http://127.0.0.1:5000/user/2/edit/4cef4774389a560ab53b7a130c2f654c [400 BAD REQUEST, 212B, 2ms]
+  ┌
+  │ {
+  │   err: 'username: not found in body'
+  │ }
+  │ 'r'
+  └
+  ✓  no 'username'
+
+↳ /user/<id>/edit/<key>: edit user metadata #Ext2 --no-user_bio
+  ┌
+  │ 
+  │ 'ctx restore start...'
+  │ '_encodeJSON:  restored'
+  │ '_decodeJSON:  restored'
+  │ '_user: null restored JSON'
+  │ '_userPrev: {"id":2,"key":"4cef4774389a560ab53b7a130c2
+  │ f654c","username":"Wilson.Weissnat94","user_bio":"The 
+  │ SQL microchip is down, program the cross-platform pane
+  │ l so we can bypass the AI monitor!"} restored JSON'
+  │ '_userNo:  restored'
+  │ '_userVarName:  restored'
+  │ '_userRepo:  restored'
+  │ '_post: null restored JSON'
+  │ '_postPrev: null restored JSON'
+  │ '_postNo:  restored'
+  │ '_postVarName:  restored'
+  │ '_postRepo:  restored'
+  │ 'ctx restore end---'
+  └
+  PUT http://127.0.0.1:5000/user/2/edit/4cef4774389a560ab53b7a130c2f654c [400 BAD REQUEST, 212B, 3ms]
+  ┌
+  │ {
+  │   err: 'user_bio: not found in body'
+  │ }
+  │ 'r'
+  └
+  ✓  no 'user_bio'
+
+↳ /user/<id>/edit/<key>: edit user metadata #Ext2 --fake-id&fake-key
+  ┌
+  │ 
+  │ 'ctx restore start...'
+  │ '_encodeJSON:  restored'
+  │ '_decodeJSON:  restored'
+  │ '_user: null restored JSON'
+  │ '_userPrev: {"id":2,"key":"4cef4774389a560ab53b7a130c2
+  │ f654c","username":"Wilson.Weissnat94","user_bio":"The 
+  │ SQL microchip is down, program the cross-platform pane
+  │ l so we can bypass the AI monitor!"} restored JSON'
+  │ '_userNo:  restored'
+  │ '_userVarName:  restored'
+  │ '_userRepo:  restored'
+  │ '_post: null restored JSON'
+  │ '_postPrev: null restored JSON'
+  │ '_postNo:  restored'
+  │ '_postVarName:  restored'
+  │ '_postRepo:  restored'
+  │ 'ctx restore end---'
+  └
+  PUT http://127.0.0.1:5000/user/874/edit/MPpgvkPx0BLrgkU [404 NOT FOUND, 202B, 2ms]
+  ┌
+  │ { err: '874: user not found' }
+  │ 'r'
+  └
+  ✓  fake uesr_id
+
+↳ /user/<id>/edit/<key>: edit user metadata #Ext2 --id&fake-key
+  ┌
+  │ 
+  │ 'ctx restore start...'
+  │ '_encodeJSON:  restored'
+  │ '_decodeJSON:  restored'
+  │ '_user: null restored JSON'
+  │ '_userPrev: {"id":2,"key":"4cef4774389a560ab53b7a130c2
+  │ f654c","username":"Wilson.Weissnat94","user_bio":"The 
+  │ SQL microchip is down, program the cross-platform pane
+  │ l so we can bypass the AI monitor!"} restored JSON'
+  │ '_userNo:  restored'
+  │ '_userVarName:  restored'
+  │ '_userRepo:  restored'
+  │ '_post: null restored JSON'
+  │ '_postPrev: null restored JSON'
+  │ '_postNo:  restored'
+  │ '_postVarName:  restored'
+  │ '_postRepo:  restored'
+  │ 'ctx restore end---'
+  └
+  PUT http://127.0.0.1:5000/user/2/edit/hoAQ6bqJYvsOY8a [403 FORBIDDEN, 220B, 2ms]
+  ┌
+  │ {
+  │   err: 'hoAQ6bqJYvsOY8a: did not match user 2'
+  │ }
+  │ 'r'
+  └
+  ✓  fake key
+
+↳ /user/<id>/edit/<key>: edit user metadata #Ext2 --fake-id&key
+  ┌
+  │ 
+  │ 'ctx restore start...'
+  │ '_encodeJSON:  restored'
+  │ '_decodeJSON:  restored'
+  │ '_user: null restored JSON'
+  │ '_userPrev: {"id":2,"key":"4cef4774389a560ab53b7a130c2
+  │ f654c","username":"Wilson.Weissnat94","user_bio":"The 
+  │ SQL microchip is down, program the cross-platform pane
+  │ l so we can bypass the AI monitor!"} restored JSON'
+  │ '_userNo:  restored'
+  │ '_userVarName:  restored'
+  │ '_userRepo:  restored'
+  │ '_post: null restored JSON'
+  │ '_postPrev: null restored JSON'
+  │ '_postNo:  restored'
+  │ '_postVarName:  restored'
+  │ '_postRepo:  restored'
+  │ 'ctx restore end---'
+  └
+  PUT http://127.0.0.1:5000/user/901/edit/4cef4774389a560ab53b7a130c2f654c [404 NOT FOUND, 202B, 2ms]
+  ┌
+  │ { err: '901: user not found' }
+  │ 'r'
+  └
+  ✓  fake id
+
+↳ /user/<id>/edit/<key>: edit user metadata #Ext2 --taken-username
+  ┌
+  │ 
+  │ 'ctx restore start...'
+  │ '_encodeJSON:  restored'
+  │ '_decodeJSON:  restored'
+  │ '_user: null restored JSON'
+  │ '_userPrev: {"id":2,"key":"4cef4774389a560ab53b7a130c2
+  │ f654c","username":"Wilson.Weissnat94","user_bio":"The 
+  │ SQL microchip is down, program the cross-platform pane
+  │ l so we can bypass the AI monitor!"} restored JSON'
+  │ '_userNo:  restored'
+  │ '_userVarName:  restored'
+  │ '_userRepo:  restored'
+  │ '_post: null restored JSON'
+  │ '_postPrev: null restored JSON'
+  │ '_postNo:  restored'
+  │ '_postVarName:  restored'
+  │ '_postRepo:  restored'
+  │ 'ctx restore end---'
+  └
+  PUT http://127.0.0.1:5000/user/2/edit/4cef4774389a560ab53b7a130c2f654c [400 BAD REQUEST, 227B, 2ms]
+  ┌
+  │ {
+  │   err: 'Wilson.Weissnat94: username already exists'
+  │ }
+  │ 'r'
+  └
+  ✓  Wilson.Weissnat94 has been taken
+
+❏ user1 --no-user_bio
+↳ ---start script---
+  ┌
+  │ 
+  │ 'ctx restore start...'
+  │ '_encodeJSON:  restored'
+  │ '_decodeJSON:  restored'
+  │ '_user: null restored JSON'
+  │ '_userPrev: {"id":2,"key":"4cef4774389a560ab53b7a130c2
+  │ f654c","username":"Wilson.Weissnat94","user_bio":"The 
+  │ SQL microchip is down, program the cross-platform pane
+  │ l so we can bypass the AI monitor!"} restored JSON'
+  │ '_userNo:  restored'
+  │ '_userVarName:  restored'
+  │ '_userRepo:  restored'
+  │ '_post: null restored JSON'
+  │ '_postPrev: null restored JSON'
+  │ '_postNo:  restored'
+  │ '_postVarName:  restored'
+  │ '_postRepo:  restored'
+  │ 'ctx restore end---'
+  │ 'ctx save start...'
+  │ '_pm skipped'
+  │ '_encodeJSON: saved'
+  │ '_decodeJSON: saved'
+  │ '_user: null saved'
+  │ '_userPrev: null saved'
+  │ '_userNo:1 saved'
+  │ '_userVarName:1 saved'
+  │ '_userRepo: saved'
+  │ '_post: null saved'
+  │ '_postPrev: null saved'
+  │ '_postNo: saved'
+  │ '_postVarName: saved'
+  │ '_postRepo: saved'
+  │ 'ctx save end---'
+  └
+  4⠄ TypeError in prerequest-script
+  POST http://127.0.0.1:5000/user [415 UNSUPPORTED MEDIA TYPE, 319B, 2ms]
+  ┌
+  │ {
+  │   err: "415 Unsupported Media Type: Did not attempt to
+  │  load JSON data because the request Content-Type was n
+  │ ot 'application/json'."
+  │ }
+  │ 'r'
+  └
+
+↳ /user: create user #Ext1 --no-user_bio Copy
+  ┌
+  │ 
+  │ 'ctx restore start...'
+  │ '_encodeJSON:  restored'
+  │ '_decodeJSON:  restored'
+  │ '_user: null restored JSON'
+  │ '_userPrev: null restored JSON'
+  │ '_userNo: 1 restored JSON'
+  │ '_userVarName: 1 restored JSON'
+  │ '_userRepo:  restored'
+  │ '_post: null restored JSON'
+  │ '_postPrev: null restored JSON'
+  │ '_postNo:  restored'
+  │ '_postVarName:  restored'
+  │ '_postRepo:  restored'
+  │ 'ctx restore end---'
+  └
+  POST http://127.0.0.1:5000/user [200 OK, 297B, 2ms]
+  ┌
+  │ {
+  │   id: 3,
+  │   key: '08801693b85577cb65c9cb76d947d1ac',
+  │   timestamp: '2023-12-17T02:54:21.874612',
+  │   user_bio: null,
+  │   username: '$Sigmund42'
+  │ }
+  │ 'r'
+  └
+  ✓  return 'id', 'key', 'username'
+  ✓  'id' should be a postive int
+  ✓  'key' should be a non-empty string
+  ✓  'username' should be a non-empty string
+  ✓  'user_bio' is expected to be absent or present with trivial value
+  ✓  return correct 'username'
+  ┌
+  │ 'ctx save start...'
+  │ '_pm skipped'
+  │ '_encodeJSON: saved'
+  │ '_decodeJSON: saved'
+  │ '_user: null saved'
+  │ '_userPrev: {\n' +
+  │   '  "id": 3,\n' +
+  │   '  "key": "08801693b85577cb65c9cb76d947d1ac",\n' +
+  │   '  "username": "$Sigmund42",\n' +
+  │   '  "user_bio": null\n' +
+  │   '} saved'
+  │ '_userNo:1 saved'
+  │ '_userVarName:1 saved'
+  │ '_userRepo: saved'
+  │ '_post: null saved'
+  │ '_postPrev: null saved'
+  │ '_postNo: saved'
+  │ '_postVarName: saved'
+  │ '_postRepo: saved'
+  │ 'ctx save end---'
+  └
+
+↳ /user: read user metadata #Ext2 Copy
+  ┌
+  │ 
+  │ 'ctx restore start...'
+  │ '_encodeJSON:  restored'
+  │ '_decodeJSON:  restored'
+  │ '_user: null restored JSON'
+  │ '_userPrev: {"id":3,"key":"08801693b85577cb65c9cb76d94
+  │ 7d1ac","username":"$Sigmund42","user_bio":null} restor
+  │ ed JSON'
+  │ '_userNo: 1 restored JSON'
+  │ '_userVarName: 1 restored JSON'
+  │ '_userRepo:  restored'
+  │ '_post: null restored JSON'
+  │ '_postPrev: null restored JSON'
+  │ '_postNo:  restored'
+  │ '_postVarName:  restored'
+  │ '_postRepo:  restored'
+  │ 'ctx restore end---'
+  └
+  GET http://127.0.0.1:5000/user?id=3&username=$Sigmund42 [200 OK, 214B, 3ms]
+  ┌
+  │ {
+  │   id: 3,
+  │   user_bio: null,
+  │   username: '$Sigmund42'
+  │ }
+  │ 'r'
+  └
+  ✓  return 'id', 'username', 'user_bio'
+  ✓  'id' should be a postive int
+  ✓  'username' should be a non-empty string
+  ✓  'user_bio' is expected to be absent or present with trivial value
+  ✓  return correct 'id', 'username', 'user_bio'
+
+↳ /user: read user metadata #Ext2 --no-id Copy
+  ┌
+  │ 
+  │ 'ctx restore start...'
+  │ '_encodeJSON:  restored'
+  │ '_decodeJSON:  restored'
+  │ '_user: null restored JSON'
+  │ '_userPrev: {"id":3,"key":"08801693b85577cb65c9cb76d94
+  │ 7d1ac","username":"$Sigmund42","user_bio":null} restor
+  │ ed JSON'
+  │ '_userNo: 1 restored JSON'
+  │ '_userVarName: 1 restored JSON'
+  │ '_userRepo:  restored'
+  │ '_post: null restored JSON'
+  │ '_postPrev: null restored JSON'
+  │ '_postNo:  restored'
+  │ '_postVarName:  restored'
+  │ '_postRepo:  restored'
+  │ 'ctx restore end---'
+  └
+  GET http://127.0.0.1:5000/user?id=3&username=$Sigmund42 [200 OK, 214B, 2ms]
+  ┌
+  │ {
+  │   id: 3,
+  │   user_bio: null,
+  │   username: '$Sigmund42'
+  │ }
+  │ 'r'
+  └
+  ✓  return 'id', 'username', 'user_bio'
+  ✓  'id' should be a postive int
+  ✓  'username' should be a non-empty string
+  ✓  'user_bio' is expected to be absent or present with trivial value
+  ✓  return correct 'id', 'username', 'user_bio'
+
+↳ /user: read user metadata #Ext2 --no-username Copy
+  ┌
+  │ 
+  │ 'ctx restore start...'
+  │ '_encodeJSON:  restored'
+  │ '_decodeJSON:  restored'
+  │ '_user: null restored JSON'
+  │ '_userPrev: {"id":3,"key":"08801693b85577cb65c9cb76d94
+  │ 7d1ac","username":"$Sigmund42","user_bio":null} restor
+  │ ed JSON'
+  │ '_userNo: 1 restored JSON'
+  │ '_userVarName: 1 restored JSON'
+  │ '_userRepo:  restored'
+  │ '_post: null restored JSON'
+  │ '_postPrev: null restored JSON'
+  │ '_postNo:  restored'
+  │ '_postVarName:  restored'
+  │ '_postRepo:  restored'
+  │ 'ctx restore end---'
+  └
+  GET http://127.0.0.1:5000/user?id=3&username=$Sigmund42 [200 OK, 214B, 2ms]
+  ┌
+  │ {
+  │   id: 3,
+  │   user_bio: null,
+  │   username: '$Sigmund42'
+  │ }
+  │ 'r'
+  └
+  ✓  return 'id', 'username', 'user_bio'
+  ✓  'id' should be a postive int
+  ✓  'username' should be a non-empty string
+  ✓  'user_bio' is expected to be absent or present with trivial value
+  ✓  return correct 'id', 'username', 'user_bio'
+
+↳ /user: read user metadata #Ext2 --id&fake-username Copy
+  ┌
+  │ 
+  │ 'ctx restore start...'
+  │ '_encodeJSON:  restored'
+  │ '_decodeJSON:  restored'
+  │ '_user: null restored JSON'
+  │ '_userPrev: {"id":3,"key":"08801693b85577cb65c9cb76d94
+  │ 7d1ac","username":"$Sigmund42","user_bio":null} restor
+  │ ed JSON'
+  │ '_userNo: 1 restored JSON'
+  │ '_userVarName: 1 restored JSON'
+  │ '_userRepo:  restored'
+  │ '_post: null restored JSON'
+  │ '_postPrev: null restored JSON'
+  │ '_postNo:  restored'
+  │ '_postVarName:  restored'
+  │ '_postRepo:  restored'
+  │ 'ctx restore end---'
+  └
+  GET http://127.0.0.1:5000/user?id=3&username=$Sigmund42 [200 OK, 214B, 2ms]
+  ┌
+  │ {
+  │   id: 3,
+  │   user_bio: null,
+  │   username: '$Sigmund42'
+  │ }
+  │ 'r'
+  └
+  ✓  return 'id', 'username', 'user_bio'
+  ✓  'id' should be a postive int
+  ✓  'username' should be a non-empty string
+  ✓  'user_bio' is expected to be absent or present with trivial value
+  ✓  return correct 'id', 'username', 'user_bio'
+
+↳ ------ Copy
+  ┌
+  │ 
+  │ 'ctx restore start...'
+  │ '_encodeJSON:  restored'
+  │ '_decodeJSON:  restored'
+  │ '_user: null restored JSON'
+  │ '_userPrev: {"id":3,"key":"08801693b85577cb65c9cb76d94
+  │ 7d1ac","username":"$Sigmund42","user_bio":null} restor
+  │ ed JSON'
+  │ '_userNo: 1 restored JSON'
+  │ '_userVarName: 1 restored JSON'
+  │ '_userRepo:  restored'
+  │ '_post: null restored JSON'
+  │ '_postPrev: null restored JSON'
+  │ '_postNo:  restored'
+  │ '_postVarName:  restored'
+  │ '_postRepo:  restored'
+  │ 'ctx restore end---'
+  └
+  5⠄ TypeError in prerequest-script
+  GET google.com [200 OK, 8.92kB, 94ms]
+  ┌
+  │ "could not parse res body json: JSONError: Unexpected 
+  │ token '<' at 1:1\n" +
+  │   '<!doctype html><html itemscope="" itemtype="http://
+  │ schema.org/WebPage" lang="en\n' +
+  │   '^'
+  │ undefined
+  │ 'r'
+  └
+
+↳ /user: read user metadata #Ext2 --fake-id&username Copy
+  ┌
+  │ 
+  │ 'ctx restore start...'
+  │ '_encodeJSON:  restored'
+  │ '_decodeJSON:  restored'
+  │ '_user: null restored JSON'
+  │ '_userPrev: {"id":3,"key":"08801693b85577cb65c9cb76d94
+  │ 7d1ac","username":"$Sigmund42","user_bio":null} restor
+  │ ed JSON'
+  │ '_userNo: 1 restored JSON'
+  │ '_userVarName: 1 restored JSON'
+  │ '_userRepo:  restored'
+  │ '_post: null restored JSON'
+  │ '_postPrev: null restored JSON'
+  │ '_postNo:  restored'
+  │ '_postVarName:  restored'
+  │ '_postRepo:  restored'
+  │ 'ctx restore end---'
+  └
+  GET http://127.0.0.1:5000/user?id=53&username=$Sigmund42 [404 NOT FOUND, 201B, 2ms]
+  ┌
+  │ { err: '53: user not found' }
+  │ 'r'
+  └
+  ✓  user not found
+
+↳ /user: read user metadata #Ext2 --fake-id&fake-username Copy
+  ┌
+  │ 
+  │ 'ctx restore start...'
+  │ '_encodeJSON:  restored'
+  │ '_decodeJSON:  restored'
+  │ '_user: null restored JSON'
+  │ '_userPrev: {"id":3,"key":"08801693b85577cb65c9cb76d94
+  │ 7d1ac","username":"$Sigmund42","user_bio":null} restor
+  │ ed JSON'
+  │ '_userNo: 1 restored JSON'
+  │ '_userVarName: 1 restored JSON'
+  │ '_userRepo:  restored'
+  │ '_post: null restored JSON'
+  │ '_postPrev: null restored JSON'
+  │ '_postNo:  restored'
+  │ '_postVarName:  restored'
+  │ '_postRepo:  restored'
+  │ 'ctx restore end---'
+  └
+  GET http://127.0.0.1:5000/user?id=432&username=Leilani_Torp [404 NOT FOUND, 202B, 3ms]
+  ┌
+  │ { err: '432: user not found' }
+  │ 'r'
+  └
+  ✓  user not found
+
+↳ /user: read user metadata #Ext2 --fake-id&no-username Copy
+  ┌
+  │ 
+  │ 'ctx restore start...'
+  │ '_encodeJSON:  restored'
+  │ '_decodeJSON:  restored'
+  │ '_user: null restored JSON'
+  │ '_userPrev: {"id":3,"key":"08801693b85577cb65c9cb76d94
+  │ 7d1ac","username":"$Sigmund42","user_bio":null} restor
+  │ ed JSON'
+  │ '_userNo: 1 restored JSON'
+  │ '_userVarName: 1 restored JSON'
+  │ '_userRepo:  restored'
+  │ '_post: null restored JSON'
+  │ '_postPrev: null restored JSON'
+  │ '_postNo:  restored'
+  │ '_postVarName:  restored'
+  │ '_postRepo:  restored'
+  │ 'ctx restore end---'
+  └
+  GET http://127.0.0.1:5000/user?id=588 [404 NOT FOUND, 202B, 2ms]
+  ┌
+  │ { err: '588: user not found' }
+  │ 'r'
+  └
+  ✓  user not found
+
+↳ /user: read user metadata #Ext2 --no-id&fake-username Copy
+  ┌
+  │ 
+  │ 'ctx restore start...'
+  │ '_encodeJSON:  restored'
+  │ '_decodeJSON:  restored'
+  │ '_user: null restored JSON'
+  │ '_userPrev: {"id":3,"key":"08801693b85577cb65c9cb76d94
+  │ 7d1ac","username":"$Sigmund42","user_bio":null} restor
+  │ ed JSON'
+  │ '_userNo: 1 restored JSON'
+  │ '_userVarName: 1 restored JSON'
+  │ '_userRepo:  restored'
+  │ '_post: null restored JSON'
+  │ '_postPrev: null restored JSON'
+  │ '_postNo:  restored'
+  │ '_postVarName:  restored'
+  │ '_postRepo:  restored'
+  │ 'ctx restore end---'
+  └
+  GET http://127.0.0.1:5000/user?username=Hallie_Hickle8 [404 NOT FOUND, 213B, 2ms]
+  ┌
+  │ {
+  │   err: 'Hallie_Hickle8: user not found'
+  │ }
+  │ 'r'
+  └
+  ✓  user not found
+
+↳ /user: read user metadata #Ext2 --no-id/username Copy
+  ┌
+  │ 
+  │ 'ctx restore start...'
+  │ '_encodeJSON:  restored'
+  │ '_decodeJSON:  restored'
+  │ '_user: null restored JSON'
+  │ '_userPrev: {"id":3,"key":"08801693b85577cb65c9cb76d94
+  │ 7d1ac","username":"$Sigmund42","user_bio":null} restor
+  │ ed JSON'
+  │ '_userNo: 1 restored JSON'
+  │ '_userVarName: 1 restored JSON'
+  │ '_userRepo:  restored'
+  │ '_post: null restored JSON'
+  │ '_postPrev: null restored JSON'
+  │ '_postNo:  restored'
+  │ '_postVarName:  restored'
+  │ '_postRepo:  restored'
+  │ 'ctx restore end---'
+  └
+  GET http://127.0.0.1:5000/user [400 BAD REQUEST, 227B, 2ms]
+  ┌
+  │ {
+  │   err: "'user_id' or 'id' is required for metadata"
+  │ }
+  │ 'r'
+  └
+  ✓  'id' or 'id' is required
+
+↳ /user/<id>/edit/<key>: edit user metadata #Ext2 Copy
+  ┌
+  │ 
+  │ 'ctx restore start...'
+  │ '_encodeJSON:  restored'
+  │ '_decodeJSON:  restored'
+  │ '_user: null restored JSON'
+  │ '_userPrev: {"id":3,"key":"08801693b85577cb65c9cb76d94
+  │ 7d1ac","username":"$Sigmund42","user_bio":null} restor
+  │ ed JSON'
+  │ '_userNo: 1 restored JSON'
+  │ '_userVarName: 1 restored JSON'
+  │ '_userRepo:  restored'
+  │ '_post: null restored JSON'
+  │ '_postPrev: null restored JSON'
+  │ '_postNo:  restored'
+  │ '_postVarName:  restored'
+  │ '_postRepo:  restored'
+  │ 'ctx restore end---'
+  └
+  PUT http://127.0.0.1:5000/user/3/edit/08801693b85577cb65c9cb76d947d1ac [200 OK, 259B, 2ms]
+  ┌
+  │ {
+  │   id: 3,
+  │   user_bio: 'We need to copy the optical PCI driver!',
+  │   username: 'Deondre.Hartmann89'
+  │ }
+  │ 'r'
+  └
+  ✓  return 'id', 'username', 'user_bio'
+  ✓  'id' should be a postive int
+  ✓  'key' is expected to be absent or present with trivial value
+  ✓  'username' should be a non-empty string
+  ✓  'user_bio' should be a non-empty string
+  ✓  return correct 'username', 'user_bio'
+  ┌
+  │ 'ctx save start...'
+  │ '_pm skipped'
+  │ '_encodeJSON: saved'
+  │ '_decodeJSON: saved'
+  │ '_user: null saved'
+  │ '_userPrev: {\n' +
+  │   '  "id": 3,\n' +
+  │   '  "key": "08801693b85577cb65c9cb76d947d1ac",\n' +
+  │   '  "username": "Deondre.Hartmann89",\n' +
+  │   '  "user_bio": "We need to copy the optical PCI driv
+  │ er!"\n' +
+  │   '} saved'
+  │ '_userNo:1 saved'
+  │ '_userVarName:1 saved'
+  │ '_userRepo: saved'
+  │ '_post: null saved'
+  │ '_postPrev: null saved'
+  │ '_postNo: saved'
+  │ '_postVarName: saved'
+  │ '_postRepo: saved'
+  │ 'ctx save end---'
+  └
+
+↳ ------ Copy
+  ┌
+  │ 
+  │ 'ctx restore start...'
+  │ '_encodeJSON:  restored'
+  │ '_decodeJSON:  restored'
+  │ '_user: null restored JSON'
+  │ '_userPrev: {"id":3,"key":"08801693b85577cb65c9cb76d94
+  │ 7d1ac","username":"Deondre.Hartmann89","user_bio":"We 
+  │ need to copy the optical PCI driver!"} restored JSON'
+  │ '_userNo: 1 restored JSON'
+  │ '_userVarName: 1 restored JSON'
+  │ '_userRepo:  restored'
+  │ '_post: null restored JSON'
+  │ '_postPrev: null restored JSON'
+  │ '_postNo:  restored'
+  │ '_postVarName:  restored'
+  │ '_postRepo:  restored'
+  │ 'ctx restore end---'
+  └
+  6⠄ TypeError in prerequest-script
+  PUT google.com [405 Method Not Allowed, 1.8kB, 18ms]
+  ┌
+  │ "could not parse res body json: JSONError: Unexpected 
+  │ token '<' at 1:1\n" +
+  │   '<!DOCTYPE html>\n' +
+  │   '^'
+  │ undefined
+  │ 'r'
+  └
+
+↳ /user/<id>/edit/<key>: edit user metadata #Ext2 --no-username/user_bio Copy
+  ┌
+  │ 
+  │ 'ctx restore start...'
+  │ '_encodeJSON:  restored'
+  │ '_decodeJSON:  restored'
+  │ '_user: null restored JSON'
+  │ '_userPrev: {"id":3,"key":"08801693b85577cb65c9cb76d94
+  │ 7d1ac","username":"Deondre.Hartmann89","user_bio":"We 
+  │ need to copy the optical PCI driver!"} restored JSON'
+  │ '_userNo: 1 restored JSON'
+  │ '_userVarName: 1 restored JSON'
+  │ '_userRepo:  restored'
+  │ '_post: null restored JSON'
+  │ '_postPrev: null restored JSON'
+  │ '_postNo:  restored'
+  │ '_postVarName:  restored'
+  │ '_postRepo:  restored'
+  │ 'ctx restore end---'
+  └
+  PUT http://127.0.0.1:5000/user/3/edit/08801693b85577cb65c9cb76d947d1ac [400 BAD REQUEST, 199B, 2ms]
+  ┌
+  │ { err: 'Body was empty' }
+  │ 'r'
+  └
+  ✓  no 'username' nor 'user_bio'
+
+↳ /user/<id>/edit/<key>: edit user metadata #Ext2 --no-username Copy
+  ┌
+  │ 
+  │ 'ctx restore start...'
+  │ '_encodeJSON:  restored'
+  │ '_decodeJSON:  restored'
+  │ '_user: null restored JSON'
+  │ '_userPrev: {"id":3,"key":"08801693b85577cb65c9cb76d94
+  │ 7d1ac","username":"Deondre.Hartmann89","user_bio":"We 
+  │ need to copy the optical PCI driver!"} restored JSON'
+  │ '_userNo: 1 restored JSON'
+  │ '_userVarName: 1 restored JSON'
+  │ '_userRepo:  restored'
+  │ '_post: null restored JSON'
+  │ '_postPrev: null restored JSON'
+  │ '_postNo:  restored'
+  │ '_postVarName:  restored'
+  │ '_postRepo:  restored'
+  │ 'ctx restore end---'
+  └
+  PUT http://127.0.0.1:5000/user/3/edit/08801693b85577cb65c9cb76d947d1ac [400 BAD REQUEST, 212B, 3ms]
+  ┌
+  │ {
+  │   err: 'username: not found in body'
+  │ }
+  │ 'r'
+  └
+  ✓  no 'username'
+
+↳ /user/<id>/edit/<key>: edit user metadata #Ext2 --no-user_bio Copy
+  ┌
+  │ 
+  │ 'ctx restore start...'
+  │ '_encodeJSON:  restored'
+  │ '_decodeJSON:  restored'
+  │ '_user: null restored JSON'
+  │ '_userPrev: {"id":3,"key":"08801693b85577cb65c9cb76d94
+  │ 7d1ac","username":"Deondre.Hartmann89","user_bio":"We 
+  │ need to copy the optical PCI driver!"} restored JSON'
+  │ '_userNo: 1 restored JSON'
+  │ '_userVarName: 1 restored JSON'
+  │ '_userRepo:  restored'
+  │ '_post: null restored JSON'
+  │ '_postPrev: null restored JSON'
+  │ '_postNo:  restored'
+  │ '_postVarName:  restored'
+  │ '_postRepo:  restored'
+  │ 'ctx restore end---'
+  └
+  PUT http://127.0.0.1:5000/user/3/edit/08801693b85577cb65c9cb76d947d1ac [400 BAD REQUEST, 212B, 3ms]
+  ┌
+  │ {
+  │   err: 'user_bio: not found in body'
+  │ }
+  │ 'r'
+  └
+  ✓  no 'user_bio'
+
+↳ /user/<id>/edit/<key>: edit user metadata #Ext2 --fake-id&fake-key Copy
+  ┌
+  │ 
+  │ 'ctx restore start...'
+  │ '_encodeJSON:  restored'
+  │ '_decodeJSON:  restored'
+  │ '_user: null restored JSON'
+  │ '_userPrev: {"id":3,"key":"08801693b85577cb65c9cb76d94
+  │ 7d1ac","username":"Deondre.Hartmann89","user_bio":"We 
+  │ need to copy the optical PCI driver!"} restored JSON'
+  │ '_userNo: 1 restored JSON'
+  │ '_userVarName: 1 restored JSON'
+  │ '_userRepo:  restored'
+  │ '_post: null restored JSON'
+  │ '_postPrev: null restored JSON'
+  │ '_postNo:  restored'
+  │ '_postVarName:  restored'
+  │ '_postRepo:  restored'
+  │ 'ctx restore end---'
+  └
+  PUT http://127.0.0.1:5000/user/449/edit/NMZf3sXNZhPHKiE [404 NOT FOUND, 202B, 2ms]
+  ┌
+  │ { err: '449: user not found' }
+  │ 'r'
+  └
+  ✓  fake uesr_id
+
+↳ /user/<id>/edit/<key>: edit user metadata #Ext2 --id&fake-key Copy
+  ┌
+  │ 
+  │ 'ctx restore start...'
+  │ '_encodeJSON:  restored'
+  │ '_decodeJSON:  restored'
+  │ '_user: null restored JSON'
+  │ '_userPrev: {"id":3,"key":"08801693b85577cb65c9cb76d94
+  │ 7d1ac","username":"Deondre.Hartmann89","user_bio":"We 
+  │ need to copy the optical PCI driver!"} restored JSON'
+  │ '_userNo: 1 restored JSON'
+  │ '_userVarName: 1 restored JSON'
+  │ '_userRepo:  restored'
+  │ '_post: null restored JSON'
+  │ '_postPrev: null restored JSON'
+  │ '_postNo:  restored'
+  │ '_postVarName:  restored'
+  │ '_postRepo:  restored'
+  │ 'ctx restore end---'
+  └
+  PUT http://127.0.0.1:5000/user/3/edit/F_O30QmVm6E4dzG [403 FORBIDDEN, 220B, 3ms]
+  ┌
+  │ {
+  │   err: 'F_O30QmVm6E4dzG: did not match user 3'
+  │ }
+  │ 'r'
+  └
+  ✓  fake key
+
+↳ /user/<id>/edit/<key>: edit user metadata #Ext2 --fake-id&key Copy
+  ┌
+  │ 
+  │ 'ctx restore start...'
+  │ '_encodeJSON:  restored'
+  │ '_decodeJSON:  restored'
+  │ '_user: null restored JSON'
+  │ '_userPrev: {"id":3,"key":"08801693b85577cb65c9cb76d94
+  │ 7d1ac","username":"Deondre.Hartmann89","user_bio":"We 
+  │ need to copy the optical PCI driver!"} restored JSON'
+  │ '_userNo: 1 restored JSON'
+  │ '_userVarName: 1 restored JSON'
+  │ '_userRepo:  restored'
+  │ '_post: null restored JSON'
+  │ '_postPrev: null restored JSON'
+  │ '_postNo:  restored'
+  │ '_postVarName:  restored'
+  │ '_postRepo:  restored'
+  │ 'ctx restore end---'
+  └
+  PUT http://127.0.0.1:5000/user/942/edit/08801693b85577cb65c9cb76d947d1ac [404 NOT FOUND, 202B, 2ms]
+  ┌
+  │ { err: '942: user not found' }
+  │ 'r'
+  └
+  ✓  fake id
+
+↳ /user/<id>/edit/<key>: edit user metadata #Ext2 --taken-username Copy
+  ┌
+  │ 
+  │ 'ctx restore start...'
+  │ '_encodeJSON:  restored'
+  │ '_decodeJSON:  restored'
+  │ '_user: null restored JSON'
+  │ '_userPrev: {"id":3,"key":"08801693b85577cb65c9cb76d94
+  │ 7d1ac","username":"Deondre.Hartmann89","user_bio":"We 
+  │ need to copy the optical PCI driver!"} restored JSON'
+  │ '_userNo: 1 restored JSON'
+  │ '_userVarName: 1 restored JSON'
+  │ '_userRepo:  restored'
+  │ '_post: null restored JSON'
+  │ '_postPrev: null restored JSON'
+  │ '_postNo:  restored'
+  │ '_postVarName:  restored'
+  │ '_postRepo:  restored'
+  │ 'ctx restore end---'
+  └
+  PUT http://127.0.0.1:5000/user/3/edit/08801693b85577cb65c9cb76d947d1ac [400 BAD REQUEST, 228B, 3ms]
+  ┌
+  │ {
+  │   err: 'Deondre.Hartmann89: username already exists'
+  │ }
+  │ 'r'
+  └
+  ✓  Deondre.Hartmann89 has been taken
+
+❏ user2
+↳ ---start script---
+  ┌
+  │ 
+  │ 'ctx restore start...'
+  │ '_encodeJSON:  restored'
+  │ '_decodeJSON:  restored'
+  │ '_user: null restored JSON'
+  │ '_userPrev: {"id":3,"key":"08801693b85577cb65c9cb76d94
+  │ 7d1ac","username":"Deondre.Hartmann89","user_bio":"We 
+  │ need to copy the optical PCI driver!"} restored JSON'
+  │ '_userNo: 1 restored JSON'
+  │ '_userVarName: 1 restored JSON'
+  │ '_userRepo:  restored'
+  │ '_post: null restored JSON'
+  │ '_postPrev: null restored JSON'
+  │ '_postNo:  restored'
+  │ '_postVarName:  restored'
+  │ '_postRepo:  restored'
+  │ 'ctx restore end---'
+  │ 'ctx save start...'
+  │ '_pm skipped'
+  │ '_encodeJSON: saved'
+  │ '_decodeJSON: saved'
+  │ '_user: null saved'
+  │ '_userPrev: null saved'
+  │ '_userNo:2 saved'
+  │ '_userVarName:12 saved'
+  │ '_userRepo: saved'
+  │ '_post: null saved'
+  │ '_postPrev: null saved'
+  │ '_postNo: saved'
+  │ '_postVarName: saved'
+  │ '_postRepo: saved'
+  │ 'ctx save end---'
+  └
+  7⠄ TypeError in prerequest-script
+  POST http://127.0.0.1:5000/user [415 UNSUPPORTED MEDIA TYPE, 319B, 2ms]
+  ┌
+  │ {
+  │   err: "415 Unsupported Media Type: Did not attempt to
+  │  load JSON data because the request Content-Type was n
+  │ ot 'application/json'."
+  │ }
+  │ 'r'
+  └
+
+↳ /user: create user #Ext1 Copy
+  ┌
+  │ 
+  │ 'ctx restore start...'
+  │ '_encodeJSON:  restored'
+  │ '_decodeJSON:  restored'
+  │ '_user: null restored JSON'
+  │ '_userPrev: null restored JSON'
+  │ '_userNo: 2 restored JSON'
+  │ '_userVarName: 12 restored JSON'
+  │ '_userRepo:  restored'
+  │ '_post: null restored JSON'
+  │ '_postPrev: null restored JSON'
+  │ '_postNo:  restored'
+  │ '_postVarName:  restored'
+  │ '_postRepo:  restored'
+  │ 'ctx restore end---'
+  └
+  POST http://127.0.0.1:5000/user [200 OK, 385B, 2ms]
+  ┌
+  │ {
+  │   id: 4,
+  │   key: 'ee42fc1d7dc8b6c95ece937c9a2aa9cd',
+  │   timestamp: '2023-12-17T02:54:22.369205',
+  │   user_bio: "copying the panel won't do anything, we n
+  │ eed to bypass the online SMTP application!",
+  │   username: 'Summer.Medhurst58'
+  │ }
+  │ 'r'
+  └
+  ✓  return 'id', 'key', 'username', 'user_bio'
+  ✓  'id' should be a postive int
+  ✓  'key' should be a non-empty string
+  ✓  'username' should be a non-empty string
+  ✓  'user_bio' should be a non-empty string
+  ✓  return correct 'username', 'user_bio'
+  ┌
+  │ 'ctx save start...'
+  │ '_pm skipped'
+  │ '_encodeJSON: saved'
+  │ '_decodeJSON: saved'
+  │ '_user: null saved'
+  │ '_userPrev: {\n' +
+  │   '  "id": 4,\n' +
+  │   '  "key": "ee42fc1d7dc8b6c95ece937c9a2aa9cd",\n' +
+  │   '  "username": "Summer.Medhurst58",\n' +
+  │   `  "user_bio": "copying the panel won't do anything,
+  │  we need to bypass the online SMTP application!"\n` +
+  │   '} saved'
+  │ '_userNo:2 saved'
+  │ '_userVarName:12 saved'
+  │ '_userRepo: saved'
+  │ '_post: null saved'
+  │ '_postPrev: null saved'
+  │ '_postNo: saved'
+  │ '_postVarName: saved'
+  │ '_postRepo: saved'
+  │ 'ctx save end---'
+  └
+
+↳ /user: read user metadata #Ext2 Copy
+  ┌
+  │ 
+  │ 'ctx restore start...'
+  │ '_encodeJSON:  restored'
+  │ '_decodeJSON:  restored'
+  │ '_user: null restored JSON'
+  │ `_userPrev: {"id":4,"key":"ee42fc1d7dc8b6c95ece937c9a2
+  │ aa9cd","username":"Summer.Medhurst58","user_bio":"copy
+  │ ing the panel won't do anything, we need to bypass the
+  │  online SMTP application!"} restored JSON`
+  │ '_userNo: 2 restored JSON'
+  │ '_userVarName: 12 restored JSON'
+  │ '_userRepo:  restored'
+  │ '_post: null restored JSON'
+  │ '_postPrev: null restored JSON'
+  │ '_postNo:  restored'
+  │ '_postVarName:  restored'
+  │ '_postRepo:  restored'
+  │ 'ctx restore end---'
+  └
+  GET http://127.0.0.1:5000/user?id=4&username=Summer.Medhurst58 [200 OK, 303B, 2ms]
+  ┌
+  │ {
+  │   id: 4,
+  │   user_bio: "copying the panel won't do anything, we n
+  │ eed to bypass the online SMTP application!",
+  │   username: 'Summer.Medhurst58'
+  │ }
+  │ 'r'
+  └
+  ✓  return 'id', 'username', 'user_bio'
+  ✓  'id' should be a postive int
+  ✓  'username' should be a non-empty string
+  ✓  'user_bio' should be a non-empty string
+  ✓  return correct 'id', 'username', 'user_bio'
+
+↳ /user: read user metadata #Ext2 --no-id Copy
+  ┌
+  │ 
+  │ 'ctx restore start...'
+  │ '_encodeJSON:  restored'
+  │ '_decodeJSON:  restored'
+  │ '_user: null restored JSON'
+  │ `_userPrev: {"id":4,"key":"ee42fc1d7dc8b6c95ece937c9a2
+  │ aa9cd","username":"Summer.Medhurst58","user_bio":"copy
+  │ ing the panel won't do anything, we need to bypass the
+  │  online SMTP application!"} restored JSON`
+  │ '_userNo: 2 restored JSON'
+  │ '_userVarName: 12 restored JSON'
+  │ '_userRepo:  restored'
+  │ '_post: null restored JSON'
+  │ '_postPrev: null restored JSON'
+  │ '_postNo:  restored'
+  │ '_postVarName:  restored'
+  │ '_postRepo:  restored'
+  │ 'ctx restore end---'
+  └
+  GET http://127.0.0.1:5000/user?id=4&username=Summer.Medhurst58 [200 OK, 303B, 2ms]
+  ┌
+  │ {
+  │   id: 4,
+  │   user_bio: "copying the panel won't do anything, we n
+  │ eed to bypass the online SMTP application!",
+  │   username: 'Summer.Medhurst58'
+  │ }
+  │ 'r'
+  └
+  ✓  return 'id', 'username', 'user_bio'
+  ✓  'id' should be a postive int
+  ✓  'username' should be a non-empty string
+  ✓  'user_bio' should be a non-empty string
+  ✓  return correct 'id', 'username', 'user_bio'
+
+↳ /user: read user metadata #Ext2 --no-username Copy
+  ┌
+  │ 
+  │ 'ctx restore start...'
+  │ '_encodeJSON:  restored'
+  │ '_decodeJSON:  restored'
+  │ '_user: null restored JSON'
+  │ `_userPrev: {"id":4,"key":"ee42fc1d7dc8b6c95ece937c9a2
+  │ aa9cd","username":"Summer.Medhurst58","user_bio":"copy
+  │ ing the panel won't do anything, we need to bypass the
+  │  online SMTP application!"} restored JSON`
+  │ '_userNo: 2 restored JSON'
+  │ '_userVarName: 12 restored JSON'
+  │ '_userRepo:  restored'
+  │ '_post: null restored JSON'
+  │ '_postPrev: null restored JSON'
+  │ '_postNo:  restored'
+  │ '_postVarName:  restored'
+  │ '_postRepo:  restored'
+  │ 'ctx restore end---'
+  └
+  GET http://127.0.0.1:5000/user?id=4&username=Summer.Medhurst58 [200 OK, 303B, 2ms]
+  ┌
+  │ {
+  │   id: 4,
+  │   user_bio: "copying the panel won't do anything, we n
+  │ eed to bypass the online SMTP application!",
+  │   username: 'Summer.Medhurst58'
+  │ }
+  │ 'r'
+  └
+  ✓  return 'id', 'username', 'user_bio'
+  ✓  'id' should be a postive int
+  ✓  'username' should be a non-empty string
+  ✓  'user_bio' should be a non-empty string
+  ✓  return correct 'id', 'username', 'user_bio'
+
+↳ /user: read user metadata #Ext2 --id&fake-username Copy
+  ┌
+  │ 
+  │ 'ctx restore start...'
+  │ '_encodeJSON:  restored'
+  │ '_decodeJSON:  restored'
+  │ '_user: null restored JSON'
+  │ `_userPrev: {"id":4,"key":"ee42fc1d7dc8b6c95ece937c9a2
+  │ aa9cd","username":"Summer.Medhurst58","user_bio":"copy
+  │ ing the panel won't do anything, we need to bypass the
+  │  online SMTP application!"} restored JSON`
+  │ '_userNo: 2 restored JSON'
+  │ '_userVarName: 12 restored JSON'
+  │ '_userRepo:  restored'
+  │ '_post: null restored JSON'
+  │ '_postPrev: null restored JSON'
+  │ '_postNo:  restored'
+  │ '_postVarName:  restored'
+  │ '_postRepo:  restored'
+  │ 'ctx restore end---'
+  └
+  GET http://127.0.0.1:5000/user?id=4&username=Summer.Medhurst58 [200 OK, 303B, 2ms]
+  ┌
+  │ {
+  │   id: 4,
+  │   user_bio: "copying the panel won't do anything, we n
+  │ eed to bypass the online SMTP application!",
+  │   username: 'Summer.Medhurst58'
+  │ }
+  │ 'r'
+  └
+  ✓  return 'id', 'username', 'user_bio'
+  ✓  'id' should be a postive int
+  ✓  'username' should be a non-empty string
+  ✓  'user_bio' should be a non-empty string
+  ✓  return correct 'id', 'username', 'user_bio'
+
+↳ ------ Copy
+  ┌
+  │ 
+  │ 'ctx restore start...'
+  │ '_encodeJSON:  restored'
+  │ '_decodeJSON:  restored'
+  │ '_user: null restored JSON'
+  │ `_userPrev: {"id":4,"key":"ee42fc1d7dc8b6c95ece937c9a2
+  │ aa9cd","username":"Summer.Medhurst58","user_bio":"copy
+  │ ing the panel won't do anything, we need to bypass the
+  │  online SMTP application!"} restored JSON`
+  │ '_userNo: 2 restored JSON'
+  │ '_userVarName: 12 restored JSON'
+  │ '_userRepo:  restored'
+  │ '_post: null restored JSON'
+  │ '_postPrev: null restored JSON'
+  │ '_postNo:  restored'
+  │ '_postVarName:  restored'
+  │ '_postRepo:  restored'
+  │ 'ctx restore end---'
+  └
+  8⠄ TypeError in prerequest-script
+  GET google.com [200 OK, 8.92kB, 78ms]
+  ┌
+  │ "could not parse res body json: JSONError: Unexpected 
+  │ token '<' at 1:1\n" +
+  │   '<!doctype html><html itemscope="" itemtype="http://
+  │ schema.org/WebPage" lang="en\n' +
+  │   '^'
+  │ undefined
+  │ 'r'
+  └
+
+↳ /user: read user metadata #Ext2 --fake-id&username Copy
+  ┌
+  │ 
+  │ 'ctx restore start...'
+  │ '_encodeJSON:  restored'
+  │ '_decodeJSON:  restored'
+  │ '_user: null restored JSON'
+  │ `_userPrev: {"id":4,"key":"ee42fc1d7dc8b6c95ece937c9a2
+  │ aa9cd","username":"Summer.Medhurst58","user_bio":"copy
+  │ ing the panel won't do anything, we need to bypass the
+  │  online SMTP application!"} restored JSON`
+  │ '_userNo: 2 restored JSON'
+  │ '_userVarName: 12 restored JSON'
+  │ '_userRepo:  restored'
+  │ '_post: null restored JSON'
+  │ '_postPrev: null restored JSON'
+  │ '_postNo:  restored'
+  │ '_postVarName:  restored'
+  │ '_postRepo:  restored'
+  │ 'ctx restore end---'
+  └
+  GET http://127.0.0.1:5000/user?id=784&username=Summer.Medhurst58 [404 NOT FOUND, 202B, 2ms]
+  ┌
+  │ { err: '784: user not found' }
+  │ 'r'
+  └
+  ✓  user not found
+
+↳ /user: read user metadata #Ext2 --fake-id&fake-username Copy
+  ┌
+  │ 
+  │ 'ctx restore start...'
+  │ '_encodeJSON:  restored'
+  │ '_decodeJSON:  restored'
+  │ '_user: null restored JSON'
+  │ `_userPrev: {"id":4,"key":"ee42fc1d7dc8b6c95ece937c9a2
+  │ aa9cd","username":"Summer.Medhurst58","user_bio":"copy
+  │ ing the panel won't do anything, we need to bypass the
+  │  online SMTP application!"} restored JSON`
+  │ '_userNo: 2 restored JSON'
+  │ '_userVarName: 12 restored JSON'
+  │ '_userRepo:  restored'
+  │ '_post: null restored JSON'
+  │ '_postPrev: null restored JSON'
+  │ '_postNo:  restored'
+  │ '_postVarName:  restored'
+  │ '_postRepo:  restored'
+  │ 'ctx restore end---'
+  └
+  GET http://127.0.0.1:5000/user?id=877&username=Dana37 [404 NOT FOUND, 202B, 2ms]
+  ┌
+  │ { err: '877: user not found' }
+  │ 'r'
+  └
+  ✓  user not found
+
+↳ /user: read user metadata #Ext2 --fake-id&no-username Copy
+  ┌
+  │ 
+  │ 'ctx restore start...'
+  │ '_encodeJSON:  restored'
+  │ '_decodeJSON:  restored'
+  │ '_user: null restored JSON'
+  │ `_userPrev: {"id":4,"key":"ee42fc1d7dc8b6c95ece937c9a2
+  │ aa9cd","username":"Summer.Medhurst58","user_bio":"copy
+  │ ing the panel won't do anything, we need to bypass the
+  │  online SMTP application!"} restored JSON`
+  │ '_userNo: 2 restored JSON'
+  │ '_userVarName: 12 restored JSON'
+  │ '_userRepo:  restored'
+  │ '_post: null restored JSON'
+  │ '_postPrev: null restored JSON'
+  │ '_postNo:  restored'
+  │ '_postVarName:  restored'
+  │ '_postRepo:  restored'
+  │ 'ctx restore end---'
+  └
+  GET http://127.0.0.1:5000/user?id=420 [404 NOT FOUND, 202B, 2ms]
+  ┌
+  │ { err: '420: user not found' }
+  │ 'r'
+  └
+  ✓  user not found
+
+↳ /user: read user metadata #Ext2 --no-id&fake-username Copy
+  ┌
+  │ 
+  │ 'ctx restore start...'
+  │ '_encodeJSON:  restored'
+  │ '_decodeJSON:  restored'
+  │ '_user: null restored JSON'
+  │ `_userPrev: {"id":4,"key":"ee42fc1d7dc8b6c95ece937c9a2
+  │ aa9cd","username":"Summer.Medhurst58","user_bio":"copy
+  │ ing the panel won't do anything, we need to bypass the
+  │  online SMTP application!"} restored JSON`
+  │ '_userNo: 2 restored JSON'
+  │ '_userVarName: 12 restored JSON'
+  │ '_userRepo:  restored'
+  │ '_post: null restored JSON'
+  │ '_postPrev: null restored JSON'
+  │ '_postNo:  restored'
+  │ '_postVarName:  restored'
+  │ '_postRepo:  restored'
+  │ 'ctx restore end---'
+  └
+  GET http://127.0.0.1:5000/user?username=Kyra_Reichert30 [404 NOT FOUND, 214B, 2ms]
+  ┌
+  │ {
+  │   err: 'Kyra_Reichert30: user not found'
+  │ }
+  │ 'r'
+  └
+  ✓  user not found
+
+↳ /user: read user metadata #Ext2 --no-id/username Copy
+  ┌
+  │ 
+  │ 'ctx restore start...'
+  │ '_encodeJSON:  restored'
+  │ '_decodeJSON:  restored'
+  │ '_user: null restored JSON'
+  │ `_userPrev: {"id":4,"key":"ee42fc1d7dc8b6c95ece937c9a2
+  │ aa9cd","username":"Summer.Medhurst58","user_bio":"copy
+  │ ing the panel won't do anything, we need to bypass the
+  │  online SMTP application!"} restored JSON`
+  │ '_userNo: 2 restored JSON'
+  │ '_userVarName: 12 restored JSON'
+  │ '_userRepo:  restored'
+  │ '_post: null restored JSON'
+  │ '_postPrev: null restored JSON'
+  │ '_postNo:  restored'
+  │ '_postVarName:  restored'
+  │ '_postRepo:  restored'
+  │ 'ctx restore end---'
+  └
+  GET http://127.0.0.1:5000/user [400 BAD REQUEST, 227B, 2ms]
+  ┌
+  │ {
+  │   err: "'user_id' or 'id' is required for metadata"
+  │ }
+  │ 'r'
+  └
+  ✓  'id' or 'id' is required
+
+↳ /user/<id>/edit/<key>: edit user metadata #Ext2 Copy
+  ┌
+  │ 
+  │ 'ctx restore start...'
+  │ '_encodeJSON:  restored'
+  │ '_decodeJSON:  restored'
+  │ '_user: null restored JSON'
+  │ `_userPrev: {"id":4,"key":"ee42fc1d7dc8b6c95ece937c9a2
+  │ aa9cd","username":"Summer.Medhurst58","user_bio":"copy
+  │ ing the panel won't do anything, we need to bypass the
+  │  online SMTP application!"} restored JSON`
+  │ '_userNo: 2 restored JSON'
+  │ '_userVarName: 12 restored JSON'
+  │ '_userRepo:  restored'
+  │ '_post: null restored JSON'
+  │ '_postPrev: null restored JSON'
+  │ '_postNo:  restored'
+  │ '_postVarName:  restored'
+  │ '_postRepo:  restored'
+  │ 'ctx restore end---'
+  └
+  PUT http://127.0.0.1:5000/user/4/edit/ee42fc1d7dc8b6c95ece937c9a2aa9cd [200 OK, 310B, 3ms]
+  ┌
+  │ {
+  │   id: 4,
+  │   user_bio: 'The SAS circuit is down, quantify the wir
+  │ eless microchip so we can compress the HDD circuit!',
+  │   username: 'Norma_Quigley35'
+  │ }
+  │ 'r'
+  └
+  ✓  return 'id', 'username', 'user_bio'
+  ✓  'id' should be a postive int
+  ✓  'key' is expected to be absent or present with trivial value
+  ✓  'username' should be a non-empty string
+  ✓  'user_bio' should be a non-empty string
+  ✓  return correct 'username', 'user_bio'
+  ┌
+  │ 'ctx save start...'
+  │ '_pm skipped'
+  │ '_encodeJSON: saved'
+  │ '_decodeJSON: saved'
+  │ '_user: null saved'
+  │ '_userPrev: {\n' +
+  │   '  "id": 4,\n' +
+  │   '  "key": "ee42fc1d7dc8b6c95ece937c9a2aa9cd",\n' +
+  │   '  "username": "Norma_Quigley35",\n' +
+  │   '  "user_bio": "The SAS circuit is down, quantify th
+  │ e wireless microchip so we can compress the HDD circui
+  │ t!"\n' +
+  │   '} saved'
+  │ '_userNo:2 saved'
+  │ '_userVarName:12 saved'
+  │ '_userRepo: saved'
+  │ '_post: null saved'
+  │ '_postPrev: null saved'
+  │ '_postNo: saved'
+  │ '_postVarName: saved'
+  │ '_postRepo: saved'
+  │ 'ctx save end---'
+  └
+
+↳ ------ Copy
+  ┌
+  │ 
+  │ 'ctx restore start...'
+  │ '_encodeJSON:  restored'
+  │ '_decodeJSON:  restored'
+  │ '_user: null restored JSON'
+  │ '_userPrev: {"id":4,"key":"ee42fc1d7dc8b6c95ece937c9a2
+  │ aa9cd","username":"Norma_Quigley35","user_bio":"The SA
+  │ S circuit is down, quantify the wireless microchip so 
+  │ we can compress the HDD circuit!"} restored JSON'
+  │ '_userNo: 2 restored JSON'
+  │ '_userVarName: 12 restored JSON'
+  │ '_userRepo:  restored'
+  │ '_post: null restored JSON'
+  │ '_postPrev: null restored JSON'
+  │ '_postNo:  restored'
+  │ '_postVarName:  restored'
+  │ '_postRepo:  restored'
+  │ 'ctx restore end---'
+  └
+  9⠄ TypeError in prerequest-script
+  PUT google.com [405 Method Not Allowed, 1.8kB, 18ms]
+  ┌
+  │ "could not parse res body json: JSONError: Unexpected 
+  │ token '<' at 1:1\n" +
+  │   '<!DOCTYPE html>\n' +
+  │   '^'
+  │ undefined
+  │ 'r'
+  └
+
+↳ /user/<id>/edit/<key>: edit user metadata #Ext2 --no-username/user_bio Copy
+  ┌
+  │ 
+  │ 'ctx restore start...'
+  │ '_encodeJSON:  restored'
+  │ '_decodeJSON:  restored'
+  │ '_user: null restored JSON'
+  │ '_userPrev: {"id":4,"key":"ee42fc1d7dc8b6c95ece937c9a2
+  │ aa9cd","username":"Norma_Quigley35","user_bio":"The SA
+  │ S circuit is down, quantify the wireless microchip so 
+  │ we can compress the HDD circuit!"} restored JSON'
+  │ '_userNo: 2 restored JSON'
+  │ '_userVarName: 12 restored JSON'
+  │ '_userRepo:  restored'
+  │ '_post: null restored JSON'
+  │ '_postPrev: null restored JSON'
+  │ '_postNo:  restored'
+  │ '_postVarName:  restored'
+  │ '_postRepo:  restored'
+  │ 'ctx restore end---'
+  └
+  PUT http://127.0.0.1:5000/user/4/edit/ee42fc1d7dc8b6c95ece937c9a2aa9cd [400 BAD REQUEST, 199B, 3ms]
+  ┌
+  │ { err: 'Body was empty' }
+  │ 'r'
+  └
+  ✓  no 'username' nor 'user_bio'
+
+↳ /user/<id>/edit/<key>: edit user metadata #Ext2 --no-username Copy
+  ┌
+  │ 
+  │ 'ctx restore start...'
+  │ '_encodeJSON:  restored'
+  │ '_decodeJSON:  restored'
+  │ '_user: null restored JSON'
+  │ '_userPrev: {"id":4,"key":"ee42fc1d7dc8b6c95ece937c9a2
+  │ aa9cd","username":"Norma_Quigley35","user_bio":"The SA
+  │ S circuit is down, quantify the wireless microchip so 
+  │ we can compress the HDD circuit!"} restored JSON'
+  │ '_userNo: 2 restored JSON'
+  │ '_userVarName: 12 restored JSON'
+  │ '_userRepo:  restored'
+  │ '_post: null restored JSON'
+  │ '_postPrev: null restored JSON'
+  │ '_postNo:  restored'
+  │ '_postVarName:  restored'
+  │ '_postRepo:  restored'
+  │ 'ctx restore end---'
+  └
+  PUT http://127.0.0.1:5000/user/4/edit/ee42fc1d7dc8b6c95ece937c9a2aa9cd [400 BAD REQUEST, 212B, 2ms]
+  ┌
+  │ {
+  │   err: 'username: not found in body'
+  │ }
+  │ 'r'
+  └
+  ✓  no 'username'
+
+↳ /user/<id>/edit/<key>: edit user metadata #Ext2 --no-user_bio Copy
+  ┌
+  │ 
+  │ 'ctx restore start...'
+  │ '_encodeJSON:  restored'
+  │ '_decodeJSON:  restored'
+  │ '_user: null restored JSON'
+  │ '_userPrev: {"id":4,"key":"ee42fc1d7dc8b6c95ece937c9a2
+  │ aa9cd","username":"Norma_Quigley35","user_bio":"The SA
+  │ S circuit is down, quantify the wireless microchip so 
+  │ we can compress the HDD circuit!"} restored JSON'
+  │ '_userNo: 2 restored JSON'
+  │ '_userVarName: 12 restored JSON'
+  │ '_userRepo:  restored'
+  │ '_post: null restored JSON'
+  │ '_postPrev: null restored JSON'
+  │ '_postNo:  restored'
+  │ '_postVarName:  restored'
+  │ '_postRepo:  restored'
+  │ 'ctx restore end---'
+  └
+  PUT http://127.0.0.1:5000/user/4/edit/ee42fc1d7dc8b6c95ece937c9a2aa9cd [400 BAD REQUEST, 212B, 2ms]
+  ┌
+  │ {
+  │   err: 'user_bio: not found in body'
+  │ }
+  │ 'r'
+  └
+  ✓  no 'user_bio'
+
+↳ /user/<id>/edit/<key>: edit user metadata #Ext2 --fake-id&fake-key Copy
+  ┌
+  │ 
+  │ 'ctx restore start...'
+  │ '_encodeJSON:  restored'
+  │ '_decodeJSON:  restored'
+  │ '_user: null restored JSON'
+  │ '_userPrev: {"id":4,"key":"ee42fc1d7dc8b6c95ece937c9a2
+  │ aa9cd","username":"Norma_Quigley35","user_bio":"The SA
+  │ S circuit is down, quantify the wireless microchip so 
+  │ we can compress the HDD circuit!"} restored JSON'
+  │ '_userNo: 2 restored JSON'
+  │ '_userVarName: 12 restored JSON'
+  │ '_userRepo:  restored'
+  │ '_post: null restored JSON'
+  │ '_postPrev: null restored JSON'
+  │ '_postNo:  restored'
+  │ '_postVarName:  restored'
+  │ '_postRepo:  restored'
+  │ 'ctx restore end---'
+  └
+  PUT http://127.0.0.1:5000/user/406/edit/KCIXsnLNuBgDg93 [404 NOT FOUND, 202B, 2ms]
+  ┌
+  │ { err: '406: user not found' }
+  │ 'r'
+  └
+  ✓  fake uesr_id
+
+↳ /user/<id>/edit/<key>: edit user metadata #Ext2 --id&fake-key Copy
+  ┌
+  │ 
+  │ 'ctx restore start...'
+  │ '_encodeJSON:  restored'
+  │ '_decodeJSON:  restored'
+  │ '_user: null restored JSON'
+  │ '_userPrev: {"id":4,"key":"ee42fc1d7dc8b6c95ece937c9a2
+  │ aa9cd","username":"Norma_Quigley35","user_bio":"The SA
+  │ S circuit is down, quantify the wireless microchip so 
+  │ we can compress the HDD circuit!"} restored JSON'
+  │ '_userNo: 2 restored JSON'
+  │ '_userVarName: 12 restored JSON'
+  │ '_userRepo:  restored'
+  │ '_post: null restored JSON'
+  │ '_postPrev: null restored JSON'
+  │ '_postNo:  restored'
+  │ '_postVarName:  restored'
+  │ '_postRepo:  restored'
+  │ 'ctx restore end---'
+  └
+  PUT http://127.0.0.1:5000/user/4/edit/DE1R3wSGVBdlePg [403 FORBIDDEN, 220B, 3ms]
+  ┌
+  │ {
+  │   err: 'DE1R3wSGVBdlePg: did not match user 4'
+  │ }
+  │ 'r'
+  └
+  ✓  fake key
+
+↳ /user/<id>/edit/<key>: edit user metadata #Ext2 --fake-id&key Copy
+  ┌
+  │ 
+  │ 'ctx restore start...'
+  │ '_encodeJSON:  restored'
+  │ '_decodeJSON:  restored'
+  │ '_user: null restored JSON'
+  │ '_userPrev: {"id":4,"key":"ee42fc1d7dc8b6c95ece937c9a2
+  │ aa9cd","username":"Norma_Quigley35","user_bio":"The SA
+  │ S circuit is down, quantify the wireless microchip so 
+  │ we can compress the HDD circuit!"} restored JSON'
+  │ '_userNo: 2 restored JSON'
+  │ '_userVarName: 12 restored JSON'
+  │ '_userRepo:  restored'
+  │ '_post: null restored JSON'
+  │ '_postPrev: null restored JSON'
+  │ '_postNo:  restored'
+  │ '_postVarName:  restored'
+  │ '_postRepo:  restored'
+  │ 'ctx restore end---'
+  └
+  PUT http://127.0.0.1:5000/user/130/edit/ee42fc1d7dc8b6c95ece937c9a2aa9cd [404 NOT FOUND, 202B, 2ms]
+  ┌
+  │ { err: '130: user not found' }
+  │ 'r'
+  └
+  ✓  fake id
+
+↳ /user/<id>/edit/<key>: edit user metadata #Ext2 --taken-username Copy
+  ┌
+  │ 
+  │ 'ctx restore start...'
+  │ '_encodeJSON:  restored'
+  │ '_decodeJSON:  restored'
+  │ '_user: null restored JSON'
+  │ '_userPrev: {"id":4,"key":"ee42fc1d7dc8b6c95ece937c9a2
+  │ aa9cd","username":"Norma_Quigley35","user_bio":"The SA
+  │ S circuit is down, quantify the wireless microchip so 
+  │ we can compress the HDD circuit!"} restored JSON'
+  │ '_userNo: 2 restored JSON'
+  │ '_userVarName: 12 restored JSON'
+  │ '_userRepo:  restored'
+  │ '_post: null restored JSON'
+  │ '_postPrev: null restored JSON'
+  │ '_postNo:  restored'
+  │ '_postVarName:  restored'
+  │ '_postRepo:  restored'
+  │ 'ctx restore end---'
+  └
+  PUT http://127.0.0.1:5000/user/4/edit/ee42fc1d7dc8b6c95ece937c9a2aa9cd [400 BAD REQUEST, 225B, 3ms]
+  ┌
+  │ {
+  │   err: 'Norma_Quigley35: username already exists'
+  │ }
+  │ 'r'
+  └
+  ✓  Norma_Quigley35 has been taken
+
+[90m┌─────────────────────────[39m[90m┬──────────────────[39m[90m┬─────────────────┐[39m
+[90m│[39m                         [90m│[39m         executed [90m│[39m          failed [90m│[39m
+[90m├─────────────────────────[39m[90m┼──────────────────[39m[90m┼─────────────────┤[39m
+[90m│[39m              iterations [90m│[39m                1 [90m│[39m               0 [90m│[39m
+[90m├─────────────────────────[39m[90m┼──────────────────[39m[90m┼─────────────────┤[39m
+[90m│[39m                requests [90m│[39m               68 [90m│[39m               0 [90m│[39m
+[90m├─────────────────────────[39m[90m┼──────────────────[39m[90m┼─────────────────┤[39m
+[90m│[39m            test-scripts [90m│[39m              162 [90m│[39m               0 [90m│[39m
+[90m├─────────────────────────[39m[90m┼──────────────────[39m[90m┼─────────────────┤[39m
+[90m│[39m      prerequest-scripts [90m│[39m              161 [90m│[39m               9 [90m│[39m
+[90m├─────────────────────────[39m[90m┼──────────────────[39m[90m┼─────────────────┤[39m
+[90m│[39m              assertions [90m│[39m              138 [90m│[39m               0 [90m│[39m
+[90m├─────────────────────────┴──────────────────┴─────────────────┤[39m
+[90m│[39m total run duration: 1779ms                                   [90m│[39m
+[90m├──────────────────────────────────────────────────────────────┤[39m
+[90m│[39m total data received: 34.54kB (approx)                        [90m│[39m
+[90m├──────────────────────────────────────────────────────────────┤[39m
+[90m│[39m average response time: 7ms [min: 2ms, max: 94ms, s.d.: 18ms] [90m│[39m
+[90m└──────────────────────────────────────────────────────────────┘[39m
+
+[31m  # [39m[31m failure   [39m[31m detail                                                      [39m
+[90m    [39m[90m           [39m[90m                                                             [39m
+ 1.  TypeError                                                              
+                Cannot read properties of undefined (reading 'skipRequest') 
+                at prerequest-script                                        
+                inside "---templates--- / create user / ------"             
+[90m    [39m[90m           [39m[90m                                                             [39m
+ 2.  TypeError                                                              
+                Cannot read properties of undefined (reading 'skipRequest') 
+                at prerequest-script                                        
+                inside "---templates--- / read user metadata / ------"      
+[90m    [39m[90m           [39m[90m                                                             [39m
+ 3.  TypeError                                                              
+                Cannot read properties of undefined (reading 'skipRequest') 
+                at prerequest-script                                        
+                inside "---templates--- / edit user metadata / ------"      
+[90m    [39m[90m           [39m[90m                                                             [39m
+ 4.  TypeError                                                              
+                Cannot read properties of undefined (reading 'skipRequest') 
+                at prerequest-script                                        
+                inside "user1 --no-user_bio / ---start script---"           
+[90m    [39m[90m           [39m[90m                                                             [39m
+ 5.  TypeError                                                              
+                Cannot read properties of undefined (reading 'skipRequest') 
+                at prerequest-script                                        
+                inside "user1 --no-user_bio / ------ Copy"                  
+[90m    [39m[90m           [39m[90m                                                             [39m
+ 6.  TypeError                                                              
+                Cannot read properties of undefined (reading 'skipRequest') 
+                at prerequest-script                                        
+                inside "user1 --no-user_bio / ------ Copy"                  
+[90m    [39m[90m           [39m[90m                                                             [39m
+ 7.  TypeError                                                              
+                Cannot read properties of undefined (reading 'skipRequest') 
+                at prerequest-script                                        
+                inside "user2 / ---start script---"                         
+[90m    [39m[90m           [39m[90m                                                             [39m
+ 8.  TypeError                                                              
+                Cannot read properties of undefined (reading 'skipRequest') 
+                at prerequest-script                                        
+                inside "user2 / ------ Copy"                                
+[90m    [39m[90m           [39m[90m                                                             [39m
+ 9.  TypeError                                                              
+                Cannot read properties of undefined (reading 'skipRequest') 
+                at prerequest-script                                        
+                inside "user2 / ------ Copy"                                
