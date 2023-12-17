@@ -1,0 +1,2363 @@
+ * Debug mode: off
+newman
+
+s03+forum-users
+
+□ ---templates--- / create user
+└ /user: create user #Ext1
+  ┌
+  │ 'ctx restore start...'
+  │ '_encodeJSON:  restored'
+  │ '_decodeJSON:  restored'
+  │ '_user:  restored'
+  │ '_userPrev:  restored'
+  │ '_userNo:  restored'
+  │ '_userVarName:  restored'
+  │ '_userRepo:  restored'
+  │ '_post:  restored'
+  │ '_postPrev:  restored'
+  │ '_postNo:  restored'
+  │ '_postVarName:  restored'
+  │ '_postRepo:  restored'
+  │ 'ctx restore end---'
+  └
+  POST http://127.0.0.1:5000/user [200 OK, 380B, 49ms]
+  ┌
+  │ {
+  │   id: 1,
+  │   key: '93c400bcbf25e31596d0d2d261a7e04a',
+  │   timestamp: '2023-12-17T02:50:23.965894',
+  │   user_bio: "You can't transmit the capacitor without 
+  │ transmitting the multi-byte PNG bus!",
+  │   username: 'Birdie_Marquardt22'
+  │ }
+  │ 'r'
+  └
+  √  return 'id', 'key', 'username', 'user_bio'
+  √  'id' should be a postive int
+  √  'key' should be a non-empty string
+  √  'username' should be a non-empty string
+  √  'user_bio' should be a non-empty string
+  √  return correct 'username', 'user_bio'
+  ┌
+  │ {
+  │   id: 1,
+  │   key: '93c400bcbf25e31596d0d2d261a7e04a',
+  │   username: 'Birdie_Marquardt22',
+  │   user_bio: "You can't transmit the capacitor without 
+  │ transmitting the multi-byte PNG bus!"
+  │ }
+  │ 'ctx save start...'
+  │ '_pm skipped'
+  │ '_encodeJSON: saved'
+  │ '_decodeJSON: saved'
+  │ '_user: null saved'
+  │ '_userPrev: {\n' +
+  │   '  "id": 1,\n' +
+  │   '  "key": "93c400bcbf25e31596d0d2d261a7e04a",\n' +
+  │   '  "username": "Birdie_Marquardt22",\n' +
+  │   `  "user_bio": "You can't transmit the capacitor wit
+  │ hout transmitting the multi-byte PNG bus!"\n` +
+  │   '} saved'
+  │ '_userNo: saved'
+  │ '_userVarName: saved'
+  │ '_userRepo: saved'
+  │ '_post: null saved'
+  │ '_postPrev: saved'
+  │ '_postNo: saved'
+  │ '_postVarName: saved'
+  │ '_postRepo: saved'
+  │ 'ctx save end---'
+  └
+
+└ /user: create user #Ext1 --no-user_bio
+  ┌
+  │ 'ctx restore start...'
+  │ '_encodeJSON:  restored'
+  │ '_decodeJSON:  restored'
+  │ '_user: null restored JSON'
+  │ `_userPrev: {"id":1,"key":"93c400bcbf25e31596d0d2d261a
+  │ 7e04a","username":"Birdie_Marquardt22","user_bio":"You
+  │  can't transmit the capacitor without transmitting the
+  │  multi-byte PNG bus!"} restored JSON`
+  │ '_userNo:  restored'
+  │ '_userVarName:  restored'
+  │ '_userRepo:  restored'
+  │ '_post: null restored JSON'
+  │ '_postPrev:  restored'
+  │ '_postNo:  restored'
+  │ '_postVarName:  restored'
+  │ '_postRepo:  restored'
+  │ 'ctx restore end---'
+  └
+  POST http://127.0.0.1:5000/user [200 OK, 296B, 7ms]
+  ┌
+  │ {
+  │   id: 2,
+  │   key: 'ab44a68785bb87ac2ff604a67f4c9879',
+  │   timestamp: '2023-12-17T02:50:24.100021',
+  │   user_bio: null,
+  │   username: '$Laurel12'
+  │ }
+  │ 'r'
+  └
+  √  return 'id', 'key', 'username'
+  √  'id' should be a postive int
+  √  'key' should be a non-empty string
+  √  'username' should be a non-empty string
+  √  'user_bio' is expected to be absent or present with trivial value
+  √  return correct 'username'
+  ┌
+  │ 'ctx save start...'
+  │ '_pm skipped'
+  │ '_encodeJSON: saved'
+  │ '_decodeJSON: saved'
+  │ '_user: null saved'
+  │ '_userPrev: {\n' +
+  │   '  "id": 2,\n' +
+  │   '  "key": "ab44a68785bb87ac2ff604a67f4c9879",\n' +
+  │   '  "username": "$Laurel12",\n' +
+  │   '  "user_bio": null\n' +
+  │   '} saved'
+  │ '_userNo: saved'
+  │ '_userVarName: saved'
+  │ '_userRepo: saved'
+  │ '_post: null saved'
+  │ '_postPrev: null saved'
+  │ '_postNo: saved'
+  │ '_postVarName: saved'
+  │ '_postRepo: saved'
+  │ 'ctx save end---'
+  └
+
+└ ------
+  ┌
+  │ 'ctx restore start...'
+  │ '_encodeJSON:  restored'
+  │ '_decodeJSON:  restored'
+  │ '_user: null restored JSON'
+  │ '_userPrev: {"id":2,"key":"ab44a68785bb87ac2ff604a67f4
+  │ c9879","username":"$Laurel12","user_bio":null} restore
+  │ d JSON'
+  │ '_userNo:  restored'
+  │ '_userVarName:  restored'
+  │ '_userRepo:  restored'
+  │ '_post: null restored JSON'
+  │ '_postPrev: null restored JSON'
+  │ '_postNo:  restored'
+  │ '_postVarName:  restored'
+  │ '_postRepo:  restored'
+  │ 'ctx restore end---'
+  └
+  POST google.com [405 Method Not Allowed, 1.8kB, 153ms]
+  ┌
+  │ "could not parse res body json: JSONError: Unexpected 
+  │ token '<' at 1:1\n" +
+  │   '<!DOCTYPE html>\n' +
+  │   '^'
+  │ undefined
+  │ 'r'
+  └
+
+└ /user: create user #Ext1 --bad-username ===
+  ┌
+  │ 'ctx restore start...'
+  │ '_encodeJSON:  restored'
+  │ '_decodeJSON:  restored'
+  │ '_user: null restored JSON'
+  │ '_userPrev: {"id":2,"key":"ab44a68785bb87ac2ff604a67f4
+  │ c9879","username":"$Laurel12","user_bio":null} restore
+  │ d JSON'
+  │ '_userNo:  restored'
+  │ '_userVarName:  restored'
+  │ '_userRepo:  restored'
+  │ '_post: null restored JSON'
+  │ '_postPrev: null restored JSON'
+  │ '_postNo:  restored'
+  │ '_postVarName:  restored'
+  │ '_postRepo:  restored'
+  │ 'ctx restore end---'
+  └
+  POST http://127.0.0.1:5000/user [400 BAD REQUEST, 257B, 7ms]
+  ┌
+  │ {
+  │   err: 'username should only consist of letters, numbe
+  │ rs, underscores, dots or $'
+  │ }
+  │ 'r'
+  └
+  √  bad 'username
+
+└ /user: create user #Ext1 --empty-username
+  ┌
+  │ 'ctx restore start...'
+  │ '_encodeJSON:  restored'
+  │ '_decodeJSON:  restored'
+  │ '_user: null restored JSON'
+  │ '_userPrev: {"id":2,"key":"ab44a68785bb87ac2ff604a67f4
+  │ c9879","username":"$Laurel12","user_bio":null} restore
+  │ d JSON'
+  │ '_userNo:  restored'
+  │ '_userVarName:  restored'
+  │ '_userRepo:  restored'
+  │ '_post: null restored JSON'
+  │ '_postPrev: null restored JSON'
+  │ '_postNo:  restored'
+  │ '_postVarName:  restored'
+  │ '_postRepo:  restored'
+  │ 'ctx restore end---'
+  └
+  POST http://127.0.0.1:5000/user [400 BAD REQUEST, 213B, 6ms]
+  ┌
+  │ {
+  │   err: 'username should not be empty'
+  │ }
+  │ 'r'
+  └
+  √  empty 'username
+
+└ /user: create user #Ext1 --no-username
+  ┌
+  │ 'ctx restore start...'
+  │ '_encodeJSON:  restored'
+  │ '_decodeJSON:  restored'
+  │ '_user: null restored JSON'
+  │ '_userPrev: {"id":2,"key":"ab44a68785bb87ac2ff604a67f4
+  │ c9879","username":"$Laurel12","user_bio":null} restore
+  │ d JSON'
+  │ '_userNo:  restored'
+  │ '_userVarName:  restored'
+  │ '_userRepo:  restored'
+  │ '_post: null restored JSON'
+  │ '_postPrev: null restored JSON'
+  │ '_postNo:  restored'
+  │ '_postVarName:  restored'
+  │ '_postRepo:  restored'
+  │ 'ctx restore end---'
+  └
+  POST http://127.0.0.1:5000/user [400 BAD REQUEST, 212B, 6ms]
+  ┌
+  │ {
+  │   err: 'username: not found in body'
+  │ }
+  │ 'r'
+  └
+  √  missing 'username
+
+└ /user: create user #Ext1 --no-username/user_bio
+  ┌
+  │ 'ctx restore start...'
+  │ '_encodeJSON:  restored'
+  │ '_decodeJSON:  restored'
+  │ '_user: null restored JSON'
+  │ '_userPrev: {"id":2,"key":"ab44a68785bb87ac2ff604a67f4
+  │ c9879","username":"$Laurel12","user_bio":null} restore
+  │ d JSON'
+  │ '_userNo:  restored'
+  │ '_userVarName:  restored'
+  │ '_userRepo:  restored'
+  │ '_post: null restored JSON'
+  │ '_postPrev: null restored JSON'
+  │ '_postNo:  restored'
+  │ '_postVarName:  restored'
+  │ '_postRepo:  restored'
+  │ 'ctx restore end---'
+  └
+  POST http://127.0.0.1:5000/user [400 BAD REQUEST, 199B, 6ms]
+  ┌
+  │ { err: 'Body was empty' }
+  │ 'r'
+  └
+  √  missing 'username
+
+□ ---templates--- / read user metadata
+└ /user: read user metadata #Ext2
+  ┌
+  │ 'ctx restore start...'
+  │ '_encodeJSON:  restored'
+  │ '_decodeJSON:  restored'
+  │ '_user: null restored JSON'
+  │ '_userPrev: {"id":2,"key":"ab44a68785bb87ac2ff604a67f4
+  │ c9879","username":"$Laurel12","user_bio":null} restore
+  │ d JSON'
+  │ '_userNo:  restored'
+  │ '_userVarName:  restored'
+  │ '_userRepo:  restored'
+  │ '_post: null restored JSON'
+  │ '_postPrev: null restored JSON'
+  │ '_postNo:  restored'
+  │ '_postVarName:  restored'
+  │ '_postRepo:  restored'
+  │ 'ctx restore end---'
+  └
+  GET http://127.0.0.1:5000/user?id=2&username=$Laurel12 [200 OK, 213B, 5ms]
+  ┌
+  │ {
+  │   id: 2,
+  │   user_bio: null,
+  │   username: '$Laurel12'
+  │ }
+  │ 'r'
+  └
+  √  return 'id', 'username', 'user_bio'
+  √  'id' should be a postive int
+  √  'username' should be a non-empty string
+  √  return correct 'id', 'username', 'user_bio'
+
+└ /user: read user metadata #Ext2 --no-id
+  ┌
+  │ 'ctx restore start...'
+  │ '_encodeJSON:  restored'
+  │ '_decodeJSON:  restored'
+  │ '_user: null restored JSON'
+  │ '_userPrev: {"id":2,"key":"ab44a68785bb87ac2ff604a67f4
+  │ c9879","username":"$Laurel12","user_bio":null} restore
+  │ d JSON'
+  │ '_userNo:  restored'
+  │ '_userVarName:  restored'
+  │ '_userRepo:  restored'
+  │ '_post: null restored JSON'
+  │ '_postPrev: null restored JSON'
+  │ '_postNo:  restored'
+  │ '_postVarName:  restored'
+  │ '_postRepo:  restored'
+  │ 'ctx restore end---'
+  └
+  GET http://127.0.0.1:5000/user?id=2&username=$Laurel12 [200 OK, 213B, 7ms]
+  ┌
+  │ {
+  │   id: 2,
+  │   user_bio: null,
+  │   username: '$Laurel12'
+  │ }
+  │ 'r'
+  └
+  √  return 'id', 'username', 'user_bio'
+  √  'id' should be a postive int
+  √  'username' should be a non-empty string
+  √  return correct 'id', 'username', 'user_bio'
+
+└ /user: read user metadata #Ext2 --no-username
+  ┌
+  │ 'ctx restore start...'
+  │ '_encodeJSON:  restored'
+  │ '_decodeJSON:  restored'
+  │ '_user: null restored JSON'
+  │ '_userPrev: {"id":2,"key":"ab44a68785bb87ac2ff604a67f4
+  │ c9879","username":"$Laurel12","user_bio":null} restore
+  │ d JSON'
+  │ '_userNo:  restored'
+  │ '_userVarName:  restored'
+  │ '_userRepo:  restored'
+  │ '_post: null restored JSON'
+  │ '_postPrev: null restored JSON'
+  │ '_postNo:  restored'
+  │ '_postVarName:  restored'
+  │ '_postRepo:  restored'
+  │ 'ctx restore end---'
+  └
+  GET http://127.0.0.1:5000/user?id=2&username=$Laurel12 [200 OK, 213B, 6ms]
+  ┌
+  │ {
+  │   id: 2,
+  │   user_bio: null,
+  │   username: '$Laurel12'
+  │ }
+  │ 'r'
+  └
+  √  return 'id', 'username', 'user_bio'
+  √  'id' should be a postive int
+  √  'username' should be a non-empty string
+  √  return correct 'id', 'username', 'user_bio'
+
+└ /user: read user metadata #Ext2 --id&fake-username
+  ┌
+  │ 'ctx restore start...'
+  │ '_encodeJSON:  restored'
+  │ '_decodeJSON:  restored'
+  │ '_user: null restored JSON'
+  │ '_userPrev: {"id":2,"key":"ab44a68785bb87ac2ff604a67f4
+  │ c9879","username":"$Laurel12","user_bio":null} restore
+  │ d JSON'
+  │ '_userNo:  restored'
+  │ '_userVarName:  restored'
+  │ '_userRepo:  restored'
+  │ '_post: null restored JSON'
+  │ '_postPrev: null restored JSON'
+  │ '_postNo:  restored'
+  │ '_postVarName:  restored'
+  │ '_postRepo:  restored'
+  │ 'ctx restore end---'
+  └
+  GET http://127.0.0.1:5000/user?id=2&username=$Laurel12 [200 OK, 213B, 15ms]
+  ┌
+  │ {
+  │   id: 2,
+  │   user_bio: null,
+  │   username: '$Laurel12'
+  │ }
+  │ 'r'
+  └
+  √  return 'id', 'username', 'user_bio'
+  √  'id' should be a postive int
+  √  'username' should be a non-empty string
+  √  return correct 'id', 'username', 'user_bio'
+
+└ ------
+  ┌
+  │ 'ctx restore start...'
+  │ '_encodeJSON:  restored'
+  │ '_decodeJSON:  restored'
+  │ '_user: null restored JSON'
+  │ '_userPrev: {"id":2,"key":"ab44a68785bb87ac2ff604a67f4
+  │ c9879","username":"$Laurel12","user_bio":null} restore
+  │ d JSON'
+  │ '_userNo:  restored'
+  │ '_userVarName:  restored'
+  │ '_userRepo:  restored'
+  │ '_post: null restored JSON'
+  │ '_postPrev: null restored JSON'
+  │ '_postNo:  restored'
+  │ '_postVarName:  restored'
+  │ '_postRepo:  restored'
+  │ 'ctx restore end---'
+  └
+  GET google.com [200 OK, 9.3kB, 126ms]
+  ┌
+  │ "could not parse res body json: JSONError: Unexpected 
+  │ token '<' at 1:1\n" +
+  │   '<!doctype html><html itemscope="" itemtype="http://
+  │ schema.org/WebPage" lang="en\n' +
+  │   '^'
+  │ undefined
+  │ 'r'
+  └
+
+└ /user: read user metadata #Ext2 --fake-id&username
+  ┌
+  │ 'ctx restore start...'
+  │ '_encodeJSON:  restored'
+  │ '_decodeJSON:  restored'
+  │ '_user: null restored JSON'
+  │ '_userPrev: {"id":2,"key":"ab44a68785bb87ac2ff604a67f4
+  │ c9879","username":"$Laurel12","user_bio":null} restore
+  │ d JSON'
+  │ '_userNo:  restored'
+  │ '_userVarName:  restored'
+  │ '_userRepo:  restored'
+  │ '_post: null restored JSON'
+  │ '_postPrev: null restored JSON'
+  │ '_postNo:  restored'
+  │ '_postVarName:  restored'
+  │ '_postRepo:  restored'
+  │ 'ctx restore end---'
+  └
+  GET http://127.0.0.1:5000/user?id=126&username=$Laurel12 [404 NOT FOUND, 202B, 6ms]
+  ┌
+  │ { err: '126: user not found' }
+  │ 'r'
+  └
+  √  user not found
+
+└ /user: read user metadata #Ext2 --fake-id&fake-username
+  ┌
+  │ 'ctx restore start...'
+  │ '_encodeJSON:  restored'
+  │ '_decodeJSON:  restored'
+  │ '_user: null restored JSON'
+  │ '_userPrev: {"id":2,"key":"ab44a68785bb87ac2ff604a67f4
+  │ c9879","username":"$Laurel12","user_bio":null} restore
+  │ d JSON'
+  │ '_userNo:  restored'
+  │ '_userVarName:  restored'
+  │ '_userRepo:  restored'
+  │ '_post: null restored JSON'
+  │ '_postPrev: null restored JSON'
+  │ '_postNo:  restored'
+  │ '_postVarName:  restored'
+  │ '_postRepo:  restored'
+  │ 'ctx restore end---'
+  └
+  GET http://127.0.0.1:5000/user?id=420&username=Khalid_Herman [404 NOT FOUND, 202B, 16ms]
+  ┌
+  │ { err: '420: user not found' }
+  │ 'r'
+  └
+  √  user not found
+
+└ /user: read user metadata #Ext2 --fake-id&no-username
+  ┌
+  │ 'ctx restore start...'
+  │ '_encodeJSON:  restored'
+  │ '_decodeJSON:  restored'
+  │ '_user: null restored JSON'
+  │ '_userPrev: {"id":2,"key":"ab44a68785bb87ac2ff604a67f4
+  │ c9879","username":"$Laurel12","user_bio":null} restore
+  │ d JSON'
+  │ '_userNo:  restored'
+  │ '_userVarName:  restored'
+  │ '_userRepo:  restored'
+  │ '_post: null restored JSON'
+  │ '_postPrev: null restored JSON'
+  │ '_postNo:  restored'
+  │ '_postVarName:  restored'
+  │ '_postRepo:  restored'
+  │ 'ctx restore end---'
+  └
+  GET http://127.0.0.1:5000/user?id=811 [404 NOT FOUND, 202B, 7ms]
+  ┌
+  │ { err: '811: user not found' }
+  │ 'r'
+  └
+  √  user not found
+
+└ /user: read user metadata #Ext2 --no-id&fake-username
+  ┌
+  │ 'ctx restore start...'
+  │ '_encodeJSON:  restored'
+  │ '_decodeJSON:  restored'
+  │ '_user: null restored JSON'
+  │ '_userPrev: {"id":2,"key":"ab44a68785bb87ac2ff604a67f4
+  │ c9879","username":"$Laurel12","user_bio":null} restore
+  │ d JSON'
+  │ '_userNo:  restored'
+  │ '_userVarName:  restored'
+  │ '_userRepo:  restored'
+  │ '_post: null restored JSON'
+  │ '_postPrev: null restored JSON'
+  │ '_postNo:  restored'
+  │ '_postVarName:  restored'
+  │ '_postRepo:  restored'
+  │ 'ctx restore end---'
+  └
+  GET http://127.0.0.1:5000/user?username=Yessenia21 [404 NOT FOUND, 209B, 6ms]
+  ┌
+  │ {
+  │   err: 'Yessenia21: user not found'
+  │ }
+  │ 'r'
+  └
+  √  user not found
+
+└ /user: read user metadata #Ext2 --no-id/username
+  ┌
+  │ 'ctx restore start...'
+  │ '_encodeJSON:  restored'
+  │ '_decodeJSON:  restored'
+  │ '_user: null restored JSON'
+  │ '_userPrev: {"id":2,"key":"ab44a68785bb87ac2ff604a67f4
+  │ c9879","username":"$Laurel12","user_bio":null} restore
+  │ d JSON'
+  │ '_userNo:  restored'
+  │ '_userVarName:  restored'
+  │ '_userRepo:  restored'
+  │ '_post: null restored JSON'
+  │ '_postPrev: null restored JSON'
+  │ '_postNo:  restored'
+  │ '_postVarName:  restored'
+  │ '_postRepo:  restored'
+  │ 'ctx restore end---'
+  └
+  GET http://127.0.0.1:5000/user [400 BAD REQUEST, 227B, 6ms]
+  ┌
+  │ {
+  │   err: "'user_id' or 'id' is required for metadata"
+  │ }
+  │ 'r'
+  └
+  √  'id' or 'id' is required
+
+□ ---templates--- / edit user metadata
+└ /user/<id>/edit/<key>: edit user metadata #Ext2
+  ┌
+  │ 'ctx restore start...'
+  │ '_encodeJSON:  restored'
+  │ '_decodeJSON:  restored'
+  │ '_user: null restored JSON'
+  │ '_userPrev: {"id":2,"key":"ab44a68785bb87ac2ff604a67f4
+  │ c9879","username":"$Laurel12","user_bio":null} restore
+  │ d JSON'
+  │ '_userNo:  restored'
+  │ '_userVarName:  restored'
+  │ '_userRepo:  restored'
+  │ '_post: null restored JSON'
+  │ '_postPrev: null restored JSON'
+  │ '_postNo:  restored'
+  │ '_postVarName:  restored'
+  │ '_postRepo:  restored'
+  │ 'ctx restore end---'
+  └
+  PUT http://127.0.0.1:5000/user/2/edit/ab44a68785bb87ac2ff604a67f4c9879 [200 OK, 286B, 5ms]
+  ┌
+  │ {
+  │   id: 2,
+  │   user_bio: "I'll generate the optical EXE pixel, that
+  │  should card the IB alarm!",
+  │   username: 'Helmer_Ziemann52'
+  │ }
+  │ 'r'
+  └
+  √  return 'id', 'username', 'user_bio'
+  √  'id' should be a postive int
+  √  'key' is expected to be absent or present with trivial value
+  √  'username' should be a non-empty string
+  √  'user_bio' should be a non-empty string
+  √  return correct 'username', 'user_bio'
+  ┌
+  │ 'ctx save start...'
+  │ '_pm skipped'
+  │ '_encodeJSON: saved'
+  │ '_decodeJSON: saved'
+  │ '_user: null saved'
+  │ '_userPrev: {\n' +
+  │   '  "id": 2,\n' +
+  │   '  "key": "ab44a68785bb87ac2ff604a67f4c9879",\n' +
+  │   '  "username": "Helmer_Ziemann52",\n' +
+  │   `  "user_bio": "I'll generate the optical EXE pixel,
+  │  that should card the IB alarm!"\n` +
+  │   '} saved'
+  │ '_userNo: saved'
+  │ '_userVarName: saved'
+  │ '_userRepo: saved'
+  │ '_post: null saved'
+  │ '_postPrev: null saved'
+  │ '_postNo: saved'
+  │ '_postVarName: saved'
+  │ '_postRepo: saved'
+  │ 'ctx save end---'
+  └
+
+└ ------
+  ┌
+  │ 'ctx restore start...'
+  │ '_encodeJSON:  restored'
+  │ '_decodeJSON:  restored'
+  │ '_user: null restored JSON'
+  │ `_userPrev: {"id":2,"key":"ab44a68785bb87ac2ff604a67f4
+  │ c9879","username":"Helmer_Ziemann52","user_bio":"I'll 
+  │ generate the optical EXE pixel, that should card the I
+  │ B alarm!"} restored JSON`
+  │ '_userNo:  restored'
+  │ '_userVarName:  restored'
+  │ '_userRepo:  restored'
+  │ '_post: null restored JSON'
+  │ '_postPrev: null restored JSON'
+  │ '_postNo:  restored'
+  │ '_postVarName:  restored'
+  │ '_postRepo:  restored'
+  │ 'ctx restore end---'
+  └
+  PUT google.com [405 Method Not Allowed, 1.8kB, 29ms]
+  ┌
+  │ "could not parse res body json: JSONError: Unexpected 
+  │ token '<' at 1:1\n" +
+  │   '<!DOCTYPE html>\n' +
+  │   '^'
+  │ undefined
+  │ 'r'
+  └
+
+└ /user/<id>/edit/<key>: edit user metadata #Ext2 --no-username/user_bio
+  ┌
+  │ 'ctx restore start...'
+  │ '_encodeJSON:  restored'
+  │ '_decodeJSON:  restored'
+  │ '_user: null restored JSON'
+  │ `_userPrev: {"id":2,"key":"ab44a68785bb87ac2ff604a67f4
+  │ c9879","username":"Helmer_Ziemann52","user_bio":"I'll 
+  │ generate the optical EXE pixel, that should card the I
+  │ B alarm!"} restored JSON`
+  │ '_userNo:  restored'
+  │ '_userVarName:  restored'
+  │ '_userRepo:  restored'
+  │ '_post: null restored JSON'
+  │ '_postPrev: null restored JSON'
+  │ '_postNo:  restored'
+  │ '_postVarName:  restored'
+  │ '_postRepo:  restored'
+  │ 'ctx restore end---'
+  └
+  PUT http://127.0.0.1:5000/user/2/edit/ab44a68785bb87ac2ff604a67f4c9879 [400 BAD REQUEST, 199B, 6ms]
+  ┌
+  │ { err: 'Body was empty' }
+  │ 'r'
+  └
+  √  no 'username' nor 'user_bio'
+
+└ /user/<id>/edit/<key>: edit user metadata #Ext2 --no-username
+  ┌
+  │ 'ctx restore start...'
+  │ '_encodeJSON:  restored'
+  │ '_decodeJSON:  restored'
+  │ '_user: null restored JSON'
+  │ `_userPrev: {"id":2,"key":"ab44a68785bb87ac2ff604a67f4
+  │ c9879","username":"Helmer_Ziemann52","user_bio":"I'll 
+  │ generate the optical EXE pixel, that should card the I
+  │ B alarm!"} restored JSON`
+  │ '_userNo:  restored'
+  │ '_userVarName:  restored'
+  │ '_userRepo:  restored'
+  │ '_post: null restored JSON'
+  │ '_postPrev: null restored JSON'
+  │ '_postNo:  restored'
+  │ '_postVarName:  restored'
+  │ '_postRepo:  restored'
+  │ 'ctx restore end---'
+  └
+  PUT http://127.0.0.1:5000/user/2/edit/ab44a68785bb87ac2ff604a67f4c9879 [400 BAD REQUEST, 212B, 7ms]
+  ┌
+  │ {
+  │   err: 'username: not found in body'
+  │ }
+  │ 'r'
+  └
+  √  no 'username'
+
+└ /user/<id>/edit/<key>: edit user metadata #Ext2 --no-user_bio
+  ┌
+  │ 'ctx restore start...'
+  │ '_encodeJSON:  restored'
+  │ '_decodeJSON:  restored'
+  │ '_user: null restored JSON'
+  │ `_userPrev: {"id":2,"key":"ab44a68785bb87ac2ff604a67f4
+  │ c9879","username":"Helmer_Ziemann52","user_bio":"I'll 
+  │ generate the optical EXE pixel, that should card the I
+  │ B alarm!"} restored JSON`
+  │ '_userNo:  restored'
+  │ '_userVarName:  restored'
+  │ '_userRepo:  restored'
+  │ '_post: null restored JSON'
+  │ '_postPrev: null restored JSON'
+  │ '_postNo:  restored'
+  │ '_postVarName:  restored'
+  │ '_postRepo:  restored'
+  │ 'ctx restore end---'
+  └
+  PUT http://127.0.0.1:5000/user/2/edit/ab44a68785bb87ac2ff604a67f4c9879 [400 BAD REQUEST, 212B, 6ms]
+  ┌
+  │ {
+  │   err: 'user_bio: not found in body'
+  │ }
+  │ 'r'
+  └
+  √  no 'user_bio'
+
+└ /user/<id>/edit/<key>: edit user metadata #Ext2 --fake-id&fake-key
+  ┌
+  │ 'ctx restore start...'
+  │ '_encodeJSON:  restored'
+  │ '_decodeJSON:  restored'
+  │ '_user: null restored JSON'
+  │ `_userPrev: {"id":2,"key":"ab44a68785bb87ac2ff604a67f4
+  │ c9879","username":"Helmer_Ziemann52","user_bio":"I'll 
+  │ generate the optical EXE pixel, that should card the I
+  │ B alarm!"} restored JSON`
+  │ '_userNo:  restored'
+  │ '_userVarName:  restored'
+  │ '_userRepo:  restored'
+  │ '_post: null restored JSON'
+  │ '_postPrev: null restored JSON'
+  │ '_postNo:  restored'
+  │ '_postVarName:  restored'
+  │ '_postRepo:  restored'
+  │ 'ctx restore end---'
+  └
+  PUT http://127.0.0.1:5000/user/426/edit/hSpNsvF9U5g5aT9 [404 NOT FOUND, 202B, 8ms]
+  ┌
+  │ { err: '426: user not found' }
+  │ 'r'
+  └
+  √  fake uesr_id
+
+└ /user/<id>/edit/<key>: edit user metadata #Ext2 --id&fake-key
+  ┌
+  │ 'ctx restore start...'
+  │ '_encodeJSON:  restored'
+  │ '_decodeJSON:  restored'
+  │ '_user: null restored JSON'
+  │ `_userPrev: {"id":2,"key":"ab44a68785bb87ac2ff604a67f4
+  │ c9879","username":"Helmer_Ziemann52","user_bio":"I'll 
+  │ generate the optical EXE pixel, that should card the I
+  │ B alarm!"} restored JSON`
+  │ '_userNo:  restored'
+  │ '_userVarName:  restored'
+  │ '_userRepo:  restored'
+  │ '_post: null restored JSON'
+  │ '_postPrev: null restored JSON'
+  │ '_postNo:  restored'
+  │ '_postVarName:  restored'
+  │ '_postRepo:  restored'
+  │ 'ctx restore end---'
+  └
+  PUT http://127.0.0.1:5000/user/2/edit/SsrlSKhVPWQJPZc [403 FORBIDDEN, 220B, 7ms]
+  ┌
+  │ {
+  │   err: 'SsrlSKhVPWQJPZc: did not match user 2'
+  │ }
+  │ 'r'
+  └
+  √  fake key
+
+└ /user/<id>/edit/<key>: edit user metadata #Ext2 --fake-id&key
+  ┌
+  │ 'ctx restore start...'
+  │ '_encodeJSON:  restored'
+  │ '_decodeJSON:  restored'
+  │ '_user: null restored JSON'
+  │ `_userPrev: {"id":2,"key":"ab44a68785bb87ac2ff604a67f4
+  │ c9879","username":"Helmer_Ziemann52","user_bio":"I'll 
+  │ generate the optical EXE pixel, that should card the I
+  │ B alarm!"} restored JSON`
+  │ '_userNo:  restored'
+  │ '_userVarName:  restored'
+  │ '_userRepo:  restored'
+  │ '_post: null restored JSON'
+  │ '_postPrev: null restored JSON'
+  │ '_postNo:  restored'
+  │ '_postVarName:  restored'
+  │ '_postRepo:  restored'
+  │ 'ctx restore end---'
+  └
+  PUT http://127.0.0.1:5000/user/161/edit/ab44a68785bb87ac2ff604a67f4c9879 [404 NOT FOUND, 202B, 6ms]
+  ┌
+  │ { err: '161: user not found' }
+  │ 'r'
+  └
+  √  fake id
+
+└ /user/<id>/edit/<key>: edit user metadata #Ext2 --taken-username
+  ┌
+  │ 'ctx restore start...'
+  │ '_encodeJSON:  restored'
+  │ '_decodeJSON:  restored'
+  │ '_user: null restored JSON'
+  │ `_userPrev: {"id":2,"key":"ab44a68785bb87ac2ff604a67f4
+  │ c9879","username":"Helmer_Ziemann52","user_bio":"I'll 
+  │ generate the optical EXE pixel, that should card the I
+  │ B alarm!"} restored JSON`
+  │ '_userNo:  restored'
+  │ '_userVarName:  restored'
+  │ '_userRepo:  restored'
+  │ '_post: null restored JSON'
+  │ '_postPrev: null restored JSON'
+  │ '_postNo:  restored'
+  │ '_postVarName:  restored'
+  │ '_postRepo:  restored'
+  │ 'ctx restore end---'
+  └
+  PUT http://127.0.0.1:5000/user/2/edit/ab44a68785bb87ac2ff604a67f4c9879 [400 BAD REQUEST, 226B, 6ms]
+  ┌
+  │ {
+  │   err: 'Helmer_Ziemann52: username already exists'
+  │ }
+  │ 'r'
+  └
+  √  Helmer_Ziemann52 has been taken
+
+□ user1 --no-user_bio
+└ ---start script---
+  ┌
+  │ 'ctx restore start...'
+  │ '_encodeJSON:  restored'
+  │ '_decodeJSON:  restored'
+  │ '_user: null restored JSON'
+  │ `_userPrev: {"id":2,"key":"ab44a68785bb87ac2ff604a67f4
+  │ c9879","username":"Helmer_Ziemann52","user_bio":"I'll 
+  │ generate the optical EXE pixel, that should card the I
+  │ B alarm!"} restored JSON`
+  │ '_userNo:  restored'
+  │ '_userVarName:  restored'
+  │ '_userRepo:  restored'
+  │ '_post: null restored JSON'
+  │ '_postPrev: null restored JSON'
+  │ '_postNo:  restored'
+  │ '_postVarName:  restored'
+  │ '_postRepo:  restored'
+  │ 'ctx restore end---'
+  │ 'ctx save start...'
+  │ '_pm skipped'
+  │ '_encodeJSON: saved'
+  │ '_decodeJSON: saved'
+  │ '_user: null saved'
+  │ '_userPrev: null saved'
+  │ '_userNo:1 saved'
+  │ '_userVarName:1 saved'
+  │ '_userRepo: saved'
+  │ '_post: null saved'
+  │ '_postPrev: null saved'
+  │ '_postNo: saved'
+  │ '_postVarName: saved'
+  │ '_postRepo: saved'
+  │ 'ctx save end---'
+  └
+  POST http://127.0.0.1:5000/user [415 UNSUPPORTED MEDIA TYPE, 319B, 7ms]
+  ┌
+  │ {
+  │   err: "415 Unsupported Media Type: Did not attempt to
+  │  load JSON data because the request Content-Type was n
+  │ ot 'application/json'."
+  │ }
+  │ 'r'
+  └
+
+└ /user: create user #Ext1 --no-user_bio Copy
+  ┌
+  │ 'ctx restore start...'
+  │ '_encodeJSON:  restored'
+  │ '_decodeJSON:  restored'
+  │ '_user: null restored JSON'
+  │ '_userPrev: null restored JSON'
+  │ '_userNo: 1 restored JSON'
+  │ '_userVarName: 1 restored JSON'
+  │ '_userRepo:  restored'
+  │ '_post: null restored JSON'
+  │ '_postPrev: null restored JSON'
+  │ '_postNo:  restored'
+  │ '_postVarName:  restored'
+  │ '_postRepo:  restored'
+  │ 'ctx restore end---'
+  └
+  POST http://127.0.0.1:5000/user [200 OK, 298B, 6ms]
+  ┌
+  │ {
+  │   id: 3,
+  │   key: 'aa9a211244a8ce676ed684620153add6',
+  │   timestamp: '2023-12-17T02:50:27.305963',
+  │   user_bio: null,
+  │   username: '$Toney_Moen'
+  │ }
+  │ 'r'
+  └
+  √  return 'id', 'key', 'username'
+  √  'id' should be a postive int
+  √  'key' should be a non-empty string
+  √  'username' should be a non-empty string
+  √  'user_bio' is expected to be absent or present with trivial value
+  √  return correct 'username'
+  ┌
+  │ 'ctx save start...'
+  │ '_pm skipped'
+  │ '_encodeJSON: saved'
+  │ '_decodeJSON: saved'
+  │ '_user: null saved'
+  │ '_userPrev: {\n' +
+  │   '  "id": 3,\n' +
+  │   '  "key": "aa9a211244a8ce676ed684620153add6",\n' +
+  │   '  "username": "$Toney_Moen",\n' +
+  │   '  "user_bio": null\n' +
+  │   '} saved'
+  │ '_userNo:1 saved'
+  │ '_userVarName:1 saved'
+  │ '_userRepo: saved'
+  │ '_post: null saved'
+  │ '_postPrev: null saved'
+  │ '_postNo: saved'
+  │ '_postVarName: saved'
+  │ '_postRepo: saved'
+  │ 'ctx save end---'
+  └
+
+└ /user: read user metadata #Ext2 Copy
+  ┌
+  │ 'ctx restore start...'
+  │ '_encodeJSON:  restored'
+  │ '_decodeJSON:  restored'
+  │ '_user: null restored JSON'
+  │ '_userPrev: {"id":3,"key":"aa9a211244a8ce676ed68462015
+  │ 3add6","username":"$Toney_Moen","user_bio":null} resto
+  │ red JSON'
+  │ '_userNo: 1 restored JSON'
+  │ '_userVarName: 1 restored JSON'
+  │ '_userRepo:  restored'
+  │ '_post: null restored JSON'
+  │ '_postPrev: null restored JSON'
+  │ '_postNo:  restored'
+  │ '_postVarName:  restored'
+  │ '_postRepo:  restored'
+  │ 'ctx restore end---'
+  └
+  GET http://127.0.0.1:5000/user?id=3&username=$Toney_Moen [200 OK, 215B, 5ms]
+  ┌
+  │ {
+  │   id: 3,
+  │   user_bio: null,
+  │   username: '$Toney_Moen'
+  │ }
+  │ 'r'
+  └
+  √  return 'id', 'username', 'user_bio'
+  √  'id' should be a postive int
+  √  'username' should be a non-empty string
+  √  'user_bio' is expected to be absent or present with trivial value
+  √  return correct 'id', 'username', 'user_bio'
+
+└ /user: read user metadata #Ext2 --no-id Copy
+  ┌
+  │ 'ctx restore start...'
+  │ '_encodeJSON:  restored'
+  │ '_decodeJSON:  restored'
+  │ '_user: null restored JSON'
+  │ '_userPrev: {"id":3,"key":"aa9a211244a8ce676ed68462015
+  │ 3add6","username":"$Toney_Moen","user_bio":null} resto
+  │ red JSON'
+  │ '_userNo: 1 restored JSON'
+  │ '_userVarName: 1 restored JSON'
+  │ '_userRepo:  restored'
+  │ '_post: null restored JSON'
+  │ '_postPrev: null restored JSON'
+  │ '_postNo:  restored'
+  │ '_postVarName:  restored'
+  │ '_postRepo:  restored'
+  │ 'ctx restore end---'
+  └
+  GET http://127.0.0.1:5000/user?id=3&username=$Toney_Moen [200 OK, 215B, 5ms]
+  ┌
+  │ {
+  │   id: 3,
+  │   user_bio: null,
+  │   username: '$Toney_Moen'
+  │ }
+  │ 'r'
+  └
+  √  return 'id', 'username', 'user_bio'
+  √  'id' should be a postive int
+  √  'username' should be a non-empty string
+  √  'user_bio' is expected to be absent or present with trivial value
+  √  return correct 'id', 'username', 'user_bio'
+
+└ /user: read user metadata #Ext2 --no-username Copy
+  ┌
+  │ 'ctx restore start...'
+  │ '_encodeJSON:  restored'
+  │ '_decodeJSON:  restored'
+  │ '_user: null restored JSON'
+  │ '_userPrev: {"id":3,"key":"aa9a211244a8ce676ed68462015
+  │ 3add6","username":"$Toney_Moen","user_bio":null} resto
+  │ red JSON'
+  │ '_userNo: 1 restored JSON'
+  │ '_userVarName: 1 restored JSON'
+  │ '_userRepo:  restored'
+  │ '_post: null restored JSON'
+  │ '_postPrev: null restored JSON'
+  │ '_postNo:  restored'
+  │ '_postVarName:  restored'
+  │ '_postRepo:  restored'
+  │ 'ctx restore end---'
+  └
+  GET http://127.0.0.1:5000/user?id=3&username=$Toney_Moen [200 OK, 215B, 5ms]
+  ┌
+  │ {
+  │   id: 3,
+  │   user_bio: null,
+  │   username: '$Toney_Moen'
+  │ }
+  │ 'r'
+  └
+  √  return 'id', 'username', 'user_bio'
+  √  'id' should be a postive int
+  √  'username' should be a non-empty string
+  √  'user_bio' is expected to be absent or present with trivial value
+  √  return correct 'id', 'username', 'user_bio'
+
+└ /user: read user metadata #Ext2 --id&fake-username Copy
+  ┌
+  │ 'ctx restore start...'
+  │ '_encodeJSON:  restored'
+  │ '_decodeJSON:  restored'
+  │ '_user: null restored JSON'
+  │ '_userPrev: {"id":3,"key":"aa9a211244a8ce676ed68462015
+  │ 3add6","username":"$Toney_Moen","user_bio":null} resto
+  │ red JSON'
+  │ '_userNo: 1 restored JSON'
+  │ '_userVarName: 1 restored JSON'
+  │ '_userRepo:  restored'
+  │ '_post: null restored JSON'
+  │ '_postPrev: null restored JSON'
+  │ '_postNo:  restored'
+  │ '_postVarName:  restored'
+  │ '_postRepo:  restored'
+  │ 'ctx restore end---'
+  └
+  GET http://127.0.0.1:5000/user?id=3&username=$Toney_Moen [200 OK, 215B, 6ms]
+  ┌
+  │ {
+  │   id: 3,
+  │   user_bio: null,
+  │   username: '$Toney_Moen'
+  │ }
+  │ 'r'
+  └
+  √  return 'id', 'username', 'user_bio'
+  √  'id' should be a postive int
+  √  'username' should be a non-empty string
+  √  'user_bio' is expected to be absent or present with trivial value
+  √  return correct 'id', 'username', 'user_bio'
+
+└ ------ Copy
+  ┌
+  │ 'ctx restore start...'
+  │ '_encodeJSON:  restored'
+  │ '_decodeJSON:  restored'
+  │ '_user: null restored JSON'
+  │ '_userPrev: {"id":3,"key":"aa9a211244a8ce676ed68462015
+  │ 3add6","username":"$Toney_Moen","user_bio":null} resto
+  │ red JSON'
+  │ '_userNo: 1 restored JSON'
+  │ '_userVarName: 1 restored JSON'
+  │ '_userRepo:  restored'
+  │ '_post: null restored JSON'
+  │ '_postPrev: null restored JSON'
+  │ '_postNo:  restored'
+  │ '_postVarName:  restored'
+  │ '_postRepo:  restored'
+  │ 'ctx restore end---'
+  └
+  GET google.com [200 OK, 8.96kB, 101ms]
+  ┌
+  │ "could not parse res body json: JSONError: Unexpected 
+  │ token '<' at 1:1\n" +
+  │   '<!doctype html><html itemscope="" itemtype="http://
+  │ schema.org/WebPage" lang="en\n' +
+  │   '^'
+  │ undefined
+  │ 'r'
+  └
+
+└ /user: read user metadata #Ext2 --fake-id&username Copy
+  ┌
+  │ 'ctx restore start...'
+  │ '_encodeJSON:  restored'
+  │ '_decodeJSON:  restored'
+  │ '_user: null restored JSON'
+  │ '_userPrev: {"id":3,"key":"aa9a211244a8ce676ed68462015
+  │ 3add6","username":"$Toney_Moen","user_bio":null} resto
+  │ red JSON'
+  │ '_userNo: 1 restored JSON'
+  │ '_userVarName: 1 restored JSON'
+  │ '_userRepo:  restored'
+  │ '_post: null restored JSON'
+  │ '_postPrev: null restored JSON'
+  │ '_postNo:  restored'
+  │ '_postVarName:  restored'
+  │ '_postRepo:  restored'
+  │ 'ctx restore end---'
+  └
+  GET http://127.0.0.1:5000/user?id=965&username=$Toney_Moen [404 NOT FOUND, 202B, 6ms]
+  ┌
+  │ { err: '965: user not found' }
+  │ 'r'
+  └
+  √  user not found
+
+└ /user: read user metadata #Ext2 --fake-id&fake-username Copy
+  ┌
+  │ 'ctx restore start...'
+  │ '_encodeJSON:  restored'
+  │ '_decodeJSON:  restored'
+  │ '_user: null restored JSON'
+  │ '_userPrev: {"id":3,"key":"aa9a211244a8ce676ed68462015
+  │ 3add6","username":"$Toney_Moen","user_bio":null} resto
+  │ red JSON'
+  │ '_userNo: 1 restored JSON'
+  │ '_userVarName: 1 restored JSON'
+  │ '_userRepo:  restored'
+  │ '_post: null restored JSON'
+  │ '_postPrev: null restored JSON'
+  │ '_postNo:  restored'
+  │ '_postVarName:  restored'
+  │ '_postRepo:  restored'
+  │ 'ctx restore end---'
+  └
+  GET http://127.0.0.1:5000/user?id=394&username=Rebeca_Bartoletti60 [404 NOT FOUND, 202B, 7ms]
+  ┌
+  │ { err: '394: user not found' }
+  │ 'r'
+  └
+  √  user not found
+
+└ /user: read user metadata #Ext2 --fake-id&no-username Copy
+  ┌
+  │ 'ctx restore start...'
+  │ '_encodeJSON:  restored'
+  │ '_decodeJSON:  restored'
+  │ '_user: null restored JSON'
+  │ '_userPrev: {"id":3,"key":"aa9a211244a8ce676ed68462015
+  │ 3add6","username":"$Toney_Moen","user_bio":null} resto
+  │ red JSON'
+  │ '_userNo: 1 restored JSON'
+  │ '_userVarName: 1 restored JSON'
+  │ '_userRepo:  restored'
+  │ '_post: null restored JSON'
+  │ '_postPrev: null restored JSON'
+  │ '_postNo:  restored'
+  │ '_postVarName:  restored'
+  │ '_postRepo:  restored'
+  │ 'ctx restore end---'
+  └
+  GET http://127.0.0.1:5000/user?id=23 [404 NOT FOUND, 201B, 6ms]
+  ┌
+  │ { err: '23: user not found' }
+  │ 'r'
+  └
+  √  user not found
+
+└ /user: read user metadata #Ext2 --no-id&fake-username Copy
+  ┌
+  │ 'ctx restore start...'
+  │ '_encodeJSON:  restored'
+  │ '_decodeJSON:  restored'
+  │ '_user: null restored JSON'
+  │ '_userPrev: {"id":3,"key":"aa9a211244a8ce676ed68462015
+  │ 3add6","username":"$Toney_Moen","user_bio":null} resto
+  │ red JSON'
+  │ '_userNo: 1 restored JSON'
+  │ '_userVarName: 1 restored JSON'
+  │ '_userRepo:  restored'
+  │ '_post: null restored JSON'
+  │ '_postPrev: null restored JSON'
+  │ '_postNo:  restored'
+  │ '_postVarName:  restored'
+  │ '_postRepo:  restored'
+  │ 'ctx restore end---'
+  └
+  GET http://127.0.0.1:5000/user?username=Carmelo_Boyle32 [404 NOT FOUND, 214B, 6ms]
+  ┌
+  │ {
+  │   err: 'Carmelo_Boyle32: user not found'
+  │ }
+  │ 'r'
+  └
+  √  user not found
+
+└ /user: read user metadata #Ext2 --no-id/username Copy
+  ┌
+  │ 'ctx restore start...'
+  │ '_encodeJSON:  restored'
+  │ '_decodeJSON:  restored'
+  │ '_user: null restored JSON'
+  │ '_userPrev: {"id":3,"key":"aa9a211244a8ce676ed68462015
+  │ 3add6","username":"$Toney_Moen","user_bio":null} resto
+  │ red JSON'
+  │ '_userNo: 1 restored JSON'
+  │ '_userVarName: 1 restored JSON'
+  │ '_userRepo:  restored'
+  │ '_post: null restored JSON'
+  │ '_postPrev: null restored JSON'
+  │ '_postNo:  restored'
+  │ '_postVarName:  restored'
+  │ '_postRepo:  restored'
+  │ 'ctx restore end---'
+  └
+  GET http://127.0.0.1:5000/user [400 BAD REQUEST, 227B, 6ms]
+  ┌
+  │ {
+  │   err: "'user_id' or 'id' is required for metadata"
+  │ }
+  │ 'r'
+  └
+  √  'id' or 'id' is required
+
+└ /user/<id>/edit/<key>: edit user metadata #Ext2 Copy
+  ┌
+  │ 'ctx restore start...'
+  │ '_encodeJSON:  restored'
+  │ '_decodeJSON:  restored'
+  │ '_user: null restored JSON'
+  │ '_userPrev: {"id":3,"key":"aa9a211244a8ce676ed68462015
+  │ 3add6","username":"$Toney_Moen","user_bio":null} resto
+  │ red JSON'
+  │ '_userNo: 1 restored JSON'
+  │ '_userVarName: 1 restored JSON'
+  │ '_userRepo:  restored'
+  │ '_post: null restored JSON'
+  │ '_postPrev: null restored JSON'
+  │ '_postNo:  restored'
+  │ '_postVarName:  restored'
+  │ '_postRepo:  restored'
+  │ 'ctx restore end---'
+  └
+  PUT http://127.0.0.1:5000/user/3/edit/aa9a211244a8ce676ed684620153add6 [200 OK, 298B, 7ms]
+  ┌
+  │ {
+  │   id: 3,
+  │   user_bio: "backing up the circuit won't do anything,
+  │  we need to override the optical SSL capacitor!",
+  │   username: 'Elmer79'
+  │ }
+  │ 'r'
+  └
+  √  return 'id', 'username', 'user_bio'
+  √  'id' should be a postive int
+  √  'key' is expected to be absent or present with trivial value
+  √  'username' should be a non-empty string
+  √  'user_bio' should be a non-empty string
+  √  return correct 'username', 'user_bio'
+  ┌
+  │ 'ctx save start...'
+  │ '_pm skipped'
+  │ '_encodeJSON: saved'
+  │ '_decodeJSON: saved'
+  │ '_user: null saved'
+  │ '_userPrev: {\n' +
+  │   '  "id": 3,\n' +
+  │   '  "key": "aa9a211244a8ce676ed684620153add6",\n' +
+  │   '  "username": "Elmer79",\n' +
+  │   `  "user_bio": "backing up the circuit won't do anyt
+  │ hing, we need to override the optical SSL capacitor!"\
+  │ n` +
+  │   '} saved'
+  │ '_userNo:1 saved'
+  │ '_userVarName:1 saved'
+  │ '_userRepo: saved'
+  │ '_post: null saved'
+  │ '_postPrev: null saved'
+  │ '_postNo: saved'
+  │ '_postVarName: saved'
+  │ '_postRepo: saved'
+  │ 'ctx save end---'
+  └
+
+└ ------ Copy
+  ┌
+  │ 'ctx restore start...'
+  │ '_encodeJSON:  restored'
+  │ '_decodeJSON:  restored'
+  │ '_user: null restored JSON'
+  │ `_userPrev: {"id":3,"key":"aa9a211244a8ce676ed68462015
+  │ 3add6","username":"Elmer79","user_bio":"backing up the
+  │  circuit won't do anything, we need to override the op
+  │ tical SSL capacitor!"} restored JSON`
+  │ '_userNo: 1 restored JSON'
+  │ '_userVarName: 1 restored JSON'
+  │ '_userRepo:  restored'
+  │ '_post: null restored JSON'
+  │ '_postPrev: null restored JSON'
+  │ '_postNo:  restored'
+  │ '_postVarName:  restored'
+  │ '_postRepo:  restored'
+  │ 'ctx restore end---'
+  └
+  PUT google.com [405 Method Not Allowed, 1.8kB, 24ms]
+  ┌
+  │ "could not parse res body json: JSONError: Unexpected 
+  │ token '<' at 1:1\n" +
+  │   '<!DOCTYPE html>\n' +
+  │   '^'
+  │ undefined
+  │ 'r'
+  └
+
+└ /user/<id>/edit/<key>: edit user metadata #Ext2 --no-username/user_bio Copy
+  ┌
+  │ 'ctx restore start...'
+  │ '_encodeJSON:  restored'
+  │ '_decodeJSON:  restored'
+  │ '_user: null restored JSON'
+  │ `_userPrev: {"id":3,"key":"aa9a211244a8ce676ed68462015
+  │ 3add6","username":"Elmer79","user_bio":"backing up the
+  │  circuit won't do anything, we need to override the op
+  │ tical SSL capacitor!"} restored JSON`
+  │ '_userNo: 1 restored JSON'
+  │ '_userVarName: 1 restored JSON'
+  │ '_userRepo:  restored'
+  │ '_post: null restored JSON'
+  │ '_postPrev: null restored JSON'
+  │ '_postNo:  restored'
+  │ '_postVarName:  restored'
+  │ '_postRepo:  restored'
+  │ 'ctx restore end---'
+  └
+  PUT http://127.0.0.1:5000/user/3/edit/aa9a211244a8ce676ed684620153add6 [400 BAD REQUEST, 199B, 7ms]
+  ┌
+  │ { err: 'Body was empty' }
+  │ 'r'
+  └
+  √  no 'username' nor 'user_bio'
+
+└ /user/<id>/edit/<key>: edit user metadata #Ext2 --no-username Copy
+  ┌
+  │ 'ctx restore start...'
+  │ '_encodeJSON:  restored'
+  │ '_decodeJSON:  restored'
+  │ '_user: null restored JSON'
+  │ `_userPrev: {"id":3,"key":"aa9a211244a8ce676ed68462015
+  │ 3add6","username":"Elmer79","user_bio":"backing up the
+  │  circuit won't do anything, we need to override the op
+  │ tical SSL capacitor!"} restored JSON`
+  │ '_userNo: 1 restored JSON'
+  │ '_userVarName: 1 restored JSON'
+  │ '_userRepo:  restored'
+  │ '_post: null restored JSON'
+  │ '_postPrev: null restored JSON'
+  │ '_postNo:  restored'
+  │ '_postVarName:  restored'
+  │ '_postRepo:  restored'
+  │ 'ctx restore end---'
+  └
+  PUT http://127.0.0.1:5000/user/3/edit/aa9a211244a8ce676ed684620153add6 [400 BAD REQUEST, 212B, 7ms]
+  ┌
+  │ {
+  │   err: 'username: not found in body'
+  │ }
+  │ 'r'
+  └
+  √  no 'username'
+
+└ /user/<id>/edit/<key>: edit user metadata #Ext2 --no-user_bio Copy
+  ┌
+  │ 'ctx restore start...'
+  │ '_encodeJSON:  restored'
+  │ '_decodeJSON:  restored'
+  │ '_user: null restored JSON'
+  │ `_userPrev: {"id":3,"key":"aa9a211244a8ce676ed68462015
+  │ 3add6","username":"Elmer79","user_bio":"backing up the
+  │  circuit won't do anything, we need to override the op
+  │ tical SSL capacitor!"} restored JSON`
+  │ '_userNo: 1 restored JSON'
+  │ '_userVarName: 1 restored JSON'
+  │ '_userRepo:  restored'
+  │ '_post: null restored JSON'
+  │ '_postPrev: null restored JSON'
+  │ '_postNo:  restored'
+  │ '_postVarName:  restored'
+  │ '_postRepo:  restored'
+  │ 'ctx restore end---'
+  └
+  PUT http://127.0.0.1:5000/user/3/edit/aa9a211244a8ce676ed684620153add6 [400 BAD REQUEST, 212B, 8ms]
+  ┌
+  │ {
+  │   err: 'user_bio: not found in body'
+  │ }
+  │ 'r'
+  └
+  √  no 'user_bio'
+
+└ /user/<id>/edit/<key>: edit user metadata #Ext2 --fake-id&fake-key Copy
+  ┌
+  │ 'ctx restore start...'
+  │ '_encodeJSON:  restored'
+  │ '_decodeJSON:  restored'
+  │ '_user: null restored JSON'
+  │ `_userPrev: {"id":3,"key":"aa9a211244a8ce676ed68462015
+  │ 3add6","username":"Elmer79","user_bio":"backing up the
+  │  circuit won't do anything, we need to override the op
+  │ tical SSL capacitor!"} restored JSON`
+  │ '_userNo: 1 restored JSON'
+  │ '_userVarName: 1 restored JSON'
+  │ '_userRepo:  restored'
+  │ '_post: null restored JSON'
+  │ '_postPrev: null restored JSON'
+  │ '_postNo:  restored'
+  │ '_postVarName:  restored'
+  │ '_postRepo:  restored'
+  │ 'ctx restore end---'
+  └
+  PUT http://127.0.0.1:5000/user/259/edit/4pPFG80J3I1rVZu [404 NOT FOUND, 202B, 6ms]
+  ┌
+  │ { err: '259: user not found' }
+  │ 'r'
+  └
+  √  fake uesr_id
+
+└ /user/<id>/edit/<key>: edit user metadata #Ext2 --id&fake-key Copy
+  ┌
+  │ 'ctx restore start...'
+  │ '_encodeJSON:  restored'
+  │ '_decodeJSON:  restored'
+  │ '_user: null restored JSON'
+  │ `_userPrev: {"id":3,"key":"aa9a211244a8ce676ed68462015
+  │ 3add6","username":"Elmer79","user_bio":"backing up the
+  │  circuit won't do anything, we need to override the op
+  │ tical SSL capacitor!"} restored JSON`
+  │ '_userNo: 1 restored JSON'
+  │ '_userVarName: 1 restored JSON'
+  │ '_userRepo:  restored'
+  │ '_post: null restored JSON'
+  │ '_postPrev: null restored JSON'
+  │ '_postNo:  restored'
+  │ '_postVarName:  restored'
+  │ '_postRepo:  restored'
+  │ 'ctx restore end---'
+  └
+  PUT http://127.0.0.1:5000/user/3/edit/xmQAA9Z4qFpVohi [403 FORBIDDEN, 220B, 12ms]
+  ┌
+  │ {
+  │   err: 'xmQAA9Z4qFpVohi: did not match user 3'
+  │ }
+  │ 'r'
+  └
+  √  fake key
+
+└ /user/<id>/edit/<key>: edit user metadata #Ext2 --fake-id&key Copy
+  ┌
+  │ 'ctx restore start...'
+  │ '_encodeJSON:  restored'
+  │ '_decodeJSON:  restored'
+  │ '_user: null restored JSON'
+  │ `_userPrev: {"id":3,"key":"aa9a211244a8ce676ed68462015
+  │ 3add6","username":"Elmer79","user_bio":"backing up the
+  │  circuit won't do anything, we need to override the op
+  │ tical SSL capacitor!"} restored JSON`
+  │ '_userNo: 1 restored JSON'
+  │ '_userVarName: 1 restored JSON'
+  │ '_userRepo:  restored'
+  │ '_post: null restored JSON'
+  │ '_postPrev: null restored JSON'
+  │ '_postNo:  restored'
+  │ '_postVarName:  restored'
+  │ '_postRepo:  restored'
+  │ 'ctx restore end---'
+  └
+  PUT http://127.0.0.1:5000/user/727/edit/aa9a211244a8ce676ed684620153add6 [404 NOT FOUND, 202B, 6ms]
+  ┌
+  │ { err: '727: user not found' }
+  │ 'r'
+  └
+  √  fake id
+
+└ /user/<id>/edit/<key>: edit user metadata #Ext2 --taken-username Copy
+  ┌
+  │ 'ctx restore start...'
+  │ '_encodeJSON:  restored'
+  │ '_decodeJSON:  restored'
+  │ '_user: null restored JSON'
+  │ `_userPrev: {"id":3,"key":"aa9a211244a8ce676ed68462015
+  │ 3add6","username":"Elmer79","user_bio":"backing up the
+  │  circuit won't do anything, we need to override the op
+  │ tical SSL capacitor!"} restored JSON`
+  │ '_userNo: 1 restored JSON'
+  │ '_userVarName: 1 restored JSON'
+  │ '_userRepo:  restored'
+  │ '_post: null restored JSON'
+  │ '_postPrev: null restored JSON'
+  │ '_postNo:  restored'
+  │ '_postVarName:  restored'
+  │ '_postRepo:  restored'
+  │ 'ctx restore end---'
+  └
+  PUT http://127.0.0.1:5000/user/3/edit/aa9a211244a8ce676ed684620153add6 [400 BAD REQUEST, 217B, 6ms]
+  ┌
+  │ {
+  │   err: 'Elmer79: username already exists'
+  │ }
+  │ 'r'
+  └
+  √  Elmer79 has been taken
+
+□ user2
+└ ---start script---
+  ┌
+  │ 'ctx restore start...'
+  │ '_encodeJSON:  restored'
+  │ '_decodeJSON:  restored'
+  │ '_user: null restored JSON'
+  │ `_userPrev: {"id":3,"key":"aa9a211244a8ce676ed68462015
+  │ 3add6","username":"Elmer79","user_bio":"backing up the
+  │  circuit won't do anything, we need to override the op
+  │ tical SSL capacitor!"} restored JSON`
+  │ '_userNo: 1 restored JSON'
+  │ '_userVarName: 1 restored JSON'
+  │ '_userRepo:  restored'
+  │ '_post: null restored JSON'
+  │ '_postPrev: null restored JSON'
+  │ '_postNo:  restored'
+  │ '_postVarName:  restored'
+  │ '_postRepo:  restored'
+  │ 'ctx restore end---'
+  │ 'ctx save start...'
+  │ '_pm skipped'
+  │ '_encodeJSON: saved'
+  │ '_decodeJSON: saved'
+  │ '_user: null saved'
+  │ '_userPrev: null saved'
+  │ '_userNo:2 saved'
+  │ '_userVarName:12 saved'
+  │ '_userRepo: saved'
+  │ '_post: null saved'
+  │ '_postPrev: null saved'
+  │ '_postNo: saved'
+  │ '_postVarName: saved'
+  │ '_postRepo: saved'
+  │ 'ctx save end---'
+  └
+  POST http://127.0.0.1:5000/user [415 UNSUPPORTED MEDIA TYPE, 319B, 7ms]
+  ┌
+  │ {
+  │   err: "415 Unsupported Media Type: Did not attempt to
+  │  load JSON data because the request Content-Type was n
+  │ ot 'application/json'."
+  │ }
+  │ 'r'
+  └
+
+└ /user: create user #Ext1 Copy
+  ┌
+  │ 'ctx restore start...'
+  │ '_encodeJSON:  restored'
+  │ '_decodeJSON:  restored'
+  │ '_user: null restored JSON'
+  │ '_userPrev: null restored JSON'
+  │ '_userNo: 2 restored JSON'
+  │ '_userVarName: 12 restored JSON'
+  │ '_userRepo:  restored'
+  │ '_post: null restored JSON'
+  │ '_postPrev: null restored JSON'
+  │ '_postNo:  restored'
+  │ '_postVarName:  restored'
+  │ '_postRepo:  restored'
+  │ 'ctx restore end---'
+  └
+  POST http://127.0.0.1:5000/user [400 BAD REQUEST, 226B, 7ms]
+  ┌
+  │ {
+  │   err: 'username length should be in range [3,20]'
+  │ }
+  │ 'r'
+  └
+  1. return 'id', 'key', 'username', 'user_bio'
+  2. 'id' should be a postive int
+  3. 'key' should be a non-empty string
+  4. 'username' should be a non-empty string
+  5. 'user_bio' should be a non-empty string
+  6. return correct 'username', 'user_bio'
+  ┌
+  │ 'ctx save start...'
+  │ '_pm skipped'
+  │ '_encodeJSON: saved'
+  │ '_decodeJSON: saved'
+  │ '_user: null saved'
+  │ '_userPrev: {\n' +
+  │   '  "id": null,\n' +
+  │   '  "key": null,\n' +
+  │   '  "username": null,\n' +
+  │   '  "user_bio": null\n' +
+  │   '} saved'
+  │ '_userNo:2 saved'
+  │ '_userVarName:12 saved'
+  │ '_userRepo: saved'
+  │ '_post: null saved'
+  │ '_postPrev: null saved'
+  │ '_postNo: saved'
+  │ '_postVarName: saved'
+  │ '_postRepo: saved'
+  │ 'ctx save end---'
+  └
+
+└ /user: read user metadata #Ext2 Copy
+  ┌
+  │ 'ctx restore start...'
+  │ '_encodeJSON:  restored'
+  │ '_decodeJSON:  restored'
+  │ '_user: null restored JSON'
+  │ '_userPrev: {"id":null,"key":null,"username":null,"use
+  │ r_bio":null} restored JSON'
+  │ '_userNo: 2 restored JSON'
+  │ '_userVarName: 12 restored JSON'
+  │ '_userRepo:  restored'
+  │ '_post: null restored JSON'
+  │ '_postPrev: null restored JSON'
+  │ '_postNo:  restored'
+  │ '_postVarName:  restored'
+  │ '_postRepo:  restored'
+  │ 'ctx restore end---'
+  └
+  GET http://127.0.0.1:5000/user [400 BAD REQUEST, 227B, 6ms]
+  ┌
+  │ {
+  │   err: "'user_id' or 'id' is required for metadata"
+  │ }
+  │ 'r'
+  └
+  7. return 'id', 'username', 'user_bio'
+  8. 'id' should be a postive int
+  9. 'username' should be a non-empty string
+  √  return correct 'id', 'username', 'user_bio'
+
+└ /user: read user metadata #Ext2 --no-id Copy
+  ┌
+  │ 'ctx restore start...'
+  │ '_encodeJSON:  restored'
+  │ '_decodeJSON:  restored'
+  │ '_user: null restored JSON'
+  │ '_userPrev: {"id":null,"key":null,"username":null,"use
+  │ r_bio":null} restored JSON'
+  │ '_userNo: 2 restored JSON'
+  │ '_userVarName: 12 restored JSON'
+  │ '_userRepo:  restored'
+  │ '_post: null restored JSON'
+  │ '_postPrev: null restored JSON'
+  │ '_postNo:  restored'
+  │ '_postVarName:  restored'
+  │ '_postRepo:  restored'
+  │ 'ctx restore end---'
+  └
+  GET http://127.0.0.1:5000/user [400 BAD REQUEST, 227B, 7ms]
+  ┌
+  │ {
+  │   err: "'user_id' or 'id' is required for metadata"
+  │ }
+  │ 'r'
+  └
+ 10. return 'id', 'username', 'user_bio'
+ 11. 'id' should be a postive int
+ 12. 'username' should be a non-empty string
+  √  return correct 'id', 'username', 'user_bio'
+
+└ /user: read user metadata #Ext2 --no-username Copy
+  ┌
+  │ 'ctx restore start...'
+  │ '_encodeJSON:  restored'
+  │ '_decodeJSON:  restored'
+  │ '_user: null restored JSON'
+  │ '_userPrev: {"id":null,"key":null,"username":null,"use
+  │ r_bio":null} restored JSON'
+  │ '_userNo: 2 restored JSON'
+  │ '_userVarName: 12 restored JSON'
+  │ '_userRepo:  restored'
+  │ '_post: null restored JSON'
+  │ '_postPrev: null restored JSON'
+  │ '_postNo:  restored'
+  │ '_postVarName:  restored'
+  │ '_postRepo:  restored'
+  │ 'ctx restore end---'
+  └
+  GET http://127.0.0.1:5000/user [400 BAD REQUEST, 227B, 6ms]
+  ┌
+  │ {
+  │   err: "'user_id' or 'id' is required for metadata"
+  │ }
+  │ 'r'
+  └
+ 13. return 'id', 'username', 'user_bio'
+ 14. 'id' should be a postive int
+ 15. 'username' should be a non-empty string
+  √  return correct 'id', 'username', 'user_bio'
+
+└ /user: read user metadata #Ext2 --id&fake-username Copy
+  ┌
+  │ 'ctx restore start...'
+  │ '_encodeJSON:  restored'
+  │ '_decodeJSON:  restored'
+  │ '_user: null restored JSON'
+  │ '_userPrev: {"id":null,"key":null,"username":null,"use
+  │ r_bio":null} restored JSON'
+  │ '_userNo: 2 restored JSON'
+  │ '_userVarName: 12 restored JSON'
+  │ '_userRepo:  restored'
+  │ '_post: null restored JSON'
+  │ '_postPrev: null restored JSON'
+  │ '_postNo:  restored'
+  │ '_postVarName:  restored'
+  │ '_postRepo:  restored'
+  │ 'ctx restore end---'
+  └
+  GET http://127.0.0.1:5000/user [400 BAD REQUEST, 227B, 6ms]
+  ┌
+  │ {
+  │   err: "'user_id' or 'id' is required for metadata"
+  │ }
+  │ 'r'
+  └
+ 16. return 'id', 'username', 'user_bio'
+ 17. 'id' should be a postive int
+ 18. 'username' should be a non-empty string
+  √  return correct 'id', 'username', 'user_bio'
+
+└ ------ Copy
+  ┌
+  │ 'ctx restore start...'
+  │ '_encodeJSON:  restored'
+  │ '_decodeJSON:  restored'
+  │ '_user: null restored JSON'
+  │ '_userPrev: {"id":null,"key":null,"username":null,"use
+  │ r_bio":null} restored JSON'
+  │ '_userNo: 2 restored JSON'
+  │ '_userVarName: 12 restored JSON'
+  │ '_userRepo:  restored'
+  │ '_post: null restored JSON'
+  │ '_postPrev: null restored JSON'
+  │ '_postNo:  restored'
+  │ '_postVarName:  restored'
+  │ '_postRepo:  restored'
+  │ 'ctx restore end---'
+  └
+  GET google.com [200 OK, 8.97kB, 81ms]
+  ┌
+  │ "could not parse res body json: JSONError: Unexpected 
+  │ token '<' at 1:1\n" +
+  │   '<!doctype html><html itemscope="" itemtype="http://
+  │ schema.org/WebPage" lang="en\n' +
+  │   '^'
+  │ undefined
+  │ 'r'
+  └
+
+└ /user: read user metadata #Ext2 --fake-id&username Copy
+  ┌
+  │ 'ctx restore start...'
+  │ '_encodeJSON:  restored'
+  │ '_decodeJSON:  restored'
+  │ '_user: null restored JSON'
+  │ '_userPrev: {"id":null,"key":null,"username":null,"use
+  │ r_bio":null} restored JSON'
+  │ '_userNo: 2 restored JSON'
+  │ '_userVarName: 12 restored JSON'
+  │ '_userRepo:  restored'
+  │ '_post: null restored JSON'
+  │ '_postPrev: null restored JSON'
+  │ '_postNo:  restored'
+  │ '_postVarName:  restored'
+  │ '_postRepo:  restored'
+  │ 'ctx restore end---'
+  └
+  GET http://127.0.0.1:5000/user?id=287 [404 NOT FOUND, 202B, 6ms]
+  ┌
+  │ { err: '287: user not found' }
+  │ 'r'
+  └
+  √  user not found
+
+└ /user: read user metadata #Ext2 --fake-id&fake-username Copy
+  ┌
+  │ 'ctx restore start...'
+  │ '_encodeJSON:  restored'
+  │ '_decodeJSON:  restored'
+  │ '_user: null restored JSON'
+  │ '_userPrev: {"id":null,"key":null,"username":null,"use
+  │ r_bio":null} restored JSON'
+  │ '_userNo: 2 restored JSON'
+  │ '_userVarName: 12 restored JSON'
+  │ '_userRepo:  restored'
+  │ '_post: null restored JSON'
+  │ '_postPrev: null restored JSON'
+  │ '_postNo:  restored'
+  │ '_postVarName:  restored'
+  │ '_postRepo:  restored'
+  │ 'ctx restore end---'
+  └
+  GET http://127.0.0.1:5000/user?id=989&username=Carroll_Padberg [404 NOT FOUND, 202B, 6ms]
+  ┌
+  │ { err: '989: user not found' }
+  │ 'r'
+  └
+  √  user not found
+
+└ /user: read user metadata #Ext2 --fake-id&no-username Copy
+  ┌
+  │ 'ctx restore start...'
+  │ '_encodeJSON:  restored'
+  │ '_decodeJSON:  restored'
+  │ '_user: null restored JSON'
+  │ '_userPrev: {"id":null,"key":null,"username":null,"use
+  │ r_bio":null} restored JSON'
+  │ '_userNo: 2 restored JSON'
+  │ '_userVarName: 12 restored JSON'
+  │ '_userRepo:  restored'
+  │ '_post: null restored JSON'
+  │ '_postPrev: null restored JSON'
+  │ '_postNo:  restored'
+  │ '_postVarName:  restored'
+  │ '_postRepo:  restored'
+  │ 'ctx restore end---'
+  └
+  GET http://127.0.0.1:5000/user?id=919 [404 NOT FOUND, 202B, 5ms]
+  ┌
+  │ { err: '919: user not found' }
+  │ 'r'
+  └
+  √  user not found
+
+└ /user: read user metadata #Ext2 --no-id&fake-username Copy
+  ┌
+  │ 'ctx restore start...'
+  │ '_encodeJSON:  restored'
+  │ '_decodeJSON:  restored'
+  │ '_user: null restored JSON'
+  │ '_userPrev: {"id":null,"key":null,"username":null,"use
+  │ r_bio":null} restored JSON'
+  │ '_userNo: 2 restored JSON'
+  │ '_userVarName: 12 restored JSON'
+  │ '_userRepo:  restored'
+  │ '_post: null restored JSON'
+  │ '_postPrev: null restored JSON'
+  │ '_postNo:  restored'
+  │ '_postVarName:  restored'
+  │ '_postRepo:  restored'
+  │ 'ctx restore end---'
+  └
+  GET http://127.0.0.1:5000/user?username=Leta_Schulist18 [404 NOT FOUND, 214B, 5ms]
+  ┌
+  │ {
+  │   err: 'Leta_Schulist18: user not found'
+  │ }
+  │ 'r'
+  └
+  √  user not found
+
+└ /user: read user metadata #Ext2 --no-id/username Copy
+  ┌
+  │ 'ctx restore start...'
+  │ '_encodeJSON:  restored'
+  │ '_decodeJSON:  restored'
+  │ '_user: null restored JSON'
+  │ '_userPrev: {"id":null,"key":null,"username":null,"use
+  │ r_bio":null} restored JSON'
+  │ '_userNo: 2 restored JSON'
+  │ '_userVarName: 12 restored JSON'
+  │ '_userRepo:  restored'
+  │ '_post: null restored JSON'
+  │ '_postPrev: null restored JSON'
+  │ '_postNo:  restored'
+  │ '_postVarName:  restored'
+  │ '_postRepo:  restored'
+  │ 'ctx restore end---'
+  └
+  GET http://127.0.0.1:5000/user [400 BAD REQUEST, 227B, 6ms]
+  ┌
+  │ {
+  │   err: "'user_id' or 'id' is required for metadata"
+  │ }
+  │ 'r'
+  └
+  √  'id' or 'id' is required
+
+└ /user/<id>/edit/<key>: edit user metadata #Ext2 Copy
+  ┌
+  │ 'ctx restore start...'
+  │ '_encodeJSON:  restored'
+  │ '_decodeJSON:  restored'
+  │ '_user: null restored JSON'
+  │ '_userPrev: {"id":null,"key":null,"username":null,"use
+  │ r_bio":null} restored JSON'
+  │ '_userNo: 2 restored JSON'
+  │ '_userVarName: 12 restored JSON'
+  │ '_userRepo:  restored'
+  │ '_post: null restored JSON'
+  │ '_postPrev: null restored JSON'
+  │ '_postNo:  restored'
+  │ '_postVarName:  restored'
+  │ '_postRepo:  restored'
+  │ 'ctx restore end---'
+  └
+  PUT http://127.0.0.1:5000/user/null/edit/null [404 NOT FOUND, 319B, 6ms]
+  ┌
+  │ {
+  │   err: '404 Not Found: The requested URL was not found
+  │  on the server. If you entered the URL manually please
+  │  check your spelling and try again.'
+  │ }
+  │ 'r'
+  └
+ 19. return 'id', 'username', 'user_bio'
+ 20. 'id' should be a postive int
+  √  'key' is expected to be absent or present with trivial value
+ 21. 'username' should be a non-empty string
+ 22. 'user_bio' should be a non-empty string
+ 23. return correct 'username', 'user_bio'
+  ┌
+  │ 'ctx save start...'
+  │ '_pm skipped'
+  │ '_encodeJSON: saved'
+  │ '_decodeJSON: saved'
+  │ '_user: null saved'
+  │ '_userPrev: {\n' +
+  │   '  "id": null,\n' +
+  │   '  "key": null,\n' +
+  │   '  "username": null,\n' +
+  │   '  "user_bio": null\n' +
+  │   '} saved'
+  │ '_userNo:2 saved'
+  │ '_userVarName:12 saved'
+  │ '_userRepo: saved'
+  │ '_post: null saved'
+  │ '_postPrev: null saved'
+  │ '_postNo: saved'
+  │ '_postVarName: saved'
+  │ '_postRepo: saved'
+  │ 'ctx save end---'
+  └
+
+└ ------ Copy
+  ┌
+  │ 'ctx restore start...'
+  │ '_encodeJSON:  restored'
+  │ '_decodeJSON:  restored'
+  │ '_user: null restored JSON'
+  │ '_userPrev: {"id":null,"key":null,"username":null,"use
+  │ r_bio":null} restored JSON'
+  │ '_userNo: 2 restored JSON'
+  │ '_userVarName: 12 restored JSON'
+  │ '_userRepo:  restored'
+  │ '_post: null restored JSON'
+  │ '_postPrev: null restored JSON'
+  │ '_postNo:  restored'
+  │ '_postVarName:  restored'
+  │ '_postRepo:  restored'
+  │ 'ctx restore end---'
+  └
+  PUT google.com [405 Method Not Allowed, 1.8kB, 24ms]
+  ┌
+  │ "could not parse res body json: JSONError: Unexpected 
+  │ token '<' at 1:1\n" +
+  │   '<!DOCTYPE html>\n' +
+  │   '^'
+  │ undefined
+  │ 'r'
+  └
+
+└ /user/<id>/edit/<key>: edit user metadata #Ext2 --no-username/user_bio Copy
+  ┌
+  │ 'ctx restore start...'
+  │ '_encodeJSON:  restored'
+  │ '_decodeJSON:  restored'
+  │ '_user: null restored JSON'
+  │ '_userPrev: {"id":null,"key":null,"username":null,"use
+  │ r_bio":null} restored JSON'
+  │ '_userNo: 2 restored JSON'
+  │ '_userVarName: 12 restored JSON'
+  │ '_userRepo:  restored'
+  │ '_post: null restored JSON'
+  │ '_postPrev: null restored JSON'
+  │ '_postNo:  restored'
+  │ '_postVarName:  restored'
+  │ '_postRepo:  restored'
+  │ 'ctx restore end---'
+  └
+  PUT http://127.0.0.1:5000/user/null/edit/null [404 NOT FOUND, 319B, 8ms]
+  ┌
+  │ {
+  │   err: '404 Not Found: The requested URL was not found
+  │  on the server. If you entered the URL manually please
+  │  check your spelling and try again.'
+  │ }
+  │ 'r'
+  └
+ 24. no 'username' nor 'user_bio'
+
+└ /user/<id>/edit/<key>: edit user metadata #Ext2 --no-username Copy
+  ┌
+  │ 'ctx restore start...'
+  │ '_encodeJSON:  restored'
+  │ '_decodeJSON:  restored'
+  │ '_user: null restored JSON'
+  │ '_userPrev: {"id":null,"key":null,"username":null,"use
+  │ r_bio":null} restored JSON'
+  │ '_userNo: 2 restored JSON'
+  │ '_userVarName: 12 restored JSON'
+  │ '_userRepo:  restored'
+  │ '_post: null restored JSON'
+  │ '_postPrev: null restored JSON'
+  │ '_postNo:  restored'
+  │ '_postVarName:  restored'
+  │ '_postRepo:  restored'
+  │ 'ctx restore end---'
+  └
+  PUT http://127.0.0.1:5000/user/null/edit/null [404 NOT FOUND, 319B, 5ms]
+  ┌
+  │ {
+  │   err: '404 Not Found: The requested URL was not found
+  │  on the server. If you entered the URL manually please
+  │  check your spelling and try again.'
+  │ }
+  │ 'r'
+  └
+ 25. no 'username'
+
+└ /user/<id>/edit/<key>: edit user metadata #Ext2 --no-user_bio Copy
+  ┌
+  │ 'ctx restore start...'
+  │ '_encodeJSON:  restored'
+  │ '_decodeJSON:  restored'
+  │ '_user: null restored JSON'
+  │ '_userPrev: {"id":null,"key":null,"username":null,"use
+  │ r_bio":null} restored JSON'
+  │ '_userNo: 2 restored JSON'
+  │ '_userVarName: 12 restored JSON'
+  │ '_userRepo:  restored'
+  │ '_post: null restored JSON'
+  │ '_postPrev: null restored JSON'
+  │ '_postNo:  restored'
+  │ '_postVarName:  restored'
+  │ '_postRepo:  restored'
+  │ 'ctx restore end---'
+  └
+  PUT http://127.0.0.1:5000/user/null/edit/null [404 NOT FOUND, 319B, 6ms]
+  ┌
+  │ {
+  │   err: '404 Not Found: The requested URL was not found
+  │  on the server. If you entered the URL manually please
+  │  check your spelling and try again.'
+  │ }
+  │ 'r'
+  └
+ 26. no 'user_bio'
+
+└ /user/<id>/edit/<key>: edit user metadata #Ext2 --fake-id&fake-key Copy
+  ┌
+  │ 'ctx restore start...'
+  │ '_encodeJSON:  restored'
+  │ '_decodeJSON:  restored'
+  │ '_user: null restored JSON'
+  │ '_userPrev: {"id":null,"key":null,"username":null,"use
+  │ r_bio":null} restored JSON'
+  │ '_userNo: 2 restored JSON'
+  │ '_userVarName: 12 restored JSON'
+  │ '_userRepo:  restored'
+  │ '_post: null restored JSON'
+  │ '_postPrev: null restored JSON'
+  │ '_postNo:  restored'
+  │ '_postVarName:  restored'
+  │ '_postRepo:  restored'
+  │ 'ctx restore end---'
+  └
+  PUT http://127.0.0.1:5000/user/523/edit/aDXpsrxCylXciXq [404 NOT FOUND, 202B, 8ms]
+  ┌
+  │ { err: '523: user not found' }
+  │ 'r'
+  └
+  √  fake uesr_id
+
+└ /user/<id>/edit/<key>: edit user metadata #Ext2 --id&fake-key Copy
+  ┌
+  │ 'ctx restore start...'
+  │ '_encodeJSON:  restored'
+  │ '_decodeJSON:  restored'
+  │ '_user: null restored JSON'
+  │ '_userPrev: {"id":null,"key":null,"username":null,"use
+  │ r_bio":null} restored JSON'
+  │ '_userNo: 2 restored JSON'
+  │ '_userVarName: 12 restored JSON'
+  │ '_userRepo:  restored'
+  │ '_post: null restored JSON'
+  │ '_postPrev: null restored JSON'
+  │ '_postNo:  restored'
+  │ '_postVarName:  restored'
+  │ '_postRepo:  restored'
+  │ 'ctx restore end---'
+  └
+  PUT http://127.0.0.1:5000/user/null/edit/7TQZrzZJNwHytP2 [404 NOT FOUND, 319B, 6ms]
+  ┌
+  │ {
+  │   err: '404 Not Found: The requested URL was not found
+  │  on the server. If you entered the URL manually please
+  │  check your spelling and try again.'
+  │ }
+  │ 'r'
+  └
+ 27. fake key
+
+└ /user/<id>/edit/<key>: edit user metadata #Ext2 --fake-id&key Copy
+  ┌
+  │ 'ctx restore start...'
+  │ '_encodeJSON:  restored'
+  │ '_decodeJSON:  restored'
+  │ '_user: null restored JSON'
+  │ '_userPrev: {"id":null,"key":null,"username":null,"use
+  │ r_bio":null} restored JSON'
+  │ '_userNo: 2 restored JSON'
+  │ '_userVarName: 12 restored JSON'
+  │ '_userRepo:  restored'
+  │ '_post: null restored JSON'
+  │ '_postPrev: null restored JSON'
+  │ '_postNo:  restored'
+  │ '_postVarName:  restored'
+  │ '_postRepo:  restored'
+  │ 'ctx restore end---'
+  └
+  PUT http://127.0.0.1:5000/user/680/edit/null [404 NOT FOUND, 202B, 6ms]
+  ┌
+  │ { err: '680: user not found' }
+  │ 'r'
+  └
+  √  fake id
+
+└ /user/<id>/edit/<key>: edit user metadata #Ext2 --taken-username Copy
+  ┌
+  │ 'ctx restore start...'
+  │ '_encodeJSON:  restored'
+  │ '_decodeJSON:  restored'
+  │ '_user: null restored JSON'
+  │ '_userPrev: {"id":null,"key":null,"username":null,"use
+  │ r_bio":null} restored JSON'
+  │ '_userNo: 2 restored JSON'
+  │ '_userVarName: 12 restored JSON'
+  │ '_userRepo:  restored'
+  │ '_post: null restored JSON'
+  │ '_postPrev: null restored JSON'
+  │ '_postNo:  restored'
+  │ '_postVarName:  restored'
+  │ '_postRepo:  restored'
+  │ 'ctx restore end---'
+  └
+  PUT http://127.0.0.1:5000/user/null/edit/null [404 NOT FOUND, 319B, 6ms]
+  ┌
+  │ {
+  │   err: '404 Not Found: The requested URL was not found
+  │  on the server. If you entered the URL manually please
+  │  check your spelling and try again.'
+  │ }
+  │ 'r'
+  └
+ 28. null has been taken
+
+┌─────────────────────────┬───────────────────┬──────────────────┐
+│                         │          executed │           failed │
+├─────────────────────────┼───────────────────┼──────────────────┤
+│              iterations │                 1 │                0 │
+├─────────────────────────┼───────────────────┼──────────────────┤
+│                requests │                68 │                0 │
+├─────────────────────────┼───────────────────┼──────────────────┤
+│            test-scripts │               162 │                0 │
+├─────────────────────────┼───────────────────┼──────────────────┤
+│      prerequest-scripts │               161 │                0 │
+├─────────────────────────┼───────────────────┼──────────────────┤
+│              assertions │               134 │               28 │
+├─────────────────────────┴───────────────────┴──────────────────┤
+│ total run duration: 7.4s                                       │
+├────────────────────────────────────────────────────────────────┤
+│ total data received: 34.72kB (approx)                          │
+├────────────────────────────────────────────────────────────────┤
+│ average response time: 14ms [min: 5ms, max: 153ms, s.d.: 26ms] │
+└────────────────────────────────────────────────────────────────┘
+
+   #  failure         detail                                                                                       
+                                                                                                                   
+ 01.  AssertionError  return 'id', 'key', 'username', 'user_bio'                                                   
+                      expected response to have status code 200 but got 400                                        
+                      at assertion:0 in test-script                                                                
+                      inside "user2 / /user: create user #Ext1 Copy"                                               
+                                                                                                                   
+ 02.  AssertionError  'id' should be a postive int                                                                 
+                      expected false to be true                                                                    
+                      at assertion:1 in test-script                                                                
+                      inside "user2 / /user: create user #Ext1 Copy"                                               
+                                                                                                                   
+ 03.  AssertionError  'key' should be a non-empty string                                                           
+                      expected false to be true                                                                    
+                      at assertion:2 in test-script                                                                
+                      inside "user2 / /user: create user #Ext1 Copy"                                               
+                                                                                                                   
+ 04.  AssertionError  'username' should be a non-empty string                                                      
+                      expected false to be true                                                                    
+                      at assertion:3 in test-script                                                                
+                      inside "user2 / /user: create user #Ext1 Copy"                                               
+                                                                                                                   
+ 05.  AssertionError  'user_bio' should be a non-empty string                                                      
+                      expected false to be true                                                                    
+                      at assertion:4 in test-script                                                                
+                      inside "user2 / /user: create user #Ext1 Copy"                                               
+                                                                                                                   
+ 06.  AssertionError  return correct 'username', 'user_bio'                                                        
+                      expected null to equal 'Maureen_Cruickshank85'                                               
+                      at assertion:5 in test-script                                                                
+                      inside "user2 / /user: create user #Ext1 Copy"                                               
+                                                                                                                   
+ 07.  AssertionError  return 'id', 'username', 'user_bio'                                                          
+                      expected response to have status code 200 but got 400                                        
+                      at assertion:0 in test-script                                                                
+                      inside "user2 / /user: read user metadata #Ext2 Copy"                                        
+                                                                                                                   
+ 08.  AssertionError  'id' should be a postive int                                                                 
+                      expected false to be true                                                                    
+                      at assertion:1 in test-script                                                                
+                      inside "user2 / /user: read user metadata #Ext2 Copy"                                        
+                                                                                                                   
+ 09.  AssertionError  'username' should be a non-empty string                                                      
+                      expected false to be true                                                                    
+                      at assertion:2 in test-script                                                                
+                      inside "user2 / /user: read user metadata #Ext2 Copy"                                        
+                                                                                                                   
+ 10.  AssertionError  return 'id', 'username', 'user_bio'                                                          
+                      expected response to have status code 200 but got 400                                        
+                      at assertion:0 in test-script                                                                
+                      inside "user2 / /user: read user metadata #Ext2 --no-id Copy"                                
+                                                                                                                   
+ 11.  AssertionError  'id' should be a postive int                                                                 
+                      expected false to be true                                                                    
+                      at assertion:1 in test-script                                                                
+                      inside "user2 / /user: read user metadata #Ext2 --no-id Copy"                                
+                                                                                                                   
+ 12.  AssertionError  'username' should be a non-empty string                                                      
+                      expected false to be true                                                                    
+                      at assertion:2 in test-script                                                                
+                      inside "user2 / /user: read user metadata #Ext2 --no-id Copy"                                
+                                                                                                                   
+ 13.  AssertionError  return 'id', 'username', 'user_bio'                                                          
+                      expected response to have status code 200 but got 400                                        
+                      at assertion:0 in test-script                                                                
+                      inside "user2 / /user: read user metadata #Ext2 --no-username Copy"                          
+                                                                                                                   
+ 14.  AssertionError  'id' should be a postive int                                                                 
+                      expected false to be true                                                                    
+                      at assertion:1 in test-script                                                                
+                      inside "user2 / /user: read user metadata #Ext2 --no-username Copy"                          
+                                                                                                                   
+ 15.  AssertionError  'username' should be a non-empty string                                                      
+                      expected false to be true                                                                    
+                      at assertion:2 in test-script                                                                
+                      inside "user2 / /user: read user metadata #Ext2 --no-username Copy"                          
+                                                                                                                   
+ 16.  AssertionError  return 'id', 'username', 'user_bio'                                                          
+                      expected response to have status code 200 but got 400                                        
+                      at assertion:0 in test-script                                                                
+                      inside "user2 / /user: read user metadata #Ext2 --id&fake-username Copy"                     
+                                                                                                                   
+ 17.  AssertionError  'id' should be a postive int                                                                 
+                      expected false to be true                                                                    
+                      at assertion:1 in test-script                                                                
+                      inside "user2 / /user: read user metadata #Ext2 --id&fake-username Copy"                     
+                                                                                                                   
+ 18.  AssertionError  'username' should be a non-empty string                                                      
+                      expected false to be true                                                                    
+                      at assertion:2 in test-script                                                                
+                      inside "user2 / /user: read user metadata #Ext2 --id&fake-username Copy"                     
+                                                                                                                   
+ 19.  AssertionError  return 'id', 'username', 'user_bio'                                                          
+                      expected response to have status code 200 but got 404                                        
+                      at assertion:0 in test-script                                                                
+                      inside "user2 / /user/<id>/edit/<key>: edit user metadata #Ext2 Copy"                        
+                                                                                                                   
+ 20.  AssertionError  'id' should be a postive int                                                                 
+                      expected false to be true                                                                    
+                      at assertion:1 in test-script                                                                
+                      inside "user2 / /user/<id>/edit/<key>: edit user metadata #Ext2 Copy"                        
+                                                                                                                   
+ 21.  AssertionError  'username' should be a non-empty string                                                      
+                      expected false to be true                                                                    
+                      at assertion:2 in test-script                                                                
+                      inside "user2 / /user/<id>/edit/<key>: edit user metadata #Ext2 Copy"                        
+                                                                                                                   
+ 22.  AssertionError  'user_bio' should be a non-empty string                                                      
+                      expected false to be true                                                                    
+                      at assertion:3 in test-script                                                                
+                      inside "user2 / /user/<id>/edit/<key>: edit user metadata #Ext2 Copy"                        
+                                                                                                                   
+ 23.  AssertionError  return correct 'username', 'user_bio'                                                        
+                      expected null to equal 'Paula_Prohaska'                                                      
+                      at assertion:4 in test-script                                                                
+                      inside "user2 / /user/<id>/edit/<key>: edit user metadata #Ext2 Copy"                        
+                                                                                                                   
+ 24.  AssertionError  no 'username' nor 'user_bio'                                                                 
+                      expected response to have status code 400 but got 404                                        
+                      at assertion:0 in test-script                                                                
+                      inside "user2 / /user/<id>/edit/<key>: edit user metadata #Ext2 --no-username/user_bio Copy" 
+                                                                                                                   
+ 25.  AssertionError  no 'username'                                                                                
+                      expected response to have status code 400 but got 404                                        
+                      at assertion:0 in test-script                                                                
+                      inside "user2 / /user/<id>/edit/<key>: edit user metadata #Ext2 --no-username Copy"          
+                                                                                                                   
+ 26.  AssertionError  no 'user_bio'                                                                                
+                      expected response to have status code 400 but got 404                                        
+                      at assertion:0 in test-script                                                                
+                      inside "user2 / /user/<id>/edit/<key>: edit user metadata #Ext2 --no-user_bio Copy"          
+                                                                                                                   
+ 27.  AssertionError  fake key                                                                                     
+                      expected response to have status code 403 but got 404                                        
+                      at assertion:0 in test-script                                                                
+                      inside "user2 / /user/<id>/edit/<key>: edit user metadata #Ext2 --id&fake-key Copy"          
+                                                                                                                   
+ 28.  AssertionError  null has been taken                                                                          
+                      expected response to have status code 400 but got 404                                        
+                      at assertion:0 in test-script                                                                
+                      inside "user2 / /user/<id>/edit/<key>: edit user metadata #Ext2 --taken-username Copy"       
