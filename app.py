@@ -58,7 +58,9 @@ def delete_post(post_id: int, key: str):
     except UnsupportedMediaType:
         data = {}
 
-    is_user_key = extract_from_json(data, "is_user_key", vtype=bool, required=False)
+    is_user_key = data.get("is_user_key")
+    if is_user_key is not None:
+        assert isinstance(is_user_key, bool), "is_user_key should be a boolean"
 
     with lock:
         post, err = posts.delete_post(post_id, key, is_user_key=is_user_key, safe=True)

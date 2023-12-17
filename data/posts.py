@@ -128,7 +128,7 @@ def delete_post(
     del _posts[post_id]
 
     if safe is True:
-        post, err = purge_key_info(safe)
+        post, err = purge_key_info(post)
         if err:
             return post, err
     return post, None
