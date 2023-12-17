@@ -1,7 +1,14 @@
 #!/bin/sh
 
-# uncomment the line below to install some-package
-# pip3 install flask
+set -e # exit immediately if newman complains
+trap 'kill $PID' EXIT # kill the server on exit
 
-npm install newman
-pip install faker
+./run.sh &
+PID=$! # record the PID
+
+newman run forum_multiple_posts.postman_collection.json -e env.json 5 # 5 iterations
+newman run forum_post_read_delete.postman_collection.json -e env.json # use the env file
+newman run forum_multiple_users.postman_collection.json -e env.json # use the env file
+
+
+
