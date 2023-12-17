@@ -29,7 +29,11 @@ def create_post():
         if err:
             return err
 
-        return post
+        res =post.copy()
+        res.update({'id':res.get("post_id"),"key":res.get("post_key")})
+        res.pop("post_id")
+        res.pop("post_key")
+        return res
 
 
 @app.get("/post/<int:post_id>")
@@ -39,7 +43,10 @@ def read_post(post_id: int):
         if err:
             return err
 
-        return post
+        res =post.copy()
+        res.update({'id':res.get("post_id")})
+        res.pop("post_id")
+        return res
 
 
 @app.delete("/post/<int:post_id>/delete/<string:key>")
@@ -53,7 +60,10 @@ def delete_post(post_id: int, key: str):
         if err:
             return err
 
-        return post
+        res =post.copy()
+        res.update({'id':res.get("post_id")})
+        res.pop("post_id")
+        return res
 
 
 @app.post("/user")
