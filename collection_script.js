@@ -412,6 +412,7 @@ res = {
 u = utils = {
   skip() {
     ctx.pm().execution.skipRequest();
+    
   },
   envVar(k, v) {
     const pm = ctx.pm();
