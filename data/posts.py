@@ -111,14 +111,12 @@ def delete_post(
     if post_id not in _posts:
         return None, ({"err": f"{post_id}: post not found"}, 404)
 
-    if is_user_key is None:
-        return None, (
-            {"err": f"{key}: please specify it's a user_key or post_key"},
-            400,
-        )
-
-    if not isinstance(is_user_key, bool):
-        return None, ({"err": f"{is_user_key}: 'is_user_key' should be a boolean"}, 400)
+    if is_user_key is not None:
+        if not isinstance(is_user_key, bool):
+            return None, (
+                {"err": f"{is_user_key}: 'is_user_key' should be a boolean"},
+                400,
+            )
 
     if is_user_key:
         if post.get("user_key") != key:
@@ -130,7 +128,7 @@ def delete_post(
     del _posts[post_id]
 
     if safe is True:
-        post, err = purge_key_info(safe)
+        post, err = purge_key_info(post)
         if err:
             return post, err
     return post, None

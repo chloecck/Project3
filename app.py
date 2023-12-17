@@ -1,6 +1,8 @@
 from threading import Lock
 
 from flask import Flask, request
+from werkzeug.exceptions import UnsupportedMediaType
+
 
 from config import config_app
 from data import posts, users
@@ -29,8 +31,8 @@ def create_post():
         if err:
             return err
 
-        res =post.copy()
-        res.update({'id':res.get("post_id"),"key":res.get("post_key")})
+        res = post.copy()
+        res.update({"id": res.get("post_id"), "key": res.get("post_key")})
         res.pop("post_id")
         res.pop("post_key")
         return res
@@ -43,25 +45,30 @@ def read_post(post_id: int):
         if err:
             return err
 
-        res =post.copy()
-        res.update({'id':res.get("post_id")})
+        res = post.copy()
+        res.update({"id": res.get("post_id")})
         res.pop("post_id")
         return res
 
 
 @app.delete("/post/<int:post_id>/delete/<string:key>")
 def delete_post(post_id: int, key: str):
-    data: dict = request.get_json()
+    try:
+        data: dict = request.get_json()
+    except UnsupportedMediaType:
+        data = {}
 
-    is_user_key = extract_from_json(data, "is_user_key", vtype=bool, required=True)
+    is_user_key = data.get("is_user_key")
+    if is_user_key is not None:
+        assert isinstance(is_user_key, bool), "is_user_key should be a boolean"
 
     with lock:
         post, err = posts.delete_post(post_id, key, is_user_key=is_user_key, safe=True)
         if err:
             return err
 
-        res =post.copy()
-        res.update({'id':res.get("post_id")})
+        res = post.copy()
+        res.update({"id": res.get("post_id")})
         res.pop("post_id")
         return res
 
@@ -78,7 +85,11 @@ def create_user():
         if err:
             return err
 
-        return user
+        res = user.copy()
+        res.update({"id": res.get("user_id"), "key": res.get("user_key")})
+        res.pop("user_id")
+        res.pop("user_key")
+        return res
 
 
 @app.get("/user")
@@ -94,7 +105,10 @@ def read_user_metadata():
         if err:
             return err
 
-        return user_metadata
+        res = user_metadata.copy()
+        res.update({"id": res.get("user_id")})
+        res.pop("user_id")
+        return res
 
 
 @app.put("/user/<int:user_id>/edit/<string:user_key>")
@@ -109,7 +123,10 @@ def edit_user_metadata(user_id: int, user_key: str):
         if err:
             return err
 
-        return metadata
+        res = metadata.copy()
+        res.update({"id": res.get("user_id")})
+        res.pop("user_id")
+        return res
 
 
 @app.get("/post")
@@ -130,7 +147,12 @@ def read_posts_queries():
         if err:
             return err
 
-        return posts_queried
+        res = posts_queried.copy()
+        for post in posts_queried:
+            post.update({"id": post.get("post_id"), "key": post.get("post_key")})
+            post.pop("post_id")
+            post.pop("post_key")
+        return res
 
 
 if __name__ == "__main__":
