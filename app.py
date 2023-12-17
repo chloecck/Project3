@@ -94,7 +94,7 @@ def create_user():
 
 @app.get("/user")
 def read_user_metadata():
-    user_id = request.args.get("user_id", type=int)
+    user_id = request.args.get("id", type=int)
     username = request.args.get("username", type=str)
     assert (
         user_id is not None or username is not None
