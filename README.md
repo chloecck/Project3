@@ -52,9 +52,39 @@
     - The endpoint implemented is the GET request to /post, which looks up the post given start time or given end time (or both) in the body.If the time periord specified is not valid, it should return an error message with a 400 exit status (indicating ‘bad request’).If the post does exist given the time range, it should return a list of JSON object each with following fields: id should be an integer,timestamp should be an ISO 8601 timestamp in UTC, msg should be a string.The timestamp should be the same as was returned when the posts was created.  If there's user, or any replies_to, replies, then it would also contain them.
 
 8. detailed summaries of your tests for each of your extensions, i.e., how to interpret your testing framework and the tests you’ve written
-## 1. Users and User Keys (Testing)
 
 
+
+## Test Description
+
+### unit test
+
+- test posts
+- test users
+- test helper
+
+### 1&2. Users and User Keys & User Profiles
+
+- create user
+  - positive
+    - w/ both `username` and `user_bio`
+    - w/ only `username`
+  - negative
+    - bad username
+      - unsupported char "==="
+      - empty ""
+    - w/o `username`
+    - w/o `username` nor `user_bio`
+- read user metadata
+  - positive 
+    - w/  both `user_id` and `username`
+    - w/ only `username`
+    - w/ only `user_id`
+    - w/ `user_id` and fake `username`
+  - negative
+    - w/ fake `user_id` and username
+    - w/ fake `user_id` and fake `username`
+    - w/ fake `user_id`, w/o `username`
 
 ## 2. User Profiles (Testing)
 
@@ -66,7 +96,8 @@
 
 ## 4. User-Based Range Queries (Testing)
 
-
+- postive
+  - 
 
 ## 5. Time-Based Range Queries (Testing)
 
