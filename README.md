@@ -63,7 +63,37 @@
 - test users
 - test helper
 
-### 1&2. Users and User Keys & User Profiles
+### Base Feature
+
+- create post
+  - positive
+    - w/ `msg`
+    - w/ `msg`, w/ `reply to`
+    - w/ `msg`, w/ `user id`, w/ `user key`
+    - w/ `msg`, w/ `reply to`, w/ `user id`, w/ `user key`
+    - w/ `msg`, w/ `reply-to-post1`
+  - negative
+    - w/o `msg`
+    - w/ `empty msg`
+    - w/ `msg`, w/ `user id`
+    - w/ `msg`, w/ `user key`
+- read post
+  - positive
+    - w/ `post_id`
+  - negative
+    - w/ fake `post_id`
+- delete post
+  - positive
+    - w/ default `post key`
+    - w/ `user key`
+  - negative
+    - w/ `fake post id`
+    - w/ `fake user key`
+    - delete deleted post again
+  - double check
+    - read deleted post
+
+### Ext 1&2. Users and User Keys & User Profiles
 
 - create user
   - positive
@@ -76,7 +106,7 @@
     - w/o `username`
     - w/o `username` nor `user_bio`
 - read user metadata
-  - positive 
+  - positive
     - w/  both `user_id` and `username`
     - w/ only `username`
     - w/ only `user_id`
@@ -85,19 +115,44 @@
     - w/ fake `user_id` and username
     - w/ fake `user_id` and fake `username`
     - w/ fake `user_id`, w/o `username`
+    - w/o `user_id`, w/ fake `username`
+    - w/o `user_id` nor `username`
+- edit user metadata
+  - positive
+    - w/ `user_id`, `user_key` and new `username` and `user_bio`
 
-## 2. User Profiles (Testing)
+  - negative
+    - w/o username, w/ user bio
+    - w/o `username`, w/ `user bio`
+    - w/o `username`
+    - w/o `user bio`
+    - w/ `fake id`, w/ `fake key`
+    - w/ `id`, w/ `fake key`
+    - w/ `fake id`, w/ `key`
+    - w/ `taken username`
+
+- sample user1: create a user w/o `user_bio` and run through each case above
+- sample user2: create a user w/ `user_bio` and run through each case above
+
+### Ext 3. Threaded Replies
+
+- post created with `reply_to` return that `reply_to`
+- post replied to has `replies` in its property w/correct post_id
+
+### Ext 4. User-Based Range Queries (Testing)
+
+- positive
+  - w/ `user_id` and `username`
+- negative
+  - w/ fake `username`
+  - w/ fake `user_id`
 
 
+### Ext 5. Time-Based Range Queries (Testing)
 
-## 3. Threaded Replies (Testing)
-
-
-
-## 4. User-Based Range Queries (Testing)
-
-- postive
-  - 
-
-## 5. Time-Based Range Queries (Testing)
+- positive
+  - w/ `start` and `end` in 24hrs
+  - w/ `start` and `end` in the future
+- negative
+  - w/ `start` after `end`
 

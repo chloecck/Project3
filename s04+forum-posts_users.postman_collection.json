@@ -407,6 +407,134 @@
 							"response": []
 						},
 						{
+							"name": "/post: create post  --msg&reply_to-post1",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"ctx.pm(pm)\r",
+											"const keys = [\"id\", \"key\", \"msg\", \"timestamp\", \"reply_to\"];\r",
+											"\r",
+											"v.return(...keys)\r",
+											"\r",
+											"const post = ctx.post();\r",
+											"v.id(post.id)\r",
+											"v.key(post.key)\r",
+											"v.ts(post.timestamp);\r",
+											"v.msg(post.msg);\r",
+											"v.user_id(post.user_id,true)\r",
+											"v.user_key(post.user_key, true);\r",
+											"v.username(post.username,true);\r",
+											"if (post.user_bio !== null) {\r",
+											"  v.user_bio(post.user_bio)\r",
+											"}\r",
+											"v.reply_to(post.reply_to)\r",
+											"v.replies(post.replies, true)\r",
+											"\r",
+											"ctx.save();\r",
+											"\r",
+											"console.log(post)\r",
+											"\r",
+											""
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											"ctx.pm(pm);\r",
+											"\r",
+											"req.json({\r",
+											"  msg: u.def(\"$randomLoremSentences\"),\r",
+											"  reply_to: 4\r",
+											"})\r",
+											"\r",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://127.0.0.1:5000/post",
+									"protocol": "http",
+									"host": [
+										"127",
+										"0",
+										"0",
+										"1"
+									],
+									"port": "5000",
+									"path": [
+										"post"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "/post/<id>: read post Copy",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"ctx.pm(pm)\r",
+											"\r",
+											"pm.test(\"post 4 has 2 replies\", () => {\r",
+											"  pm.expect(pm.response.json()?.replies?.length === 2).to.be.true;\r",
+											"})"
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://127.0.0.1:5000/post/4",
+									"protocol": "http",
+									"host": [
+										"127",
+										"0",
+										"0",
+										"1"
+									],
+									"port": "5000",
+									"path": [
+										"post",
+										"4"
+									]
+								}
+							},
+							"response": []
+						},
+						{
 							"name": "------",
 							"event": [
 								{
@@ -748,7 +876,7 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "http://127.0.0.1:5000/post/<id>",
+									"raw": "http://127.0.0.1:5000/post/",
 									"protocol": "http",
 									"host": [
 										"127",
@@ -759,7 +887,7 @@
 									"port": "5000",
 									"path": [
 										"post",
-										"<id>"
+										""
 									]
 								}
 							},
@@ -941,11 +1069,11 @@
 										"exec": [
 											"ctx.pm(pm)\r",
 											"\r",
-											"pm.test(\"today\", () => {\r",
+											"pm.test(\"today has 7 posts\", () => {\r",
 											"  v.true(Array.isArray(res.json()))\r",
-											"  console.log(res.json())\r",
+											"  console.log(res.json().length)\r",
 											"  console.log(\"today\")\r",
-											"  v.true(res.json().length > 0)\r",
+											"  v.true(res.json().length ===7)\r",
 											"})\r",
 											""
 										],
@@ -960,8 +1088,137 @@
 											"\r",
 											"const start = u.tsDiff({ day: 1 })\r",
 											"const end = u.tsDiff()\r",
-											"req.rangePost({ start, end })\r",
-											"console.log(start, end)"
+											"req.rangePost({ start, end })"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://127.0.0.1:5000/post?start=<>&end=<>",
+									"protocol": "http",
+									"host": [
+										"127",
+										"0",
+										"0",
+										"1"
+									],
+									"port": "5000",
+									"path": [
+										"post"
+									],
+									"query": [
+										{
+											"key": "start",
+											"value": "<>"
+										},
+										{
+											"key": "end",
+											"value": "<>"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "/post: time range query #Ext4 --within-24hrs-start",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"ctx.pm(pm)\r",
+											"\r",
+											"pm.test(\"today has 7 posts\", () => {\r",
+											"  v.true(Array.isArray(res.json()))\r",
+											"  console.log(res.json())\r",
+											"  console.log(res.json().length)\r",
+											"\r",
+											"  console.log(\"today\")\r",
+											"  v.true(res.json().length ===7)\r",
+											"})\r",
+											""
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											"ctx.pm(pm)\r",
+											"\r",
+											"const start = u.tsDiff({ day: 1 })\r",
+											"req.rangePost({ start })"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://127.0.0.1:5000/post?start=<>&end=<>",
+									"protocol": "http",
+									"host": [
+										"127",
+										"0",
+										"0",
+										"1"
+									],
+									"port": "5000",
+									"path": [
+										"post"
+									],
+									"query": [
+										{
+											"key": "start",
+											"value": "<>"
+										},
+										{
+											"key": "end",
+											"value": "<>"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "/post: time range query #Ext4 --within-24hrs-end",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"ctx.pm(pm)\r",
+											"\r",
+											"pm.test(\"today has 7 posts\", () => {\r",
+											"  v.true(Array.isArray(res.json()))\r",
+											"  console.log(res.json())\r",
+											"  console.log(res.json().length)\r",
+											"\r",
+											"  console.log(\"today\")\r",
+											"  v.true(res.json().length ===7)\r",
+											"})\r",
+											""
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											"ctx.pm(pm)\r",
+											"\r",
+											"const end = u.tsDiff()\r",
+											"req.rangePost({ end })"
 										],
 										"type": "text/javascript"
 									}
