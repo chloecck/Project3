@@ -6,7 +6,7 @@ trap 'kill $PID' EXIT # kill the server on exit
 ./run.sh &
 PID=$! # record the PID
 
-# python -m unittest discover -s tests
+python -m unittest discover -s tests
 
 # newman run try.postman_collection.json
 newman run s01+forum-multiple_posts.postman_collection.json -e env.json

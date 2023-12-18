@@ -1061,7 +1061,7 @@
 							"response": []
 						},
 						{
-							"name": "/post: time range query #Ext4 --within 24hrs",
+							"name": "/post: time range query #Ext4 --within 48hrs",
 							"event": [
 								{
 									"listen": "test",
@@ -1087,7 +1087,7 @@
 											"ctx.pm(pm)\r",
 											"\r",
 											"const start = u.tsDiff({ day: 1 })\r",
-											"const end = u.tsDiff()\r",
+											"const end = u.tsDiff({day:-1})\r",
 											"req.rangePost({ start, end })"
 										],
 										"type": "text/javascript"
@@ -1125,7 +1125,7 @@
 							"response": []
 						},
 						{
-							"name": "/post: time range query #Ext4 --within-24hrs-start",
+							"name": "/post: time range query #Ext4 --within-48hrs-start",
 							"event": [
 								{
 									"listen": "test",
@@ -1190,7 +1190,7 @@
 							"response": []
 						},
 						{
-							"name": "/post: time range query #Ext4 --within-24hrs-end",
+							"name": "/post: time range query #Ext4 --within-48hrs-end",
 							"event": [
 								{
 									"listen": "test",
@@ -1217,7 +1217,7 @@
 										"exec": [
 											"ctx.pm(pm)\r",
 											"\r",
-											"const end = u.tsDiff()\r",
+											"const end = u.tsDiff({day:-1})\r",
 											"req.rangePost({ end })"
 										],
 										"type": "text/javascript"
