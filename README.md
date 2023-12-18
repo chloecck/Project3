@@ -151,7 +151,9 @@
 ### Ext 5. Time-Based Range Queries (Testing)
 
 - positive
-  - w/ `start` and `end` in 24hrs
+  - w/ `start` and `end` in 48hrs
+  - w/ `start`  in 24hrs
+  - w/  `end` in 24hrs
   - w/ `start` and `end` in the future
 - negative
   - w/ `start` after `end`
